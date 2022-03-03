@@ -1,0 +1,4 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/CharacterFrontBluePantsPurpleShirt.png","D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/bin/DesktopGL/CharacterFrontBluePantsPurpleShirt.xnb","TextureProcessor","Texture2DContent",1120,4181,0,8905578
+"D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/Grass.png","D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/bin/DesktopGL/Grass.xnb","TextureProcessor","Texture2DContent",1356,4181,0,0035184
+"D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/ShopFood1.png","D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/bin/DesktopGL/ShopFood1.xnb","TextureProcessor","Texture2DContent",4580,16469,0,0808455
