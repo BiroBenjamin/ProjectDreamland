@@ -33,6 +33,9 @@ obj/
 [Rr]elease*/
 Ankh.NoLoad
 
+#VSCode files
+*.vscode
+
 #Tooling
 _ReSharper*/
 *.resharper

@@ -10,6 +10,7 @@ using System.Diagnostics;
 
 namespace ProjectDreamland{
     public class Game1 : Game{
+        private FileManager mapManager;
         private Map map0;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -50,8 +51,10 @@ namespace ProjectDreamland{
             _player = new Player(Content.Load<Texture2D>("CharacterFrontBluePantsPurpleShirt"));
 
             _components = new List<Sprite>();
-            // Load map0
-            map0 = new Map(@"D:\GitRepos\ProjectDreamland\ProjectDreamland\map\map0.pdmap");
+            // Create Map Manager and load map0
+            mapManager = new FileManager(@"map/map0.map");
+            map0 = new Map();
+            map0 = (Map)mapManager.Read();
             map0.Initialize(Content);
             foreach (Sprite mapAsset in map0.Components) {
                 _components.Add(mapAsset);
