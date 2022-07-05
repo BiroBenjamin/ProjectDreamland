@@ -4,9 +4,9 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>/mnt/data/GitRepos/ProjectDreamland/ProjectDreamland/Content/CharacterFrontBluePantsPurpleShirt.png</File>
-    <File>/mnt/data/GitRepos/ProjectDreamland/ProjectDreamland/Content/Grass.png</File>
-    <File>/mnt/data/GitRepos/ProjectDreamland/ProjectDreamland/Content/ShopFood1.png</File>
+    <File>D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/CharacterFrontBluePantsPurpleShirt.png</File>
+    <File>D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/Grass.png</File>
+    <File>D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/ShopFood1.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

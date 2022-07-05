@@ -1,4 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"/mnt/data/GitRepos/ProjectDreamland/ProjectDreamland/Content/CharacterFrontBluePantsPurpleShirt.png","/mnt/data/GitRepos/ProjectDreamland/ProjectDreamland/Content/bin/DesktopGL/Content/CharacterFrontBluePantsPurpleShirt.xnb","TextureProcessor","Texture2DContent",1120,4181,0.1792182
-"/mnt/data/GitRepos/ProjectDreamland/ProjectDreamland/Content/Grass.png","/mnt/data/GitRepos/ProjectDreamland/ProjectDreamland/Content/bin/DesktopGL/Content/Grass.xnb","TextureProcessor","Texture2DContent",1356,4181,0.001136
-"/mnt/data/GitRepos/ProjectDreamland/ProjectDreamland/Content/ShopFood1.png","/mnt/data/GitRepos/ProjectDreamland/ProjectDreamland/Content/bin/DesktopGL/Content/ShopFood1.xnb","TextureProcessor","Texture2DContent",4580,16469,0.0010544
+"D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/CharacterFrontBluePantsPurpleShirt.png","D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/bin/DesktopGL/Content/CharacterFrontBluePantsPurpleShirt.xnb","TextureProcessor","Texture2DContent",1120,4181,1,224076
+"D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/Grass.png","D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/bin/DesktopGL/Content/Grass.xnb","TextureProcessor","Texture2DContent",1356,4181,0,0530814
+"D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/ShopFood1.png","D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/bin/DesktopGL/Content/ShopFood1.xnb","TextureProcessor","Texture2DContent",4580,16469,0,0295674
