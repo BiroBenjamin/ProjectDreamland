@@ -5,7 +5,8 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/bbiro/source/repos/ProjectDreamland/ProjectDreamland/Content/CharacterFrontBluePantsPurpleShirt.png</File>
-    <File>C:/Users/bbiro/source/repos/ProjectDreamland/ProjectDreamland/Content/Fonts/Ubuntu32.spritefont</File>
+    <File>C:/Users/bbiro/source/repos/ProjectDreamland/ProjectDreamland/Content/Fonts/ArialBig.spritefont</File>
+    <File>C:/Users/bbiro/source/repos/ProjectDreamland/ProjectDreamland/Content/Fonts/ArialSmall.spritefont</File>
     <File>C:/Users/bbiro/source/repos/ProjectDreamland/ProjectDreamland/Content/Grass.png</File>
     <File>C:/Users/bbiro/source/repos/ProjectDreamland/ProjectDreamland/Content/ShopFood1.png</File>
     <File>C:/Users/bbiro/source/repos/ProjectDreamland/ProjectDreamland/Content/UI/Menu/ButtonSmall.png</File>
@@ -13,6 +14,7 @@
     <File>C:/Users/bbiro/source/repos/ProjectDreamland/ProjectDreamland/Content/UI/Menu/MenuPanelBackground.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

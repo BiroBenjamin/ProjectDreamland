@@ -47,7 +47,7 @@ namespace ProjectDreamland.UI.Menu.Components
     public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch, ContentManager content)
     {
       spriteBatch.Draw(_image, _imageBounds, Color.White);
-      spriteBatch.DrawString(content.Load<SpriteFont>("Fonts/Ubuntu32"), _text,
+      spriteBatch.DrawString(content.Load<SpriteFont>("Fonts/ArialBig"), _text,
         new Vector2(_imageBounds.X + _imageBounds.Width / 4, _imageBounds.Y + _imageBounds.Height / 4), Color.Black);
     }
   }

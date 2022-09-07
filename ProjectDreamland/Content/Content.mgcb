@@ -25,12 +25,19 @@
 /processorParam:TextureFormat=Color
 /build:CharacterFrontBluePantsPurpleShirt.png
 
-#begin Fonts/Ubuntu32.spritefont
+#begin Fonts/ArialBig.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Fonts/Ubuntu32.spritefont
+/build:Fonts/ArialBig.spritefont
+
+#begin Fonts/ArialSmall.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/ArialSmall.spritefont
 
 #begin Grass.png
 /importer:TextureImporter

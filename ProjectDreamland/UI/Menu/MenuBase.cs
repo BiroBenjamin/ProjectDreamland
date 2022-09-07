@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using ProjectDreamland.Data;
 using ProjectDreamland.UI.Menu.Components;
 using System;
 using System.Collections.Generic;
@@ -27,13 +26,9 @@ namespace ProjectDreamland.UI.Menu
     protected void CreateButton(string text, Action action, Texture2D buttonIcon, bool isOnLeftSide)
     {
       _backgroundBounds.Y += buttonIcon.Height * 2;
-      _buttons.Add(new Button(
-        text,
-        buttonIcon,
-        _backgroundBounds,
-        isOnLeftSide,
-        action
-      ));
+      Button button = new Button(text, buttonIcon, _backgroundBounds, isOnLeftSide);
+      button.MouseEventHandler.OnClick += action;
+      _buttons.Add(button);
     }
 
     public virtual void Update(GameTime gameTime)

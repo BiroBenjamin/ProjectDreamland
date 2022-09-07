@@ -1,4 +1,5 @@
-﻿using ProjectDreamland.UI.Menu;
+﻿using ProjectDreamland.Managers;
+using ProjectDreamland.UI.Menu;
 using ProjectDreamland.UI.Menu.OptionsMenu;
 using System;
 
@@ -9,7 +10,7 @@ namespace ProjectDreamland.Data
     //Placeholder action, does nothing
     public static readonly Action Placeholder = () =>
     {
-
+      DebugManager.Log("Placeholder action invoked!");
     };
     //Toggles the pause menu
     public static readonly Action ToggleMenu = () =>
@@ -19,7 +20,7 @@ namespace ProjectDreamland.Data
     //Quits the application
     public static readonly Action ExitApplication = () =>
     {
-      //Game1.Self.Exit();
+      Game1.Self.Exit();
     };
     //Toggles the settings menu
     public static readonly Action ToggleSettings = () =>

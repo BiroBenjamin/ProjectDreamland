@@ -1,13 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
 using ProjectDreamland.Sprites;
 using ProjectDreamland.Core;
-using ProjectDreamland.Data;
-using System.Diagnostics;
 using ProjectDreamland.UI.Menu;
+using ProjectDreamland.UI.Debug;
+using ProjectDreamland.Managers;
+using ProjectDreamland.Data.GameFiles;
 
 namespace ProjectDreamland
 {
@@ -18,9 +17,11 @@ namespace ProjectDreamland
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Camera _camera;
+    private DebugWindow _debugWindow;
     private List<Sprite> _components;
     private Player _player;
     private MenuPanel _characterPanel;
+    private Map _currentMap;
 
     public static int ScreenWidth { get; set; }
     public static int ScreenHeight { get; set; }
@@ -44,6 +45,8 @@ namespace ProjectDreamland
       ScreenHeight = _graphics.PreferredBackBufferHeight;
       ScreenWidth = _graphics.PreferredBackBufferWidth;
 
+      SystemPrefsManager.SetUpSystemPrefs();
+
       base.Initialize();
     }
 
@@ -52,6 +55,7 @@ namespace ProjectDreamland
       _spriteBatch = new SpriteBatch(GraphicsDevice);
 
       //Load UI
+      DebugManager.ShowWindow(GraphicsDevice, ScreenWidth, ScreenHeight);
       _characterPanel = new MenuPanel(Content);
 
       // Load camera
@@ -62,15 +66,9 @@ namespace ProjectDreamland
 
       _components = new List<Sprite>();
       // Create Map Manager and load map0
-      /*mapManager = new FileManager(@"map/map0.map");
-      map0 = new Map();
-      map0 = (Map)mapManager.Read();
-      map0.Initialize(Content);
-      foreach (Sprite mapAsset in map0.Components) 
-      {
-          _components.Add(mapAsset);
-          //Debug.WriteLine(mapAsset.Position);
-      }*/
+      MapManager.LoadMaps(Content);
+      _currentMap = MapManager.Maps[0];
+
       // Load components
       _components.Add(new Sprite(Content.Load<Texture2D>("ShopFood1"), true) { Position = new Vector2(50, 50) });
       _components.Add(_player);
@@ -78,9 +76,6 @@ namespace ProjectDreamland
 
     protected override void Update(GameTime gameTime)
     {
-      /*if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-        Exit();*/
-
       // Update every component
       foreach(Sprite comp in _components) 
       {
@@ -88,6 +83,7 @@ namespace ProjectDreamland
       }
       _camera.Follow(_player);
       _characterPanel.Update(gameTime);
+      DebugManager.Update(gameTime);
 
       base.Update(gameTime);
     }
@@ -99,8 +95,11 @@ namespace ProjectDreamland
       _spriteBatch.Begin(transformMatrix: _camera.Transform);
 
       // Draw terrain
-      /*foreach (Sprite ter in _terrain)
-          ter.Draw(gameTime, _spriteBatch);*/
+      foreach(Tile file in _currentMap.Tiles)
+      {
+        _spriteBatch.Draw(file.Texture, 
+          new Rectangle(file.Position.X, file.Position.Y, file.Size.Width, file.Size.Height), Color.White);
+      }
       // Draw every component
       foreach (Sprite comp in _components)
         comp.Draw(gameTime, _spriteBatch);
@@ -108,6 +107,7 @@ namespace ProjectDreamland
       _spriteBatch.End();
 
       _spriteBatch.Begin();
+      DebugManager.Draw(gameTime, _spriteBatch, Content);
       _characterPanel.Draw(gameTime, _spriteBatch);
       _spriteBatch.End();
 

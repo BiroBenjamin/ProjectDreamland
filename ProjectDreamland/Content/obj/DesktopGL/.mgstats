@@ -1,2 +1,2 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/bbiro/source/repos/ProjectDreamland/ProjectDreamland/Content/UI/Menu/ButtonSmall.png","C:/Users/bbiro/source/repos/ProjectDreamland/ProjectDreamland/Content/bin/DesktopGL/UI/Menu/ButtonSmall.xnb","TextureProcessor","Texture2DContent",941,10325,0,1976592
+"C:/Users/bbiro/source/repos/ProjectDreamland/ProjectDreamland/Content/Fonts/ArialBig.spritefont","C:/Users/bbiro/source/repos/ProjectDreamland/ProjectDreamland/Content/bin/DesktopGL/Fonts/ArialBig.xnb","FontDescriptionProcessor","SpriteFontContent",2008,21538,0,2147374
