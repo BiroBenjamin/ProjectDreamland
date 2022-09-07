@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/ShopFood1.png</SourceFile>
-  <SourceTime>2021-02-14T11:52:14+01:00</SourceTime>
-  <DestFile>D:/GitRepos/ProjectDreamland/ProjectDreamland/Content/bin/DesktopGL/ShopFood1.xnb</DestFile>
-  <DestTime>2022-02-07T16:19:59.4067879+01:00</DestTime>
+  <SourceFile>C:/Users/bbiro/source/repos/ProjectDreamland/ProjectDreamland/Content/ShopFood1.png</SourceFile>
+  <SourceTime>2022-07-05T08:12:05.0319283+02:00</SourceTime>
+  <DestFile>C:/Users/bbiro/source/repos/ProjectDreamland/ProjectDreamland/Content/bin/DesktopGL/ShopFood1.xnb</DestFile>
+  <DestTime>2022-09-07T11:23:01.9672385+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T18:17:54+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
