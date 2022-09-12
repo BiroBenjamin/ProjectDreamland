@@ -1,21 +1,22 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using ProjectDreamland.Sprites;
+using ProjectDreamland.Data.GameFiles.Characters;
 
-namespace ProjectDreamland.Core {
-    public class Camera {
-        public Matrix Transform { get; private set; }
+namespace ProjectDreamland.Core
+{
+  public class Camera
+  {
+    public Matrix Transform { get; private set; }
 
-        public void Follow(Sprite target) {
-            Transform = Matrix.CreateTranslation(
-                -target.Position.X - (target.Rectangle.Width / 2),
-                -target.Position.Y - (target.Rectangle.Height / 2),
-                0) * Matrix.CreateTranslation(
-                    Game1.ScreenWidth / 2, 
-                    Game1.ScreenHeight / 2,
-                    0);
-        }
+    public void Follow(Player target)
+    {
+      Rectangle targetRect = new Rectangle(target.Position.X, target.Position.Y, target.Size.Width, target.Size.Height);
+      Transform = Matrix.CreateTranslation(
+        -targetRect.X - (targetRect.Width / 2),
+        -targetRect.Y - (targetRect.Height / 2),
+        0) * Matrix.CreateTranslation(
+          Game1.ScreenWidth / 2,
+          Game1.ScreenHeight / 2,
+          0);
     }
+  }
 }

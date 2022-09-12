@@ -1,12 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using ProjectDreamland.Sprites;
 using ProjectDreamland.Core;
 using ProjectDreamland.UI.Menu;
-using ProjectDreamland.UI.Debug;
+//using ProjectDreamland.UI.Debug;
 using ProjectDreamland.Managers;
 using ProjectDreamland.Data.GameFiles;
+using ProjectDreamland.Data.GameFiles.Characters;
+using System.Linq;
+using ProjectDreamland.Data.GameFiles.Objects;
+using ProjectDreamland.Handlers;
 
 namespace ProjectDreamland
 {
@@ -17,8 +20,10 @@ namespace ProjectDreamland
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Camera _camera;
-    private DebugWindow _debugWindow;
-    private List<Sprite> _components;
+    //private DebugWindow _debugWindow;
+    private RenderHandler _renderHandler;
+    private List<BaseObject> _components;
+    private List<BaseObject> _renderedComponents;
     private Player _player;
     private MenuPanel _characterPanel;
     private Map _currentMap;
@@ -58,54 +63,52 @@ namespace ProjectDreamland
       DebugManager.ShowWindow(GraphicsDevice, ScreenWidth, ScreenHeight);
       _characterPanel = new MenuPanel(Content);
 
-      // Load camera
-      _camera = new Camera();
-
-      // Loading the player character
-      _player = new Player(Content.Load<Texture2D>("CharacterFrontBluePantsPurpleShirt"));
-
-      _components = new List<Sprite>();
       // Create Map Manager and load map0
       MapManager.LoadMaps(Content);
       _currentMap = MapManager.Maps[0];
 
-      // Load components
-      _components.Add(new Sprite(Content.Load<Texture2D>("ShopFood1"), true) { Position = new Vector2(50, 50) });
+      // Load camera
+      _camera = new Camera();
+      _renderHandler = new RenderHandler();
+
+      // Loading the player character
+      _player = new Player(Content.Load<Texture2D>("Characters/CharacterBaseFront"), 100, 100);
+
+      //Load components
+      _components = new List<BaseObject>();
+      _components.AddRange(_currentMap.Tiles);
+      _components.AddRange(_currentMap.WorldObjects);
       _components.Add(_player);
+      _renderedComponents = new List<BaseObject>();
     }
 
     protected override void Update(GameTime gameTime)
     {
       // Update every component
-      foreach(Sprite comp in _components) 
-      {
-        comp.Update(gameTime, _components);
-      }
+      _player.Update(gameTime, _components);
       _camera.Follow(_player);
       _characterPanel.Update(gameTime);
       DebugManager.Update(gameTime);
+      _renderedComponents = _renderHandler.GetRenderableObjects(_components, _player, new Rectangle(0, 0, ScreenWidth, ScreenHeight));
 
       base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
-      GraphicsDevice.Clear(Color.CornflowerBlue);
+      GraphicsDevice.Clear(Color.Gray);
 
       _spriteBatch.Begin(transformMatrix: _camera.Transform);
 
-      // Draw terrain
-      foreach(Tile file in _currentMap.Tiles)
-      {
-        _spriteBatch.Draw(file.Texture, 
-          new Rectangle(file.Position.X, file.Position.Y, file.Size.Width, file.Size.Height), Color.White);
-      }
       // Draw every component
-      foreach (Sprite comp in _components)
+      foreach (BaseObject comp in _renderedComponents.OrderBy(x => x.ZIndex))
+      {
         comp.Draw(gameTime, _spriteBatch);
+      }
 
       _spriteBatch.End();
 
+      //Static elements, like UI
       _spriteBatch.Begin();
       DebugManager.Draw(gameTime, _spriteBatch, Content);
       _characterPanel.Draw(gameTime, _spriteBatch);

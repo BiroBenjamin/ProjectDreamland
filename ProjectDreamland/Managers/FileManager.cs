@@ -1,5 +1,6 @@
 ﻿using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles;
+using ProjectDreamland.Data.GameFiles.Objects;
 using System;
 using System.IO;
 using System.Xml.Serialization;
@@ -37,7 +38,10 @@ namespace ProjectDreamland.Managers
           loadedItem = (BaseFile)serializer.Deserialize(reader);
           loadedItem.FullFilePath = path;
           if(loadedItem.FileType != FileTypesEnum.Map.ToString())
-            loadedItem.FullImagePath = Path.Combine(SystemPrefsManager.SystemPrefs.RootPath, loadedItem.ImagePath);
+          {
+            BaseObject baseObject = (BaseObject)loadedItem;
+            baseObject.FullImagePath = Path.Combine(SystemPrefsManager.SystemPrefs.RootPath, baseObject.ImagePath);
+          }
         }
         catch (Exception ex)
         {

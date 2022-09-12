@@ -2,18 +2,17 @@
 using System.Drawing;
 using System.Xml.Serialization;
 
-namespace ProjectDreamland.Data.GameFiles
+namespace ProjectDreamland.Data.GameFiles.Objects
 {
   [Serializable]
-  public class WorldObject : BaseFile
+  public class WorldObject : BaseObject
   {
-    [XmlIgnore] public Size BaseSize { get; private set; } = new Size(32, 32);
-    public Size Size { get; set; } = new Size(64, 64);
     public bool IsInteractable { get; set; } = false;
 
-    public WorldObject(){}
+    public WorldObject() { }
     public WorldObject(BaseFile baseFile) :
-      base(baseFile){}
+      base(baseFile)
+    { }
 
     public Microsoft.Xna.Framework.Rectangle GetRectangle()
     {
@@ -31,10 +30,9 @@ namespace ProjectDreamland.Data.GameFiles
       return $"ID: {ID}\nName: {Name}\nImagePath: {ImagePath}\nLocation: {Position}";
     }
 
-    public override BaseFile Clone()
+    public override BaseObject Clone()
     {
       WorldObject obj = new WorldObject(base.Clone());
-      obj.BaseSize = BaseSize;
       obj.Size = Size;
       obj.CollisionSize = CollisionSize;
       obj.IsInteractable = IsInteractable;
