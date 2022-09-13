@@ -7,7 +7,6 @@ namespace ProjectDreamland.Data.GameFiles.Objects
   public class BaseObject : BaseFile
   {
     public int ZIndex { get; set; }
-    [XmlIgnore] public string FullImagePath { get; set; }
     public string ImagePath { get; set; }
     [XmlIgnore] public Texture2D Texture { get; set; }
     public System.Drawing.Point Position { get; set; }
@@ -18,6 +17,17 @@ namespace ProjectDreamland.Data.GameFiles.Objects
 
     public BaseObject() { }
     public BaseObject(BaseFile baseFile) : base(baseFile) { }
+    public BaseObject(BaseObject baseObject) : base(baseObject)
+    {
+      ZIndex = baseObject.ZIndex;
+      ImagePath = baseObject.ImagePath;
+      Texture = baseObject.Texture;
+      Position = baseObject.Position;
+      Size = baseObject.Size;
+      IsCollidable = baseObject.IsCollidable;
+      CollisionPosition = baseObject.CollisionPosition;
+      CollisionSize = baseObject.CollisionSize;
+    }
 
     public Rectangle GetCollision()
     {
@@ -26,21 +36,6 @@ namespace ProjectDreamland.Data.GameFiles.Objects
         Position.Y + CollisionPosition.Y,
         CollisionSize.Width,
         CollisionSize.Height);
-    }
-
-    public override BaseFile Clone()
-    {
-      BaseObject obj = new BaseObject(base.Clone());
-      obj.ZIndex = ZIndex;
-      obj.FullImagePath = FullImagePath;
-      obj.ImagePath = ImagePath;
-      obj.Texture = Texture;
-      obj.Position = Position;
-      obj.Size = Size;
-      obj.IsCollidable = IsCollidable;
-      obj.CollisionPosition = CollisionPosition;
-      obj.CollisionSize = CollisionSize;
-      return obj;
     }
 
     public virtual void Update(GameTime gameTime)

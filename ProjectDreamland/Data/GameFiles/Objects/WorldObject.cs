@@ -10,9 +10,11 @@ namespace ProjectDreamland.Data.GameFiles.Objects
     public bool IsInteractable { get; set; } = false;
 
     public WorldObject() { }
-    public WorldObject(BaseFile baseFile) :
-      base(baseFile)
-    { }
+    public WorldObject(BaseObject baseObject) : base(baseObject) { }
+    public WorldObject(WorldObject worldObject) : base(worldObject)
+    {
+      IsInteractable = worldObject.IsInteractable;
+    }
 
     public Microsoft.Xna.Framework.Rectangle GetRectangle()
     {
@@ -28,15 +30,6 @@ namespace ProjectDreamland.Data.GameFiles.Objects
     public override string ToString()
     {
       return $"ID: {ID}\nName: {Name}\nImagePath: {ImagePath}\nLocation: {Position}";
-    }
-
-    public override BaseObject Clone()
-    {
-      WorldObject obj = new WorldObject(base.Clone());
-      obj.Size = Size;
-      obj.CollisionSize = CollisionSize;
-      obj.IsInteractable = IsInteractable;
-      return obj;
     }
   }
 }

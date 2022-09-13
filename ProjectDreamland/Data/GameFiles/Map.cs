@@ -15,8 +15,13 @@ namespace ProjectDreamland.Data.GameFiles
     public Size Size { get; set; }
 
     public Map(){}
-    public Map(BaseFile baseFile) :
-      base(baseFile){}
+    public Map(BaseFile baseFile) : base(baseFile) { }
+    public Map(Map map) : base(map)
+    {
+      WorldObjects = map.WorldObjects;
+      Tiles = map.Tiles;
+      Size = map.Size;
+    }
 
     public BaseFile DoesItemIntersectOthers(BaseFile item)
     {
@@ -43,15 +48,6 @@ namespace ProjectDreamland.Data.GameFiles
         }
       }
       return null;
-    }
-
-    public override BaseFile Clone()
-    {
-      Map map = new Map(base.Clone());
-      map.WorldObjects = WorldObjects;
-      map.Tiles = Tiles;
-      map.Size = Size;
-      return map;
     }
   }
 }

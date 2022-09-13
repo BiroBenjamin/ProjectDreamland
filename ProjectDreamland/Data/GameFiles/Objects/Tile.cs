@@ -11,21 +11,16 @@ namespace ProjectDreamland.Data.GameFiles.Objects
     public string TileType { get; set; }
 
     public Tile() { }
-    public Tile(BaseFile baseFile) : base(baseFile) { }
+    public Tile(BaseObject baseObject) : base(baseObject) { }
+    public Tile(Tile tile) : base(tile)
+    {
+      TileType = tile.TileType;
+    }
 
     public bool CursorIntersects(Microsoft.Xna.Framework.Vector2 cursor)
     {
       return cursor.X > Position.X && cursor.X < Size.Width + Position.X &&
         cursor.Y > Position.Y && cursor.Y < Size.Height + Position.Y;
     }
-
-    public override BaseObject Clone()
-    {
-      Tile obj = new Tile(base.Clone());
-      obj.Size = Size;
-      obj.TileType = TileType;
-      return obj;
-    }
-
   }
 }

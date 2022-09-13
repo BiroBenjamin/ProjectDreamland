@@ -8,7 +8,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 {
   public class Player : BaseCharacter
   {
-    new private float speed = 3.5f;
+    new public float Speed { get; set; } = 3.5f;
     private KeyboardState keyState = Keyboard.GetState();
     public Player(Texture2D texture) : base(texture)
     {
@@ -31,13 +31,13 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
       // Getting player movement input
       if (keyState.IsKeyDown(Keys.W))
-        velocity.Y -= speed;
+        velocity.Y -= Speed;
       if (keyState.IsKeyDown(Keys.S))
-        velocity.Y += speed;
+        velocity.Y += Speed;
       if (keyState.IsKeyDown(Keys.A))
-        velocity.X -= speed;
+        velocity.X -= Speed;
       if (keyState.IsKeyDown(Keys.D))
-        velocity.X += speed;
+        velocity.X += Speed;
       Collision(components);
       Position = new System.Drawing.Point((int)(Position.X + velocity.X), (int)(Position.Y + velocity.Y));
     }
@@ -58,7 +58,6 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     public void Update(GameTime gameTime, List<BaseObject> components)
     {
       base.Update(gameTime);
-      ZIndex = Position.Y + Size.Height;
       Move(gameTime, components);
     }
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

@@ -10,6 +10,7 @@ using ProjectDreamland.Data.GameFiles.Characters;
 using System.Linq;
 using ProjectDreamland.Data.GameFiles.Objects;
 using ProjectDreamland.Handlers;
+using ProjectDreamland.Data.Enums;
 
 namespace ProjectDreamland
 {
@@ -25,6 +26,7 @@ namespace ProjectDreamland
     private List<BaseObject> _components;
     private List<BaseObject> _renderedComponents;
     private Player _player;
+    private BaseCharacter _dummy;
     private MenuPanel _characterPanel;
     private Map _currentMap;
 
@@ -73,12 +75,15 @@ namespace ProjectDreamland
 
       // Loading the player character
       _player = new Player(Content.Load<Texture2D>("Characters/CharacterBaseFront"), 100, 100);
+      _dummy = new BaseCharacter(Content.Load<Texture2D>("Characters/GorillaFront"), 150, ResourceTypesEnum.Rage, 100, 0, 3f);
+      _dummy.Position = new System.Drawing.Point(150, 150);
 
       //Load components
       _components = new List<BaseObject>();
       _components.AddRange(_currentMap.Tiles);
       _components.AddRange(_currentMap.WorldObjects);
       _components.Add(_player);
+      _components.Add(_dummy);
       _renderedComponents = new List<BaseObject>();
     }
 
@@ -86,6 +91,7 @@ namespace ProjectDreamland
     {
       // Update every component
       _player.Update(gameTime, _components);
+      _dummy.Update(gameTime);
       _camera.Follow(_player);
       _characterPanel.Update(gameTime);
       DebugManager.Update(gameTime);

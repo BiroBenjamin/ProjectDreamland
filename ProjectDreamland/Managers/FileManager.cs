@@ -14,7 +14,9 @@ namespace ProjectDreamland.Managers
       XmlSerializer serializer = new XmlSerializer(typeof(T));
       try
       {
-        using (StreamWriter writer = new StreamWriter((obj as BaseFile).FullFilePath))
+        BaseFile baseFile = obj as BaseFile;
+        string path = Path.Combine(SystemPrefsManager.SystemPrefs.RootPath, baseFile.FilePath);
+        using (StreamWriter writer = new StreamWriter(path))
         {
 
           serializer.Serialize(writer, obj);
@@ -36,11 +38,11 @@ namespace ProjectDreamland.Managers
         try
         {
           loadedItem = (BaseFile)serializer.Deserialize(reader);
-          loadedItem.FullFilePath = path;
-          if(loadedItem.FileType != FileTypesEnum.Map.ToString())
+          loadedItem.FilePath = loadedItem.FilePath.Replace(SystemPrefsManager.SystemPrefs.RootPath + "\\", "");
+          if (typeof(T) != typeof(Map))
           {
             BaseObject baseObject = (BaseObject)loadedItem;
-            baseObject.FullImagePath = Path.Combine(SystemPrefsManager.SystemPrefs.RootPath, baseObject.ImagePath);
+            baseObject.ImagePath = baseObject.ImagePath.Replace(SystemPrefsManager.SystemPrefs.RootPath + "\\", "");
           }
         }
         catch (Exception ex)
