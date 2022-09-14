@@ -75,27 +75,28 @@ namespace ProjectDreamland
 
       // Loading the player character
       _player = new Player(Content.Load<Texture2D>("Characters/CharacterBaseFront"), 100, 100);
-      _dummy = new BaseCharacter(Content.Load<Texture2D>("Characters/GorillaFront"), 150, ResourceTypesEnum.Rage, 100, 0, 3f);
-      _dummy.Position = new System.Drawing.Point(150, 150);
 
       //Load components
       _components = new List<BaseObject>();
       _components.AddRange(_currentMap.Tiles);
       _components.AddRange(_currentMap.WorldObjects);
+      _components.AddRange(_currentMap.Characters);
       _components.Add(_player);
-      _components.Add(_dummy);
       _renderedComponents = new List<BaseObject>();
     }
 
     protected override void Update(GameTime gameTime)
     {
       // Update every component
-      _player.Update(gameTime, _components);
-      _dummy.Update(gameTime);
+      _renderedComponents = _renderHandler.GetRenderableObjects(_components, _player, new Rectangle(0, 0, ScreenWidth, ScreenHeight));
+      _player.Update(gameTime, _renderedComponents);
+      foreach (BaseObject comp in _renderedComponents)
+      {
+        comp.Update(gameTime);
+      }
       _camera.Follow(_player);
       _characterPanel.Update(gameTime);
       DebugManager.Update(gameTime);
-      _renderedComponents = _renderHandler.GetRenderableObjects(_components, _player, new Rectangle(0, 0, ScreenWidth, ScreenHeight));
 
       base.Update(gameTime);
     }

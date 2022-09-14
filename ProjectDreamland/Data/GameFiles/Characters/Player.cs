@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles.Objects;
 using System.Collections.Generic;
 
@@ -47,6 +48,16 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       {
         if (comp == this || !comp.IsCollidable)
           continue;
+        if (Position.Y > comp.Position.Y && Position.Y + Size.Height < comp.Position.Y + comp.Size.Height &&
+          Position.Y < comp.Position.Y + comp.Size.Height && Position.Y + Size.Height > comp.Position.Y &&
+          Position.X >= comp.Position.X && Position.X + Size.Width <= comp.Position.X + comp.Size.Width)
+        {
+          comp.Alpha = .45f;
+        }
+        else 
+        { 
+          comp.Alpha = 1f; 
+        }
 
         if (velocity.X > 0 && IsCollidingLeft(comp) || velocity.X < 0 && IsCollidingRight(comp))
           velocity.X = 0;

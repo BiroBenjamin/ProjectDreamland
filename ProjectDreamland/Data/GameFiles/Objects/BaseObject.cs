@@ -9,6 +9,7 @@ namespace ProjectDreamland.Data.GameFiles.Objects
     public int ZIndex { get; set; }
     public string ImagePath { get; set; }
     [XmlIgnore] public Texture2D Texture { get; set; }
+    [XmlIgnore] public float Alpha { get; set; } = 1f;
     public System.Drawing.Point Position { get; set; }
     public System.Drawing.Size Size { get; set; }
     public System.Drawing.Point CollisionPosition { get; set; } = new System.Drawing.Point(0, 0);
@@ -44,7 +45,7 @@ namespace ProjectDreamland.Data.GameFiles.Objects
     }
     public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-      spriteBatch.Draw(Texture, new Vector2(Position.X, Position.Y), Color.White);
+      spriteBatch.Draw(Texture, new Vector2(Position.X, Position.Y), Color.White * Alpha);
     }
   }
 }

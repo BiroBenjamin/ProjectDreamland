@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles;
+using ProjectDreamland.Data.GameFiles.Characters;
 using ProjectDreamland.Data.GameFiles.Objects;
 using System.Collections.Generic;
 using System.IO;
@@ -31,6 +32,11 @@ namespace ProjectDreamland.Managers
         {
           string imagePath = Path.Combine(SystemPrefsManager.SystemPrefs.RootPath, obj.ImagePath.Split('.')[0]);
           obj.Texture = content.Load<Texture2D>(imagePath);
+        }
+        foreach(BaseCharacter character in map.Characters)
+        {
+          string imagePath = Path.Combine(SystemPrefsManager.SystemPrefs.RootPath, character.ImagePath.Split('.')[0]);
+          character.Texture = content.Load<Texture2D>(imagePath);
         }
         Maps.Add(map);
       }

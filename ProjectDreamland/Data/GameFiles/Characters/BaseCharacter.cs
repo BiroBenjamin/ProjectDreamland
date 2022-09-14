@@ -9,40 +9,55 @@ namespace ProjectDreamland.Data.GameFiles.Characters
   [Serializable]
   public class BaseCharacter : BaseObject
   {
-    public float Health { get; set; }
+    public int Level { get; set; }
     public string ResourceType { get; set; }
-    public float MaxResourceAmount { get; set; }
-    private float _currentResourceAmount;
-    public float CurrentResourceAmount
+    public float MaxResourcePoints { get; set; }
+    private float _currentResourcePoints;
+    public float CurrentResourcePoints
     {
-      get { return _currentResourceAmount; }
+      get { return _currentResourcePoints; }
       set
       {
-        if (value > MaxResourceAmount) _currentResourceAmount = MaxResourceAmount;
+        if (value > MaxResourcePoints) _currentResourcePoints = MaxResourcePoints;
+      }
+    }
+    public float MaxHealthPoints { get; set; }
+    private float _currentHealthPoints;
+    public float CurrentHealthPoints
+    {
+      get { return _currentHealthPoints; }
+      set
+      {
+        if (value > MaxHealthPoints) _currentHealthPoints = MaxHealthPoints;
       }
     }
     public float Speed { get; set; } = 3f;
-
     protected Vector2 velocity;
 
-    //public Rectangle GetSize()
-    //{
-    //  return new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
-    //}
-
-    public BaseCharacter() { }
+    public BaseCharacter()
+    {
+      IsCollidable = true;
+    }
     public BaseCharacter(Texture2D texture)
     {
       Texture = texture;
+      IsCollidable = true;
     }
-    public BaseCharacter(Texture2D texture, float health, ResourceTypesEnum resourceType, float maxResource, float currentResource, float speed)
+    public BaseCharacter(BaseObject baseObject) : base(baseObject) 
     {
-      Texture = texture;
-      Health = health;
-      ResourceType = resourceType.ToString();
-      MaxResourceAmount = maxResource;
-      _currentResourceAmount = currentResource;
-      Speed = speed;
+      IsCollidable = true;
+    }
+    public BaseCharacter(BaseCharacter baseCharacter) : base(baseCharacter)
+    {
+      Texture = baseCharacter.Texture;
+      Level = baseCharacter.Level;
+      MaxHealthPoints = baseCharacter.MaxHealthPoints;
+      CurrentHealthPoints = baseCharacter.CurrentHealthPoints;
+      ResourceType = baseCharacter.ResourceType.ToString();
+      MaxResourcePoints = baseCharacter.MaxResourcePoints;
+      CurrentResourcePoints = baseCharacter.CurrentResourcePoints;
+      Speed = baseCharacter.Speed;
+      IsCollidable = true;
     }
 
 
