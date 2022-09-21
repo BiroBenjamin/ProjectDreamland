@@ -10,7 +10,6 @@ using ProjectDreamland.Data.GameFiles.Characters;
 using System.Linq;
 using ProjectDreamland.Data.GameFiles.Objects;
 using ProjectDreamland.Handlers;
-using ProjectDreamland.Data.Enums;
 
 namespace ProjectDreamland
 {
@@ -26,7 +25,6 @@ namespace ProjectDreamland
     private List<BaseObject> _components;
     private List<BaseObject> _renderedComponents;
     private Player _player;
-    private BaseCharacter _dummy;
     private MenuPanel _characterPanel;
     private Map _currentMap;
 
@@ -105,14 +103,15 @@ namespace ProjectDreamland
     {
       GraphicsDevice.Clear(Color.Gray);
 
-      _spriteBatch.Begin(transformMatrix: _camera.Transform);
-
       // Draw every component
+      _spriteBatch.Begin(transformMatrix: _camera.Transform);
       foreach (BaseObject comp in _renderedComponents.OrderBy(x => x.ZIndex))
       {
-        comp.Draw(gameTime, _spriteBatch);
+        comp.Draw(Content, gameTime, _spriteBatch);
       }
-
+      Texture2D texture = new Texture2D(GraphicsDevice, 1, 1);
+      texture.SetData(new[] {Color.Red});
+      _spriteBatch.Draw(texture, _player.attackBounds, Color.Red * .5f);
       _spriteBatch.End();
 
       //Static elements, like UI

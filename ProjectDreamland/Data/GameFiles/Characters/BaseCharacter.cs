@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles.Objects;
@@ -11,27 +12,17 @@ namespace ProjectDreamland.Data.GameFiles.Characters
   {
     public int Level { get; set; }
     public string ResourceType { get; set; }
-    public float MaxResourcePoints { get; set; }
-    private float _currentResourcePoints;
-    public float CurrentResourcePoints
-    {
-      get { return _currentResourcePoints; }
-      set
-      {
-        if (value > MaxResourcePoints) _currentResourcePoints = MaxResourcePoints;
-      }
-    }
-    public float MaxHealthPoints { get; set; }
-    private float _currentHealthPoints;
-    public float CurrentHealthPoints
-    {
-      get { return _currentHealthPoints; }
-      set
-      {
-        if (value > MaxHealthPoints) _currentHealthPoints = MaxHealthPoints;
-      }
-    }
+    public int MaxResourcePoints { get; set; }
+    public int CurrentResourcePoints;
+    public (int, int) AttackDamage { get; set; } = (5, 9);
+    public float AttackRange { get; set; } = 1.5f;
+    public int MaxHealthPoints { get; set; }
+    public int CurrentHealthPoints;
+    public bool IsDead { get; set; } = false;
+    public bool IsTakingDamage { get; set; } = false;
     public float Speed { get; set; } = 3f;
+    public LookDirectionsEnum Facing { get; set; } = LookDirectionsEnum.South;
+
     protected Vector2 velocity;
 
     public BaseCharacter()
@@ -43,7 +34,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       Texture = texture;
       IsCollidable = true;
     }
-    public BaseCharacter(BaseObject baseObject) : base(baseObject) 
+    public BaseCharacter(BaseObject baseObject) : base(baseObject)
     {
       IsCollidable = true;
     }
@@ -60,43 +51,63 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       IsCollidable = true;
     }
 
+    public (bool, int) Attack(BaseCharacter target)
+    {
+      Random rand = new Random();
+      int damage = rand.Next(AttackDamage.Item1, AttackDamage.Item2 + 1);
+      (bool, int) damageDone = target.TakeDamage(damage);
+      IsTakingDamage = false;
+      return damageDone;
+    }
+    public (bool, int) TakeDamage(int damage)
+    {
+      IsTakingDamage = true;
+      int lastCurrentHealth = CurrentHealthPoints;
+      if (CurrentHealthPoints - damage > 0)
+      {
+        CurrentHealthPoints -= damage;
+        return (true, damage);
+      }
+      else
+      {
+        CurrentHealthPoints = 0;
+        IsDead = true;
+        return (true, CurrentHealthPoints);
+      }
+    }
 
     #region Collision
-    protected bool IsCollidingLeft(BaseObject sprite)
+    public bool IsCollidingLeft(Rectangle targetCollision)
     {
       Rectangle thisCollision = GetCollision();
-      Rectangle targetCollision = sprite.GetCollision();
       return thisCollision.Right + velocity.X > targetCollision.Left &&
              thisCollision.Right < targetCollision.Right &&
              thisCollision.Top < targetCollision.Bottom &&
              thisCollision.Bottom > targetCollision.Top;
 
     }
-    protected bool IsCollidingRight(BaseObject sprite)
+    public bool IsCollidingRight(Rectangle targetCollision)
     {
       Rectangle thisCollision = GetCollision();
-      Rectangle targetCollision = sprite.GetCollision();
       return thisCollision.Left + velocity.X < targetCollision.Right &&
              thisCollision.Left > targetCollision.Left &&
              thisCollision.Top < targetCollision.Bottom &&
              thisCollision.Bottom > targetCollision.Top;
 
     }
-    protected bool IsCollidingTop(BaseObject sprite)
+    public bool IsCollidingTop(Rectangle targetCollision)
     {
       Rectangle thisCollision = GetCollision();
-      Rectangle targetCollision = sprite.GetCollision();
       return thisCollision.Bottom + this.velocity.Y > targetCollision.Top &&
              thisCollision.Top < targetCollision.Top &&
              thisCollision.Right > targetCollision.Left &&
              thisCollision.Left < targetCollision.Right;
 
     }
-    protected bool IsCollidingBottom(BaseObject sprite)
+    public bool IsCollidingBottom(Rectangle targetCollision)
     {
       int zindex = ZIndex;
       Rectangle thisCollision = GetCollision();
-      Rectangle targetCollision = sprite.GetCollision();
       return thisCollision.Top + this.velocity.Y < targetCollision.Bottom &&
              thisCollision.Bottom > targetCollision.Bottom &&
              thisCollision.Right > targetCollision.Left &&
@@ -109,9 +120,20 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     {
       ZIndex = Position.Y + Size.Height;
     }
-    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public override void Draw(ContentManager content, GameTime gameTime, SpriteBatch spriteBatch)
     {
-      base.Draw(gameTime, spriteBatch);
+      if (IsDead) return;
+      base.Draw(content, gameTime, spriteBatch);
+      if (IsTakingDamage)
+      {
+        spriteBatch.DrawString(content.Load<SpriteFont>("Fonts/ArialBig"), $"{MaxHealthPoints}/{CurrentHealthPoints}",
+          new Vector2(Position.X, Position.Y - 10), Color.Red);
+      }
+      else
+      {
+        spriteBatch.DrawString(content.Load<SpriteFont>("Fonts/ArialBig"), $"{MaxHealthPoints}/{CurrentHealthPoints}",
+          new Vector2(Position.X, Position.Y - 10), Color.Black);
+      }
     }
   }
 }

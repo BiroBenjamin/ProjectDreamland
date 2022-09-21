@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Xml.Serialization;
 
@@ -43,7 +44,7 @@ namespace ProjectDreamland.Data.GameFiles.Objects
     {
 
     }
-    public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public virtual void Draw(ContentManager content, GameTime gameTime, SpriteBatch spriteBatch)
     {
       spriteBatch.Draw(Texture, new Vector2(Position.X, Position.Y), Color.White * Alpha);
     }
