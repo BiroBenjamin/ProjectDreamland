@@ -20,15 +20,21 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     public Player(Texture2D texture) : base(texture)
     {
       Size = new System.Drawing.Size(texture.Width, texture.Height);
-      CollisionSize = new System.Drawing.Size(texture.Width, texture.Height / 4);
-      CollisionPosition = new System.Drawing.Point(0, texture.Height - texture.Height / 4);
+      SetCollision(Position.X, Position.Y, texture.Width, texture.Height);
     }
     public Player(Texture2D texture, int x, int y) : base(texture)
     {
       Size = new System.Drawing.Size(texture.Width, texture.Height);
       Position = new System.Drawing.Point(x, y);
-      CollisionSize = new System.Drawing.Size(texture.Width - texture.Width / 2, texture.Height / 4);
-      CollisionPosition = new System.Drawing.Point(0 + texture.Width / 4, texture.Height - texture.Height / 4);
+      SetCollision(Position.X, Position.Y, texture.Width, texture.Height);
+    }
+    private void SetCollision(int posX, int posY, int textWidth, int textHeight)
+    {
+      int width = textWidth - textWidth / 2;
+      int height = textHeight / 4;
+
+      CollisionSize = new System.Drawing.Size(width, height);
+      CollisionPosition = new System.Drawing.Point(posX + width / 2, posY + textHeight - height);
     }
 
     private void Move(List<BaseObject> components)
@@ -64,10 +70,10 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     private void PerformAttack(List<BaseCharacter> characters)
     {
       _currentMouseState = Mouse.GetState();
-        List<BaseCharacter> targets = GetTargets(characters);
+      List<BaseCharacter> targets = GetTargets(characters);
       if (_currentMouseState.LeftButton == ButtonState.Pressed && _lastMouseState.LeftButton == ButtonState.Released)
       {
-        foreach(BaseCharacter target in targets)
+        foreach (BaseCharacter target in targets)
         {
           Attack(target);
         }
@@ -81,16 +87,36 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       switch (Facing)
       {
         case LookDirectionsEnum.North:
-          attackBounds = new Rectangle(Position.X, CollisionPosition.Y, Size.Width, calculatedAttackRange);
+          attackBounds = new Rectangle(
+            CollisionPosition.X - (calculatedAttackRange * 2 - CollisionSize.Width) / 2,
+            CollisionPosition.Y - calculatedAttackRange,
+            calculatedAttackRange * 2,
+            calculatedAttackRange
+          );
           break;
         case LookDirectionsEnum.South:
-          attackBounds = new Rectangle(Position.X, Position.Y + Size.Height, Size.Width, calculatedAttackRange);
+          attackBounds = new Rectangle(
+            CollisionPosition.X - (calculatedAttackRange * 2 - CollisionSize.Width) / 2,
+            CollisionPosition.Y + CollisionSize.Height,
+            calculatedAttackRange * 2,
+            calculatedAttackRange
+          );
           break;
         case LookDirectionsEnum.West:
-          attackBounds = new Rectangle(Position.X - calculatedAttackRange, Position.Y, calculatedAttackRange, Size.Height);
+          attackBounds = new Rectangle(
+            CollisionPosition.X - calculatedAttackRange,
+            CollisionPosition.Y - (calculatedAttackRange * 2 - CollisionSize.Height) / 2,
+            calculatedAttackRange,
+            calculatedAttackRange * 2
+          );
           break;
         case LookDirectionsEnum.East:
-          attackBounds = new Rectangle(Position.X + Size.Width, Position.Y, calculatedAttackRange, Size.Height);
+          attackBounds = new Rectangle(
+            CollisionPosition.X + CollisionSize.Width,
+            CollisionPosition.Y - (calculatedAttackRange * 2 - CollisionSize.Height) / 2,
+            calculatedAttackRange,
+            calculatedAttackRange * 2
+          );
           break;
       }
       targets = characters.Where(x => x.GetCollision().Intersects(attackBounds)).ToList();
@@ -110,9 +136,9 @@ namespace ProjectDreamland.Data.GameFiles.Characters
         {
           comp.Alpha = .45f;
         }
-        else 
-        { 
-          comp.Alpha = 1f; 
+        else
+        {
+          comp.Alpha = 1f;
         }
 
         if (velocity.X > 0 && IsCollidingLeft(comp.GetCollision()) || velocity.X < 0 && IsCollidingRight(comp.GetCollision()))

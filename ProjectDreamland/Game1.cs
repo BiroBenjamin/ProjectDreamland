@@ -112,6 +112,9 @@ namespace ProjectDreamland
       Texture2D texture = new Texture2D(GraphicsDevice, 1, 1);
       texture.SetData(new[] {Color.Red});
       _spriteBatch.Draw(texture, _player.attackBounds, Color.Red * .5f);
+      _spriteBatch.Draw(texture, 
+        new Rectangle(_player.CollisionPosition.X, _player.CollisionPosition.Y, _player.CollisionSize.Width, _player.CollisionSize.Height), 
+        Color.Red);
       _spriteBatch.End();
 
       //Static elements, like UI
