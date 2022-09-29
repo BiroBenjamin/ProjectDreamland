@@ -31,7 +31,7 @@ namespace ProjectDreamland.Data.GameFiles.Objects
       CollisionSize = baseObject.CollisionSize;
     }
 
-    public Rectangle GetCollision()
+    public virtual Rectangle GetCollision()
     {
       return new Rectangle(
         Position.X + CollisionPosition.X,

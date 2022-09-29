@@ -2,8 +2,11 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectDreamland.Data.Enums;
+using ProjectDreamland.Data.GameFiles.Abilities;
 using ProjectDreamland.Data.GameFiles.Objects;
 using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace ProjectDreamland.Data.GameFiles.Characters
 {
@@ -22,6 +25,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     public bool IsTakingDamage { get; set; } = false;
     public float Speed { get; set; } = 3f;
     public LookDirectionsEnum Facing { get; set; } = LookDirectionsEnum.South;
+    [XmlIgnore] public Rectangle AttackBounds = new Rectangle();
 
     protected Vector2 velocity;
 
@@ -51,28 +55,25 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       IsCollidable = true;
     }
 
-    public (bool, int) Attack(BaseCharacter target)
+    public void Attack(List<BaseCharacter> characters, BaseAbility ability)
     {
-      Random rand = new Random();
-      int damage = rand.Next(AttackDamage.Item1, AttackDamage.Item2 + 1);
-      (bool, int) damageDone = target.TakeDamage(damage);
-      IsTakingDamage = false;
-      return damageDone;
+      ability.Cast(characters, this);
     }
-    public (bool, int) TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
-      IsTakingDamage = true;
-      int lastCurrentHealth = CurrentHealthPoints;
-      if (CurrentHealthPoints - damage > 0)
-      {
-        CurrentHealthPoints -= damage;
-        return (true, damage);
-      }
-      else
+      //IsTakingDamage = true;
+      if (CurrentHealthPoints - damage < 0)
       {
         CurrentHealthPoints = 0;
         IsDead = true;
-        return (true, CurrentHealthPoints);
+      }
+      else if (CurrentHealthPoints - damage > MaxHealthPoints)
+      {
+        CurrentHealthPoints = MaxHealthPoints;
+      }
+      else
+      {
+        CurrentHealthPoints -= damage;        
       }
     }
 
