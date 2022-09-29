@@ -42,9 +42,9 @@ namespace ProjectDreamland
     protected override void Initialize()
     {
       // Initialize the window data
-      _graphics.IsFullScreen = false;
-      _graphics.PreferredBackBufferWidth = 1280;
-      _graphics.PreferredBackBufferHeight = 720;
+      _graphics.IsFullScreen = true;
+      _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+      _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
       _graphics.ApplyChanges();
 
       ScreenHeight = _graphics.PreferredBackBufferHeight;
@@ -105,16 +105,15 @@ namespace ProjectDreamland
 
       // Draw every component
       _spriteBatch.Begin(transformMatrix: _camera.Transform);
+      Texture2D texture = new Texture2D(GraphicsDevice, 1, 1);
+      texture.SetData(new Color[] { Color.Red } );
       foreach (BaseObject comp in _renderedComponents.OrderBy(x => x.ZIndex))
       {
         comp.Draw(Content, gameTime, _spriteBatch);
+        if(comp.GetType() == typeof(BaseCharacter) || comp == _player)
+         _spriteBatch.Draw(texture, new Rectangle(comp.GetCollision().X, comp.GetCollision().Y, comp.GetCollision().Width, comp.GetCollision().Height), Color.Red);
       }
-      Texture2D texture = new Texture2D(GraphicsDevice, 1, 1);
-      texture.SetData(new[] {Color.Red});
-      _spriteBatch.Draw(texture, _player.attackBounds, Color.Red * .5f);
-      _spriteBatch.Draw(texture, 
-        new Rectangle(_player.CollisionPosition.X, _player.CollisionPosition.Y, _player.CollisionSize.Width, _player.CollisionSize.Height), 
-        Color.Red);
+      _player.DrawAbilities(gameTime, _spriteBatch, GraphicsDevice);
       _spriteBatch.End();
 
       //Static elements, like UI

@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ProjectDreamland.Data.Enums;
+using ProjectDreamland.Data.GameFiles.Abilities;
 using ProjectDreamland.Data.GameFiles.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,22 +13,28 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 {
   public class Player : BaseCharacter
   {
-    new public float Speed { get; set; } = 3.5f;
+    new public float Speed { get; set; } = 4f;
 
-    private KeyboardState _keyState;
+    private BaseAbility _ability1;
+    private BaseAbility _ability2;
+    private BaseAbility _ability3;
+
+    private KeyboardState _currentKeyState;
+    private KeyboardState _lastKeyState;
     private MouseState _currentMouseState;
     private MouseState _lastMouseState;
-    public Rectangle attackBounds = new Rectangle();
     public Player(Texture2D texture) : base(texture)
     {
       Size = new System.Drawing.Size(texture.Width, texture.Height);
       SetCollision(Position.X, Position.Y, texture.Width, texture.Height);
+      SetStatus();
     }
     public Player(Texture2D texture, int x, int y) : base(texture)
     {
       Size = new System.Drawing.Size(texture.Width, texture.Height);
       Position = new System.Drawing.Point(x, y);
       SetCollision(Position.X, Position.Y, texture.Width, texture.Height);
+      SetStatus();
     }
     private void SetCollision(int posX, int posY, int textWidth, int textHeight)
     {
@@ -36,93 +44,87 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       CollisionSize = new System.Drawing.Size(width, height);
       CollisionPosition = new System.Drawing.Point(posX + width / 2, posY + textHeight - height);
     }
+    private void SetStatus()
+    {
+      MaxHealthPoints = 200;
+      CurrentHealthPoints = 125;
+      _ability1 = new MeleeAttack("Attack", "Very big damage", ResourceTypesEnum.None, 0, 20,
+        DamageTypesEnum.Physical, 1.5f, .5f, true);
+      _ability2 = new RangedMagicAttack("Magic Attack", "Very big magic damage", ResourceTypesEnum.Mana, 30, 30,
+        DamageTypesEnum.Fire, 6, 1, true);
+      _ability3 = new HealAbility("Heal", "Very big heal", ResourceTypesEnum.Mana, 35, 25,
+        DamageTypesEnum.Nature, .5f, 5f, true);
+    }
 
     private void Move(List<BaseObject> components)
     {
-      _keyState = Keyboard.GetState();
+      _currentKeyState = Keyboard.GetState();
       velocity = new Vector2();
 
       // Getting player movement input
-      if (_keyState.IsKeyDown(Keys.W))
+      if (_currentKeyState.IsKeyDown(Keys.W))
       {
         Facing = LookDirectionsEnum.North;
         velocity.Y -= Speed;
       }
-      if (_keyState.IsKeyDown(Keys.S))
+      if (_currentKeyState.IsKeyDown(Keys.S))
       {
         Facing = LookDirectionsEnum.South;
         velocity.Y += Speed;
       }
-      if (_keyState.IsKeyDown(Keys.A))
+      if (_currentKeyState.IsKeyDown(Keys.A))
       {
         Facing = LookDirectionsEnum.West;
         velocity.X -= Speed;
       }
-      if (_keyState.IsKeyDown(Keys.D))
+      if (_currentKeyState.IsKeyDown(Keys.D))
       {
         Facing = LookDirectionsEnum.East;
         velocity.X += Speed;
       }
       Collision(components);
       Position = new System.Drawing.Point((int)(Position.X + velocity.X), (int)(Position.Y + velocity.Y));
-      CollisionPosition = new System.Drawing.Point((int)(CollisionPosition.X + velocity.X), (int)(CollisionPosition.Y + velocity.Y));
+      CollisionPosition = new System.Drawing.Point(
+        (int)Math.Round(CollisionPosition.X + velocity.X), 
+        (int)Math.Round(CollisionPosition.Y + velocity.Y)
+      );
     }
-    private void PerformAttack(List<BaseCharacter> characters)
+    public override Rectangle GetCollision()
+    {
+      return new Rectangle(
+        CollisionPosition.X,
+        CollisionPosition.Y,
+        CollisionSize.Width,
+        CollisionSize.Height);
+    }
+
+    private void PerformAttack(GameTime gameTime, List<BaseCharacter> characters)
     {
       _currentMouseState = Mouse.GetState();
-      List<BaseCharacter> targets = GetTargets(characters);
+      _currentKeyState = Keyboard.GetState();
+      _ability1.Update(gameTime);
       if (_currentMouseState.LeftButton == ButtonState.Pressed && _lastMouseState.LeftButton == ButtonState.Released)
       {
-        foreach (BaseCharacter target in targets)
-        {
-          Attack(target);
-        }
+        //Attack(characters, _ability1);
+        _ability1.Cast(characters, this);
+      }
+      _ability2.Update(gameTime);
+      if (_currentMouseState.RightButton == ButtonState.Pressed && _lastMouseState.RightButton == ButtonState.Released)
+      {
+        //Attack(characters, _ability2, new Vector2());
+        (_ability2 as RangedMagicAttack).Cast(characters, this, new Vector2(Position.X + Size.Width / 2, Position.Y + Size.Height / 2),
+          _currentMouseState.Position.ToVector2());
+      }
+      _ability3.Update(gameTime);
+      if (_currentKeyState.IsKeyDown(Keys.Q) && _lastKeyState.IsKeyUp(Keys.Q))
+      {
+        //Attack(characters, _ability3);
+        _ability3.Cast(characters, this);
       }
       _lastMouseState = _currentMouseState;
+      _lastKeyState = _currentKeyState;
     }
-    private List<BaseCharacter> GetTargets(List<BaseCharacter> characters)
-    {
-      List<BaseCharacter> targets = new List<BaseCharacter>();
-      int calculatedAttackRange = (int)AttackRange * 32;
-      switch (Facing)
-      {
-        case LookDirectionsEnum.North:
-          attackBounds = new Rectangle(
-            CollisionPosition.X - (calculatedAttackRange * 2 - CollisionSize.Width) / 2,
-            CollisionPosition.Y - calculatedAttackRange,
-            calculatedAttackRange * 2,
-            calculatedAttackRange
-          );
-          break;
-        case LookDirectionsEnum.South:
-          attackBounds = new Rectangle(
-            CollisionPosition.X - (calculatedAttackRange * 2 - CollisionSize.Width) / 2,
-            CollisionPosition.Y + CollisionSize.Height,
-            calculatedAttackRange * 2,
-            calculatedAttackRange
-          );
-          break;
-        case LookDirectionsEnum.West:
-          attackBounds = new Rectangle(
-            CollisionPosition.X - calculatedAttackRange,
-            CollisionPosition.Y - (calculatedAttackRange * 2 - CollisionSize.Height) / 2,
-            calculatedAttackRange,
-            calculatedAttackRange * 2
-          );
-          break;
-        case LookDirectionsEnum.East:
-          attackBounds = new Rectangle(
-            CollisionPosition.X + CollisionSize.Width,
-            CollisionPosition.Y - (calculatedAttackRange * 2 - CollisionSize.Height) / 2,
-            calculatedAttackRange,
-            calculatedAttackRange * 2
-          );
-          break;
-      }
-      targets = characters.Where(x => x.GetCollision().Intersects(attackBounds)).ToList();
-
-      return targets;
-    }
+    
     private void Collision(List<BaseObject> components)
     {
       foreach (BaseObject comp in components)
@@ -152,11 +154,15 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     {
       base.Update(gameTime);
       Move(components);
-      PerformAttack(components.Where(x => x.FileType == FileTypesEnum.Character.ToString()).Cast<BaseCharacter>().ToList());
+      PerformAttack(gameTime, components.Where(x => x.FileType == FileTypesEnum.Character.ToString()).Cast<BaseCharacter>().ToList());
     }
     public override void Draw(ContentManager content, GameTime gameTime, SpriteBatch spriteBatch)
     {
       base.Draw(content, gameTime, spriteBatch);
+    }
+    public void DrawAbilities(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+    {
+      _ability2.Draw(gameTime, spriteBatch, graphicsDevice);
     }
   }
 }
