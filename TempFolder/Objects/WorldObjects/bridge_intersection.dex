@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WorldObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>WorldObject</FileType>
+  <ID>bridge_intersection</ID>
+  <Name>BridgeIntersection</Name>
+  <FilePath>Objects\WorldObjects\bridge_intersection.dex</FilePath>
+  <ZIndex>1</ZIndex>
+  <ImagePath>Sprites\WorldObjects\bridge_intersection.png</ImagePath>
+  <Position>
+    <X>1920</X>
+    <Y>2520</Y>
+  </Position>
+  <Size>
+    <Width>64</Width>
+    <Height>64</Height>
+  </Size>
+  <CollisionPosition>
+    <X>0</X>
+    <Y>0</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>0</Width>
+    <Height>0</Height>
+  </CollisionSize>
+  <IsCollidable>false</IsCollidable>
+  <IsInteractable>false</IsInteractable>
+</WorldObject>

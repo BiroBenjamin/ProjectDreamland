@@ -5,7 +5,7 @@ namespace ProjectDreamland.Core
 {
   public class Camera
   {
-    public Matrix Transform { get; private set; }
+    public static Matrix Transform { get; private set; }
 
     public void Follow(Player target)
     {

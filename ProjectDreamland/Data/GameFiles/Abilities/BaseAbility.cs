@@ -4,6 +4,7 @@ using ProjectDreamland.Core;
 using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles.Abilities.Interfaces;
 using ProjectDreamland.Data.GameFiles.Characters;
+using ProjectDreamland.Data.GameFiles.Objects;
 using System;
 using System.Collections.Generic;
 
@@ -39,7 +40,7 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       _timer = (int)(60 * cooldown);
     }
 
-    public virtual void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime, List<BaseObject> components)
     {
       if (!CanCast) _timer--;
       if (_timer == 0)

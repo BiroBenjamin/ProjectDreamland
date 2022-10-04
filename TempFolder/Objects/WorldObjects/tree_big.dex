@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WorldObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>WorldObject</FileType>
+  <ID>tree_big</ID>
+  <Name>TreeBig</Name>
+  <FilePath>Objects\WorldObjects\tree_big.dex</FilePath>
+  <ZIndex>1</ZIndex>
+  <ImagePath>Sprites\WorldObjects\tree_big.png</ImagePath>
+  <Position>
+    <X>-84</X>
+    <Y>-123</Y>
+  </Position>
+  <Size>
+    <Width>192</Width>
+    <Height>192</Height>
+  </Size>
+  <CollisionPosition>
+    <X>64</X>
+    <Y>165</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>56</Width>
+    <Height>26</Height>
+  </CollisionSize>
+  <IsCollidable>true</IsCollidable>
+  <IsInteractable>false</IsInteractable>
+</WorldObject>

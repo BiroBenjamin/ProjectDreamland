@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WorldObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>WorldObject</FileType>
+  <ID>tree_log</ID>
+  <Name>TreeLog</Name>
+  <FilePath>Objects\WorldObjects\tree_log.dex</FilePath>
+  <ZIndex>1</ZIndex>
+  <ImagePath>Sprites\WorldObjects\tree_log.png</ImagePath>
+  <Position>
+    <X>-99</X>
+    <Y>42</Y>
+  </Position>
+  <Size>
+    <Width>96</Width>
+    <Height>64</Height>
+  </Size>
+  <CollisionPosition>
+    <X>8</X>
+    <Y>30</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>80</Width>
+    <Height>16</Height>
+  </CollisionSize>
+  <IsCollidable>true</IsCollidable>
+  <IsInteractable>false</IsInteractable>
+</WorldObject>

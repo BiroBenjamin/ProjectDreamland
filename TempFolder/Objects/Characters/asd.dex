@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BaseCharacter xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>Character</FileType>
+  <ID>asd</ID>
+  <Name>asdadad</Name>
+  <FilePath>Objects\Characters\asd.dex</FilePath>
+  <ZIndex>0</ZIndex>
+  <ImagePath>Sprites\Characters\gorilla_front.png</ImagePath>
+  <Position>
+    <X>0</X>
+    <Y>0</Y>
+  </Position>
+  <Size>
+    <Width>126</Width>
+    <Height>108</Height>
+  </Size>
+  <CollisionPosition>
+    <X>21</X>
+    <Y>81</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>84</Width>
+    <Height>27</Height>
+  </CollisionSize>
+  <IsCollidable>true</IsCollidable>
+  <Level>2</Level>
+  <ResourceType>Mana</ResourceType>
+  <MaxResourcePoints>110</MaxResourcePoints>
+  <CurrentResourcePoints>0</CurrentResourcePoints>
+  <MaxHealthPoints>100</MaxHealthPoints>
+  <CurrentHealthPoints>0</CurrentHealthPoints>
+  <Speed>3</Speed>
+</BaseCharacter>

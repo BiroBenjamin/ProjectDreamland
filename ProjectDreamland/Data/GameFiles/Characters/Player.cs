@@ -13,7 +13,11 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 {
   public class Player : BaseCharacter
   {
-    new public float Speed { get; set; } = 4f;
+    new public float Speed { get; set; } = 2f;
+    public int ExperienceNeeded { get; set; }
+    public int CurrentExperience { get; set; }
+
+    private GraphicsDevice _graphicsDevice;
 
     private BaseAbility _ability1;
     private BaseAbility _ability2;
@@ -23,18 +27,20 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     private KeyboardState _lastKeyState;
     private MouseState _currentMouseState;
     private MouseState _lastMouseState;
-    public Player(Texture2D texture) : base(texture)
+    public Player(GraphicsDevice graphicsDevice, Texture2D texture) : base(texture)
     {
       Size = new System.Drawing.Size(texture.Width, texture.Height);
       SetCollision(Position.X, Position.Y, texture.Width, texture.Height);
       SetStatus();
+      _graphicsDevice = graphicsDevice;
     }
-    public Player(Texture2D texture, int x, int y) : base(texture)
+    public Player(GraphicsDevice graphicsDevice, Texture2D texture, int x, int y) : base(texture)
     {
       Size = new System.Drawing.Size(texture.Width, texture.Height);
       Position = new System.Drawing.Point(x, y);
       SetCollision(Position.X, Position.Y, texture.Width, texture.Height);
       SetStatus();
+      _graphicsDevice = graphicsDevice;
     }
     private void SetCollision(int posX, int posY, int textWidth, int textHeight)
     {
@@ -48,10 +54,12 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     {
       MaxHealthPoints = 200;
       CurrentHealthPoints = 125;
+      Level = 4;
+      ExperienceNeeded = (int)Math.Pow(Level * 100, 1.1);
       _ability1 = new MeleeAttack("Attack", "Very big damage", ResourceTypesEnum.None, 0, 20,
         DamageTypesEnum.Physical, 1.5f, .5f, true);
       _ability2 = new RangedMagicAttack("Magic Attack", "Very big magic damage", ResourceTypesEnum.Mana, 30, 30,
-        DamageTypesEnum.Fire, 6, 1, true);
+        DamageTypesEnum.Fire, 10, 5f, true);
       _ability3 = new HealAbility("Heal", "Very big heal", ResourceTypesEnum.Mana, 35, 25,
         DamageTypesEnum.Nature, .5f, 5f, true);
     }
@@ -98,31 +106,43 @@ namespace ProjectDreamland.Data.GameFiles.Characters
         CollisionSize.Height);
     }
 
-    private void PerformAttack(GameTime gameTime, List<BaseCharacter> characters)
+    private void PerformAttack(GameTime gameTime, List<BaseCharacter> characters, List<BaseObject> objects)
     {
       _currentMouseState = Mouse.GetState();
       _currentKeyState = Keyboard.GetState();
-      _ability1.Update(gameTime);
+      _ability1.Update(gameTime, objects);
       if (_currentMouseState.LeftButton == ButtonState.Pressed && _lastMouseState.LeftButton == ButtonState.Released)
       {
         //Attack(characters, _ability1);
         _ability1.Cast(characters, this);
       }
-      _ability2.Update(gameTime);
-      if (_currentMouseState.RightButton == ButtonState.Pressed && _lastMouseState.RightButton == ButtonState.Released)
+      _ability2.Update(gameTime, objects);
+      if (_currentKeyState.IsKeyDown(Keys.E) && _lastKeyState.IsKeyUp(Keys.E) && Level >= 4)
       {
         //Attack(characters, _ability2, new Vector2());
-        (_ability2 as RangedMagicAttack).Cast(characters, this, new Vector2(Position.X + Size.Width / 2, Position.Y + Size.Height / 2),
+        (_ability2 as RangedMagicAttack).Cast(_graphicsDevice, characters, this, new Vector2(Position.X + Size.Width / 2, Position.Y + Size.Height / 2),
           _currentMouseState.Position.ToVector2());
       }
-      _ability3.Update(gameTime);
-      if (_currentKeyState.IsKeyDown(Keys.Q) && _lastKeyState.IsKeyUp(Keys.Q))
+      _ability3.Update(gameTime, objects);
+      if (_currentKeyState.IsKeyDown(Keys.Q) && _lastKeyState.IsKeyUp(Keys.Q) && Level >= 2)
       {
         //Attack(characters, _ability3);
         _ability3.Cast(characters, this);
       }
       _lastMouseState = _currentMouseState;
       _lastKeyState = _currentKeyState;
+      HandleDeadCharacters(characters);
+    }
+    private void HandleDeadCharacters(List<BaseCharacter> characters)
+    {
+      foreach(BaseCharacter character in characters)
+      {
+        if (character.CharacterState == CharacterStatesEnum.Dying)
+        {
+          CurrentExperience += (int)Math.Pow(character.Level * 5, 1.1);
+          character.CharacterState = CharacterStatesEnum.Dead;
+        }
+      }
     }
     
     private void Collision(List<BaseObject> components)
@@ -150,19 +170,39 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       }
     }
 
-    public void Update(GameTime gameTime, List<BaseObject> components)
+    private void HandleLevel()
     {
-      base.Update(gameTime);
-      Move(components);
-      PerformAttack(gameTime, components.Where(x => x.FileType == FileTypesEnum.Character.ToString()).Cast<BaseCharacter>().ToList());
+      if(CurrentExperience >= ExperienceNeeded)
+      {
+        CurrentExperience -= ExperienceNeeded;
+        Level++;
+        ExperienceNeeded = (int)Math.Pow(Level * 100, 1.1);
+      }
     }
+
+    public override void Update(GameTime gameTime, List<BaseObject> components)
+    {
+      ZIndex = Position.Y + Size.Height;
+      Move(components);
+      PerformAttack(gameTime, components.Where(x => x.FileType == FileTypesEnum.Character.ToString()).Cast<BaseCharacter>().ToList(), components);
+      HandleLevel();
+      _healthBar.Update(gameTime, MaxHealthPoints, CurrentHealthPoints);
+    }
+
     public override void Draw(ContentManager content, GameTime gameTime, SpriteBatch spriteBatch)
     {
       base.Draw(content, gameTime, spriteBatch);
+      //spriteBatch.DrawString(content.Load<SpriteFont>("Fonts/ArialBig"), $"{Level} : {ExperienceNeeded}/{CurrentExperience}",
+      //  new Vector2(Position.X, Position.Y + Size.Height), Color.Black);
     }
     public void DrawAbilities(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
     {
       _ability2.Draw(gameTime, spriteBatch, graphicsDevice);
+    }
+    public override void DrawUI(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+    {
+      if (_healthBar == null) return;
+      _healthBar.Draw(gameTime, spriteBatch, graphicsDevice, Position.X, Position.Y - 10, Color.GreenYellow);
     }
   }
 }

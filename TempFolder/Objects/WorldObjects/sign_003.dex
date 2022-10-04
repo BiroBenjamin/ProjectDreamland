@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WorldObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>WorldObject</FileType>
+  <ID>sign_003</ID>
+  <Name>Sign003</Name>
+  <FilePath>Objects\WorldObjects\sign_003.dex</FilePath>
+  <ZIndex>1</ZIndex>
+  <ImagePath>Sprites\WorldObjects\sign_003.png</ImagePath>
+  <Position>
+    <X>0</X>
+    <Y>0</Y>
+  </Position>
+  <Size>
+    <Width>32</Width>
+    <Height>32</Height>
+  </Size>
+  <CollisionPosition>
+    <X>9</X>
+    <Y>21</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>13</Width>
+    <Height>11</Height>
+  </CollisionSize>
+  <IsCollidable>true</IsCollidable>
+  <IsInteractable>false</IsInteractable>
+</WorldObject>

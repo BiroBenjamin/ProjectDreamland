@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WorldObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>WorldObject</FileType>
+  <ID>toombstone_002</ID>
+  <Name>Toombstone002</Name>
+  <FilePath>Objects\WorldObjects\toombstone_002.dex</FilePath>
+  <ZIndex>1</ZIndex>
+  <ImagePath>Sprites\WorldObjects\toombstone_002.png</ImagePath>
+  <Position>
+    <X>0</X>
+    <Y>0</Y>
+  </Position>
+  <Size>
+    <Width>32</Width>
+    <Height>42</Height>
+  </Size>
+  <CollisionPosition>
+    <X>4</X>
+    <Y>28</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>24</Width>
+    <Height>13</Height>
+  </CollisionSize>
+  <IsCollidable>true</IsCollidable>
+  <IsInteractable>false</IsInteractable>
+</WorldObject>

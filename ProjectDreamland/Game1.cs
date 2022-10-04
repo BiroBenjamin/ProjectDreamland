@@ -10,6 +10,8 @@ using ProjectDreamland.Data.GameFiles.Characters;
 using System.Linq;
 using ProjectDreamland.Data.GameFiles.Objects;
 using ProjectDreamland.Handlers;
+using ProjectDreamland.Data.Enums;
+using System;
 
 namespace ProjectDreamland
 {
@@ -20,13 +22,14 @@ namespace ProjectDreamland
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Camera _camera;
-    //private DebugWindow _debugWindow;
     private RenderHandler _renderHandler;
     private List<BaseObject> _components;
     private List<BaseObject> _renderedComponents;
     private Player _player;
     private MenuPanel _characterPanel;
     private Map _currentMap;
+
+    private UIHandler _uiHandler;
 
     public static int ScreenWidth { get; set; }
     public static int ScreenHeight { get; set; }
@@ -72,7 +75,7 @@ namespace ProjectDreamland
       _renderHandler = new RenderHandler();
 
       // Loading the player character
-      _player = new Player(Content.Load<Texture2D>("Characters/CharacterBaseFront"), 100, 100);
+      _player = new Player(GraphicsDevice, Content.Load<Texture2D>("Characters/CharacterBaseFront"), 100, 100);
 
       //Load components
       _components = new List<BaseObject>();
@@ -81,6 +84,8 @@ namespace ProjectDreamland
       _components.AddRange(_currentMap.Characters);
       _components.Add(_player);
       _renderedComponents = new List<BaseObject>();
+
+      _uiHandler = new UIHandler(ScreenWidth, ScreenHeight, _player, Content);
     }
 
     protected override void Update(GameTime gameTime)
@@ -90,11 +95,11 @@ namespace ProjectDreamland
       _player.Update(gameTime, _renderedComponents);
       foreach (BaseObject comp in _renderedComponents)
       {
-        comp.Update(gameTime);
+        comp.Update(gameTime, _renderedComponents);
       }
       _camera.Follow(_player);
       _characterPanel.Update(gameTime);
-      DebugManager.Update(gameTime);
+      _uiHandler.Update(gameTime);
 
       base.Update(gameTime);
     }
@@ -104,21 +109,24 @@ namespace ProjectDreamland
       GraphicsDevice.Clear(Color.Gray);
 
       // Draw every component
-      _spriteBatch.Begin(transformMatrix: _camera.Transform);
-      Texture2D texture = new Texture2D(GraphicsDevice, 1, 1);
-      texture.SetData(new Color[] { Color.Red } );
+      _spriteBatch.Begin(transformMatrix: Camera.Transform);
+      //Texture2D texture = new Texture2D(GraphicsDevice, 1, 1);
+      //texture.SetData(new Color[] { Color.Red } );
       foreach (BaseObject comp in _renderedComponents.OrderBy(x => x.ZIndex))
       {
         comp.Draw(Content, gameTime, _spriteBatch);
         if(comp.GetType() == typeof(BaseCharacter) || comp == _player)
-         _spriteBatch.Draw(texture, new Rectangle(comp.GetCollision().X, comp.GetCollision().Y, comp.GetCollision().Width, comp.GetCollision().Height), Color.Red);
+        {
+          (comp as BaseCharacter).DrawUI(gameTime, _spriteBatch, GraphicsDevice);
+        }
+        // _spriteBatch.Draw(texture, new Rectangle(comp.GetCollision().X, comp.GetCollision().Y, comp.GetCollision().Width, comp.GetCollision().Height), Color.Red);
       }
       _player.DrawAbilities(gameTime, _spriteBatch, GraphicsDevice);
       _spriteBatch.End();
 
       //Static elements, like UI
       _spriteBatch.Begin();
-      DebugManager.Draw(gameTime, _spriteBatch, Content);
+      _uiHandler.Draw(gameTime, _spriteBatch, GraphicsDevice);
       _characterPanel.Draw(gameTime, _spriteBatch);
       _spriteBatch.End();
 

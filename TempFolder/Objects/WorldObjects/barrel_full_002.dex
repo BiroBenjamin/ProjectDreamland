@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WorldObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>WorldObject</FileType>
+  <ID>barrel_full_002</ID>
+  <Name>BarrelFull002</Name>
+  <FilePath>Objects\WorldObjects\barrel_full_002.dex</FilePath>
+  <ZIndex>1</ZIndex>
+  <ImagePath>Sprites\WorldObjects\barrel_full_002.png</ImagePath>
+  <Position>
+    <X>0</X>
+    <Y>0</Y>
+  </Position>
+  <Size>
+    <Width>28</Width>
+    <Height>42</Height>
+  </Size>
+  <CollisionPosition>
+    <X>5</X>
+    <Y>23</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>18</Width>
+    <Height>19</Height>
+  </CollisionSize>
+  <IsCollidable>true</IsCollidable>
+  <IsInteractable>true</IsInteractable>
+</WorldObject>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WorldObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>WorldObject</FileType>
+  <ID>tree_medium</ID>
+  <Name>TreeMedium</Name>
+  <FilePath>Objects\WorldObjects\tree_medium.dex</FilePath>
+  <ZIndex>1</ZIndex>
+  <ImagePath>Sprites\WorldObjects\tree_medium.png</ImagePath>
+  <Position>
+    <X>2060</X>
+    <Y>2022</Y>
+  </Position>
+  <Size>
+    <Width>104</Width>
+    <Height>120</Height>
+  </Size>
+  <CollisionPosition>
+    <X>33</X>
+    <Y>97</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>38</Width>
+    <Height>19</Height>
+  </CollisionSize>
+  <IsCollidable>true</IsCollidable>
+  <IsInteractable>false</IsInteractable>
+</WorldObject>

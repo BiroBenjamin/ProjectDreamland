@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>Tile</FileType>
+  <ID>dirt_grass_cliff_top_side_left</ID>
+  <Name>DirtGrassCliffTopSideLeft</Name>
+  <FilePath>Objects\Tiles\DirtCliff\dirt_grass_cliff_top_side_left.dex</FilePath>
+  <ZIndex>0</ZIndex>
+  <ImagePath>Sprites\Tiles\DirtCliff\dirt_grass_cliff_top_side_left.png</ImagePath>
+  <Position>
+    <X>0</X>
+    <Y>0</Y>
+  </Position>
+  <Size>
+    <Width>32</Width>
+    <Height>32</Height>
+  </Size>
+  <CollisionPosition>
+    <X>0</X>
+    <Y>0</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>0</Width>
+    <Height>0</Height>
+  </CollisionSize>
+  <IsCollidable>false</IsCollidable>
+  <TileType>Normal</TileType>
+</Tile>

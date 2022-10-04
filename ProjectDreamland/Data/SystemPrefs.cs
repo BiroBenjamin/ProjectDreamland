@@ -10,7 +10,7 @@ namespace ProjectDreamland.Data
   [Serializable]
   public class SystemPrefs
   {
-    [XmlIgnore] public string RootPath { get; set; }
+    public string RootPath { get; set; }
     public string DebugLogPath { get; set; } = $@"C:\Users\{Environment.UserName}\Documents\DreamlandEditor\DebugLog\";
     public bool IsDevMode { get; set; } = true;
 
@@ -19,11 +19,15 @@ namespace ProjectDreamland.Data
 
     public SystemPrefs()
     {
-      RootPath = $@"C:\TempFolder";
+      //RootPath = $@"C:\TempFolder";
 
+      
+    }
+    public void SetupFolderStructure()
+    {
       FolderStructure = new Dictionary<string, string[]>()
       {
-        { FileTypesEnum.Map.GetDescription(), new string[2] {$@"{RootPath}\Maps", "map" } },
+        { FileTypesEnum.Map.GetDescription(), new string[2] {Path.Combine(RootPath, "Maps"), "map" } },
         //{ "Item", new string[2] {$@"{rootPath}\Objects\Items", "dex" } },
         { FileTypesEnum.Character.GetDescription(), new string[2] {$@"{RootPath}\Objects\Characters", "dex" } },
         { FileTypesEnum.WorldObject.GetDescription(), new string[2] {$@"{RootPath}\Objects\WorldObjects", "dex" } },

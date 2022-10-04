@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WorldObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>WorldObject</FileType>
+  <ID>urn_002</ID>
+  <Name>Urn002</Name>
+  <FilePath>Objects\WorldObjects\urn_002.dex</FilePath>
+  <ZIndex>1</ZIndex>
+  <ImagePath>Sprites\WorldObjects\urn_002.png</ImagePath>
+  <Position>
+    <X>1934</X>
+    <Y>2196</Y>
+  </Position>
+  <Size>
+    <Width>32</Width>
+    <Height>28</Height>
+  </Size>
+  <CollisionPosition>
+    <X>5</X>
+    <Y>19</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>21</Width>
+    <Height>7</Height>
+  </CollisionSize>
+  <IsCollidable>true</IsCollidable>
+  <IsInteractable>false</IsInteractable>
+</WorldObject>

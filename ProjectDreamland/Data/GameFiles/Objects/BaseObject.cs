@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace ProjectDreamland.Data.GameFiles.Objects
@@ -40,7 +41,7 @@ namespace ProjectDreamland.Data.GameFiles.Objects
         CollisionSize.Height);
     }
 
-    public virtual void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime, List<BaseObject> components)
     {
 
     }

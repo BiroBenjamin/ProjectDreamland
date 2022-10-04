@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WorldObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>WorldObject</FileType>
+  <ID>crate_007</ID>
+  <Name>Crate007</Name>
+  <FilePath>Objects\WorldObjects\crate_007.dex</FilePath>
+  <ZIndex>1</ZIndex>
+  <ImagePath>Sprites\WorldObjects\crate_007.png</ImagePath>
+  <Position>
+    <X>0</X>
+    <Y>0</Y>
+  </Position>
+  <Size>
+    <Width>28</Width>
+    <Height>40</Height>
+  </Size>
+  <CollisionPosition>
+    <X>4</X>
+    <Y>11</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>20</Width>
+    <Height>28</Height>
+  </CollisionSize>
+  <IsCollidable>true</IsCollidable>
+  <IsInteractable>true</IsInteractable>
+</WorldObject>

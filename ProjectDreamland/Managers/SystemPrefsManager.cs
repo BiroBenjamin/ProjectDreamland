@@ -17,9 +17,11 @@ namespace ProjectDreamland.Managers
       if (!File.Exists(path))
       {
         SerializeSystemPrefs();
+        SystemPrefs.SetupFolderStructure();
         return SystemPrefs;
       }
       DeserializeSystemPrefs();
+      SystemPrefs.SetupFolderStructure();
       return SystemPrefs;
     }
     private static void DeserializeSystemPrefs()

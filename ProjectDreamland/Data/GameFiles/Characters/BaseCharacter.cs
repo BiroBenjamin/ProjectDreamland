@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles.Abilities;
 using ProjectDreamland.Data.GameFiles.Objects;
+using ProjectDreamland.UI;
 using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -21,26 +22,30 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     public float AttackRange { get; set; } = 1.5f;
     public int MaxHealthPoints { get; set; }
     public int CurrentHealthPoints;
-    public bool IsDead { get; set; } = false;
+    [XmlIgnore] public CharacterStatesEnum CharacterState { get; set; }
     public bool IsTakingDamage { get; set; } = false;
     public float Speed { get; set; } = 3f;
     public LookDirectionsEnum Facing { get; set; } = LookDirectionsEnum.South;
     [XmlIgnore] public Rectangle AttackBounds = new Rectangle();
 
     protected Vector2 velocity;
+    protected HealthBar _healthBar;
 
     public BaseCharacter()
     {
       IsCollidable = true;
+      SetupUI();
     }
     public BaseCharacter(Texture2D texture)
     {
       Texture = texture;
       IsCollidable = true;
+      SetupUI();
     }
     public BaseCharacter(BaseObject baseObject) : base(baseObject)
     {
       IsCollidable = true;
+      SetupUI();
     }
     public BaseCharacter(BaseCharacter baseCharacter) : base(baseCharacter)
     {
@@ -53,6 +58,12 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       CurrentResourcePoints = baseCharacter.CurrentResourcePoints;
       Speed = baseCharacter.Speed;
       IsCollidable = true;
+      CharacterState = CharacterStatesEnum.Alive;
+      SetupUI();
+    }
+    private void SetupUI()
+    {
+      _healthBar = new HealthBar();
     }
 
     public void Attack(List<BaseCharacter> characters, BaseAbility ability)
@@ -61,11 +72,11 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     }
     public void TakeDamage(int damage)
     {
-      //IsTakingDamage = true;
+      //if (CharacterState != CharacterStatesEnum.Alive) return;
       if (CurrentHealthPoints - damage < 0)
       {
         CurrentHealthPoints = 0;
-        IsDead = true;
+        CharacterState = CharacterStatesEnum.Dying;
       }
       else if (CurrentHealthPoints - damage > MaxHealthPoints)
       {
@@ -117,24 +128,30 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     }
     #endregion
 
-    public override void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime, List<BaseObject> components)
     {
       ZIndex = Position.Y + Size.Height;
+
+      if (_healthBar == null) return;
+      _healthBar.Update(gameTime, MaxHealthPoints, CurrentHealthPoints);
     }
     public override void Draw(ContentManager content, GameTime gameTime, SpriteBatch spriteBatch)
     {
-      if (IsDead) return;
-      base.Draw(content, gameTime, spriteBatch);
-      if (IsTakingDamage)
+      if (CharacterState == CharacterStatesEnum.Alive)
       {
-        spriteBatch.DrawString(content.Load<SpriteFont>("Fonts/ArialBig"), $"{MaxHealthPoints}/{CurrentHealthPoints}",
-          new Vector2(Position.X, Position.Y - 10), Color.Red);
+        base.Draw(content, gameTime, spriteBatch);
       }
       else
       {
-        spriteBatch.DrawString(content.Load<SpriteFont>("Fonts/ArialBig"), $"{MaxHealthPoints}/{CurrentHealthPoints}",
-          new Vector2(Position.X, Position.Y - 10), Color.Black);
+        spriteBatch.Draw(Texture, new Vector2(Position.X, Position.Y), Color.White * .5f);
       }
+      //spriteBatch.DrawString(content.Load<SpriteFont>("Fonts/ArialBig"), $"{MaxHealthPoints}/{CurrentHealthPoints}",
+      //  new Vector2(Position.X, Position.Y - 10), Color.Black);
+    }
+    public virtual void DrawUI(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+    {
+      if (_healthBar == null) return;
+      _healthBar.Draw(gameTime, spriteBatch, graphicsDevice, Position.X, Position.Y - 10, Color.IndianRed);
     }
   }
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WorldObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>WorldObject</FileType>
+  <ID>tree_trunk_002</ID>
+  <Name>TreeTrunk002</Name>
+  <FilePath>Objects\WorldObjects\tree_trunk_002.dex</FilePath>
+  <ZIndex>1</ZIndex>
+  <ImagePath>Sprites\WorldObjects\tree_trunk_002.png</ImagePath>
+  <Position>
+    <X>0</X>
+    <Y>0</Y>
+  </Position>
+  <Size>
+    <Width>64</Width>
+    <Height>64</Height>
+  </Size>
+  <CollisionPosition>
+    <X>5</X>
+    <Y>36</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>52</Width>
+    <Height>17</Height>
+  </CollisionSize>
+  <IsCollidable>true</IsCollidable>
+  <IsInteractable>false</IsInteractable>
+</WorldObject>

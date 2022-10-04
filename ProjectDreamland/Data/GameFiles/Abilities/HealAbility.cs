@@ -3,6 +3,7 @@ using ProjectDreamland.Core;
 using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles.Abilities.Interfaces;
 using ProjectDreamland.Data.GameFiles.Characters;
+using ProjectDreamland.Data.GameFiles.Objects;
 using System;
 using System.Collections.Generic;
 
@@ -29,9 +30,9 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       return null;
     }
 
-    public override void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime, List<BaseObject> components)
     {
-      base.Update(gameTime);
+      base.Update(gameTime, components);
     }
   }
 }

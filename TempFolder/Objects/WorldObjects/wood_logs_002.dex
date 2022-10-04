@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WorldObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>WorldObject</FileType>
+  <ID>wood_logs_002</ID>
+  <Name>WoodLogs002</Name>
+  <FilePath>Objects\WorldObjects\wood_logs_002.dex</FilePath>
+  <ZIndex>1</ZIndex>
+  <ImagePath>Sprites\WorldObjects\wood_logs_002.png</ImagePath>
+  <Position>
+    <X>2120</X>
+    <Y>2232</Y>
+  </Position>
+  <Size>
+    <Width>26</Width>
+    <Height>30</Height>
+  </Size>
+  <CollisionPosition>
+    <X>2</X>
+    <Y>14</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>22</Width>
+    <Height>15</Height>
+  </CollisionSize>
+  <IsCollidable>true</IsCollidable>
+  <IsInteractable>false</IsInteractable>
+</WorldObject>

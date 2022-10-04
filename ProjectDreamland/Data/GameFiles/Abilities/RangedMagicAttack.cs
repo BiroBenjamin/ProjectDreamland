@@ -20,7 +20,7 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       _projectiles = new List<Projectile>();
     }
 
-    public void Cast(List<BaseCharacter> characters, BaseCharacter caster, Vector2 startPosition, Vector2 direction)
+    public void Cast(GraphicsDevice graphicsDevice, List<BaseCharacter> characters, BaseCharacter caster, Vector2 startPosition, Vector2 endPosition)
     {
       if (!CanCast) return;
       base.Cast(characters, caster);
@@ -28,7 +28,8 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       Random rand = new Random();
       (int, int) damageRange = ((int)(Damage * 0.8f), (int)(Damage * 1.5f));
       int damageDone = rand.Next(damageRange.Item1, damageRange.Item2 + 1);
-      Projectile projectile = new Projectile(characters, damageDone, startPosition, direction, Range, 5);
+      characters.Remove(caster);
+      Projectile projectile = new Projectile(graphicsDevice, characters, damageDone, startPosition, endPosition, 10f, 6f);
       _projectiles.Add(projectile);
       projectile.Start();
     }
@@ -37,14 +38,14 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       return null;
     }
 
-    public override void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime, List<BaseObject> components)
     {
-      base.Update(gameTime);
+      base.Update(gameTime, components);
       if (_projectiles.Count <= 0 || _projectiles == null) return;
       List<Projectile> removableProjectiles = new List<Projectile>();
       foreach (Projectile projectile in _projectiles)
       {
-        projectile.Update(gameTime);
+        projectile.Update(gameTime, components);
         if (!projectile.IsStarted)
         {
           removableProjectiles.Add(projectile);
@@ -62,7 +63,7 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       if (_projectiles.Count <= 0 || _projectiles == null) return;
       foreach (Projectile projectile in _projectiles)
       {
-        projectile.Draw(gameTime, spriteBatch, graphicsDevice);
+        projectile.Draw(gameTime, spriteBatch);
       }
     }
   }
