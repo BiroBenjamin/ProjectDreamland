@@ -13,7 +13,9 @@ namespace ProjectDreamland.Core
       Transform = Matrix.CreateTranslation(
         -targetRect.X - (targetRect.Width / 2),
         -targetRect.Y - (targetRect.Height / 2),
-        0) * Matrix.CreateTranslation(
+        0) * 
+        Matrix.CreateScale(1.3f) *
+        Matrix.CreateTranslation(
           Game1.ScreenWidth / 2,
           Game1.ScreenHeight / 2,
           0);
