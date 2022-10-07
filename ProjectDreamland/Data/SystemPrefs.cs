@@ -10,7 +10,7 @@ namespace ProjectDreamland.Data
   [Serializable]
   public class SystemPrefs
   {
-    public string RootPath { get; set; }
+    [XmlIgnore] public string RootPath { get; set; }
     public string DebugLogPath { get; set; } = $@"C:\Users\{Environment.UserName}\Documents\DreamlandEditor\DebugLog\";
     public bool IsDevMode { get; set; } = true;
 
@@ -19,9 +19,7 @@ namespace ProjectDreamland.Data
 
     public SystemPrefs()
     {
-      //RootPath = $@"C:\TempFolder";
-
-      
+      RootPath = Path.GetFullPath(@".\Content");
     }
     public void SetupFolderStructure()
     {

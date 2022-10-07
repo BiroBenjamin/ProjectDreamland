@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  
+  <!--Give product a unique ID per platform-->
+  <?if $(var.Platform) = x64 ?>
+    <?define ProductCode = "{4A72DB2C-C9BD-4116-A0A4-F28FFA07561B}" ?>
+  <?else?>
+    <?define ProductCode = "{BA1678B9-1F72-4942-863E-1E3A22F02566}" ?>
+  <?endif?>
+    
+  <!--Fixed upgrade ID-->
+  <?define UpgradeCode = "{EBEE36D7-2A65-48C3-B652-06B5D42FE038}" ?>
+    
+  <!--Define main product-->
+  <Product
+    Id="$(var.ProductCode)"
+    Name="!(loc.ProductName_$(var.Platform))"
+    Language="!(loc.Language)" 
+    Version="$(var.BuildVersion)"
+    Manufacturer="!(loc.Company)"
+    UpgradeCode="$(var.UpgradeCode)">
+    
+    <!--Provide package details-->
+    <Package 
+      InstallerVersion="200" 
+      Compressed="yes" 
+      InstallScope="perMachine" 
+      Platform="$(var.Platform)"
+      Manufacturer="!(loc.Company)"
+      Description="!(loc.Description)"
+      Keywords="!(loc.Keywords)"
+      Comments="!(loc.Comments)"
+      Languages="!(loc.Language)"
+    />
+
+    <!--Downgrade error message-->
+    <MajorUpgrade 
+      DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+    
+    <!--Include .cab file into .msi file-->
+    <MediaTemplate 
+      EmbedCab="yes"  
+    />
+
+    <!--Define main app icon-->
+    <!--
+    <Icon Id="icon.ico" SourceFile="$(var.ProjectDreamland.ProjectDir)\Icon.ico"/>
+    -->
+    
+    <!--Use the icon.ico icon for this installer-->
+    <Property Id="ARPPRODUCTICON">icon.ico</Property>
+    <!--Help, support website (shows in add/remove programs)-->
+    <Property Id="ARPURLINFOABOUT">https://www.dreamland.com</Property>
+
+    <!--Create a basic UI for the installer-->
+    <UIRef Id="WixUI_Minimal" />
+    
+    <!--Background and Banner for the installer
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\Assets\backgound.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\Assets\banner.bmp" />
+    -->
+
+    <!--Licence for the installer (write it in markdown for crossplatform)-->
+    <!--
+    <WixVariable Id="WixUILicenceRtf" Value="$(var.ProjectDir)\Assets\licence.rtf" />
+    -->
+    
+    <!--Define components, shortcuts, files...-->
+    <Feature 
+      Id="ProductFeature" 
+      Title="ProjectDreamlandSetup" 
+      Level="1">
+      
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="PublishedComponents" />
+    
+    </Feature>
+  </Product>
+
+  
+
+</Wix>

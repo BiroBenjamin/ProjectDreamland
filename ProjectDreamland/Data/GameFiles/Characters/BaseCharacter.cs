@@ -72,7 +72,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     }
     public void TakeDamage(int damage)
     {
-      if (CharacterState != CharacterStatesEnum.Alive) return;
+      //if (CharacterState != CharacterStatesEnum.Alive) return;
       if (CurrentHealthPoints - damage < 0)
       {
         CurrentHealthPoints = 0;
