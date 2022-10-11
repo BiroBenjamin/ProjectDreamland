@@ -10,7 +10,7 @@ namespace ProjectDreamland.Data
   [Serializable]
   public class SystemPrefs
   {
-    [XmlIgnore] public string RootPath { get; set; }
+    public string RootPath { get; set; } = Path.GetFullPath(@".\Content");
     public string DebugLogPath { get; set; } = $@"C:\Users\{Environment.UserName}\Documents\DreamlandEditor\DebugLog\";
     public bool IsDevMode { get; set; } = true;
 

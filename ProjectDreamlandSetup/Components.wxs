@@ -6,22 +6,41 @@
     <!--Product Components-->
     <ComponentGroup Id="ProductComponents">
 
-      <!--Test file-->
-      <!--<ComponentRef Id="TestFile"  />-->
+      <!--Shortcut-->
+      <ComponentRef Id="MainAppShortcut"  />
 
     </ComponentGroup>
 
     <!--Inastalled files-->
     <DirectoryRef Id="INSTALLFOLDER" FileSource="..\ProjectDreamland\bin\$(var.Configuration)\net6.0\win-$(var.Platform)\publish\">
       
-      <!--<Component Id="TestFile" Guid="{65EDAC9B-3848-4CF0-9AEA-0AAA695B3ED1}">
-        
-        <File Id="FileTestFile" Name="api-ms-win-core-console-l1-1-0.dll" KeyPath="yes" />
+      <!--Shortcut to main application-->
+      <Component Id="MainAppShortcut" Guid="{65EDAC9B-3848-4CF0-9AEA-0AAA695B3ED1}">
 
-        --><!--Remove Start Mneu items--><!--
+        <Shortcut 
+          Id="MainAppShortcut" 
+          Name="Project Dreamland" 
+          Target="[INSTALLFOLDER]ProjectDreamland.exe"
+          Directory="InstallProgramMenuFolder"
+          WorkingDirectory="INSTALLFOLDER"
+          Icon="icon.ico"
+          />
+
+        <!--Our unique key for this short cut-->
+        <RegistryValue 
+          Id="RegShortcutKey" 
+          Root="HKCU" 
+          Key="SOFTWARE\!(loc.ProductFolderName)"
+          Name="Shortcut" 
+          Value="1"
+          Type="integer"
+          KeyPath="yes"
+        />
+
+        <!--Remove Start Mneu items-->
         <RemoveFolder Id="RemoveStartMenu" Directory="InstallProgramMenuFolder" On="uninstall" />
         
-      </Component>-->
+      </Component>
       
     </DirectoryRef>
     

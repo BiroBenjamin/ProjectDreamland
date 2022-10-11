@@ -6,8 +6,9 @@
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>f66b2af6-c0b3-43b3-8c2f-aba64d07bd15</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>Project Dreamland-$(Configuration)-$(Platform)</OutputName>
+    <OutputName>ProjectDreamland-$(Configuration)-$(Platform)</OutputName>
     <OutputType>Package</OutputType>
+    <Cultures>;</Cultures>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
@@ -30,6 +31,7 @@
   <ItemGroup>
     <Compile Include="Components.wxs" />
     <Compile Include="ComponentsGenerated.wxs" />
+    <Compile Include="Dependencies.wxs" />
     <Compile Include="Directories.wxs" />
     <Compile Include="Product.wxs" />
   </ItemGroup>
@@ -66,32 +68,25 @@
     <!--Clean previous build folder-->
     <Exec Command="rd /s /q ..\ProjectDreamland\bin\$(Configuration)\net6.0\win-$(Platform)" />
     <!--Publish Monogame app-->
-    <Exec Command="dotnet publish ..\ProjectDreamland\ProjectDreamland.csproj -c $(Configuration) -r win-$(Platform) /p:PublishReadyToRun=false /p:TieredCompilation=false --self-contained" />
+    <Exec Command="dotnet publish ..\ProjectDreamland\ProjectDreamland.csproj -c $(Configuration) -r win-$(Platform) --self-contained" />
     <!--Get assembly version-->
     <GetAssemblyIdentity AssemblyFiles="..\ProjectDreamland\bin\$(Configuration)\net6.0\win-$(Platform)\ProjectDreamland.dll">
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
     </GetAssemblyIdentity>
     <!--Define variables we need-->
     <PropertyGroup>
-      <DefineConstants>BuildVersion=%(AssemblyVersion.Version);BasePath="..\ProjectDreamland\bin\$(Configuration)\net6.0\win-$(Platform)\publish"</DefineConstants>
+      <DefineConstants>BuildVersion=%(AssemblyVersion.Version);BasePath=..\ProjectDreamland\bin\$(Configuration)\net6.0\win-$(Platform)\publish</DefineConstants>
     </PropertyGroup>
     <!--Harvest file components from publish fodler-->
-    <HeatDirectory 
-      PreprocessorVariable="var.BasePath"
-      Outputfile="ComponentsGenerated.wxs" 
-      DirectoryRefId="INSTALLFOLDER" 
-      ComponentGroupName="PublishedComponents" 
-      SuppressCom="true" 
-      Directory="..\ProjectDreamland\bin\$(Configuration)\net6.0\win-$(Platform)\publish" 
-      SuppressFragments="true" 
-      SuppressRegistry="true" 
-      SuppressRootDirectory="true" 
-      AutoGenerateGuids="false" 
-      GenerateGuidsNow="true" 
-      ToolPath="$(WixToolPath)" 
-      RunAsSeparateProcess="true"
-      />
+    <HeatDirectory Outputfile="ComponentsGenerated.wxs" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="PublishedComponents" SuppressCom="true" Directory="..\ProjectDreamland\bin\$(Configuration)\net6.0\win-$(Platform)\publish" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" RunAsSeparateProcess="true" PreprocessorVariable="var.BasePath" />
   </Target>
   <Target Name="AfterBuild">
+    <!--Get assembly version-->
+    <GetAssemblyIdentity AssemblyFiles="..\ProjectDreamland\bin\$(Configuration)\net6.0\win-$(Platform)\ProjectDreamland.dll">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
+    </GetAssemblyIdentity>
+    <!--Rename our final .msi-->
+    <Exec Command="if not exist Installs mkdir Installs" />
+    <Exec Command="move bin\$(Configuration)\$(OutputName).msi Installs\ProjectDreamland-v%(AssemblyVersion.Version)-$(Configuration)-$(Platform).msi" />
   </Target>
 </Project>

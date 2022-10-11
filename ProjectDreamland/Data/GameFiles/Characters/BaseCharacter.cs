@@ -30,6 +30,13 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     protected Vector2 velocity;
     protected HealthBar _healthBar;
+    protected ResourceBar _resourceBar;
+
+    //Mana back per 5 second
+    protected int _manaInterval = 25;
+    //Energy back per 2 second
+    protected int _energyInterval = 10;
+    protected int _timer;
 
     public BaseCharacter()
     {
@@ -64,6 +71,25 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     private void SetupUI()
     {
       _healthBar = new HealthBar();
+      _resourceBar = new ResourceBar(ResourceType);
+
+      SetTimer();
+    }
+
+    protected void SetTimer()
+    {
+      switch (ResourceType)
+      {
+        case "Mana":
+          _timer = 60 * 5;
+          break;
+        case "Energy":
+          _timer = 60 * 2;
+          break;
+        default:
+          _timer = 60 * 2;
+          break;
+      }
     }
 
     public void Attack(List<BaseCharacter> characters, BaseAbility ability)
@@ -72,7 +98,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     }
     public void TakeDamage(int damage)
     {
-      //if (CharacterState != CharacterStatesEnum.Alive) return;
+      if (CharacterState != CharacterStatesEnum.Alive) return;
       if (CurrentHealthPoints - damage < 0)
       {
         CurrentHealthPoints = 0;
@@ -132,9 +158,37 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     {
       ZIndex = Position.Y + Size.Height;
 
-      if (_healthBar == null) return;
+      if (_healthBar == null || _resourceBar == null) return;
       _healthBar.Update(gameTime, MaxHealthPoints, CurrentHealthPoints);
+      _resourceBar.Update(gameTime, MaxResourcePoints, CurrentHealthPoints);
+
+      _timer--;
+      if (_timer == 0)
+      {
+        AddResource();
+        SetTimer();
+      }
     }
+    protected void AddResource()
+    {
+      if (ResourceType == ResourceTypesEnum.Mana.ToString() && CurrentResourcePoints + _manaInterval >= MaxResourcePoints)
+      {
+        CurrentResourcePoints = MaxResourcePoints;
+      }
+      else
+      {
+        CurrentResourcePoints += _manaInterval;
+      }
+      if (ResourceType == ResourceTypesEnum.Energy.ToString() && CurrentResourcePoints + _energyInterval >= MaxResourcePoints)
+      {
+        CurrentResourcePoints = MaxResourcePoints;
+      }
+      else
+      {
+        CurrentResourcePoints += _energyInterval;
+      }
+    }
+
     public override void Draw(ContentManager content, GameTime gameTime, SpriteBatch spriteBatch)
     {
       if (CharacterState == CharacterStatesEnum.Alive)
@@ -145,13 +199,12 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       {
         spriteBatch.Draw(Texture, new Vector2(Position.X, Position.Y), Color.White * .5f);
       }
-      //spriteBatch.DrawString(content.Load<SpriteFont>("Fonts/ArialBig"), $"{MaxHealthPoints}/{CurrentHealthPoints}",
-      //  new Vector2(Position.X, Position.Y - 10), Color.Black);
     }
     public virtual void DrawUI(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
     {
-      if (_healthBar == null) return;
-      _healthBar.Draw(gameTime, spriteBatch, graphicsDevice, Position.X, Position.Y - 10, Color.IndianRed);
+      if (_healthBar == null || _resourceBar == null) return;
+      _healthBar.Draw(gameTime, spriteBatch, graphicsDevice, new Vector2(Position.X + Size.Width / 2, Position.Y), Color.IndianRed);
+      _resourceBar.Draw(gameTime, spriteBatch, graphicsDevice, new Vector2(Position.X + Size.Width / 2, Position.Y));
     }
   }
 }

@@ -25,6 +25,11 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       if (!CanCast) return;
       base.Cast(characters, caster);
 
+      if(caster.CurrentResourcePoints < Cost)
+      {
+        return;
+      }
+
       Random rand = new Random();
       (int, int) damageRange = ((int)(Damage * 0.8f), (int)(Damage * 1.5f));
       int damageDone = rand.Next(damageRange.Item1, damageRange.Item2 + 1);
@@ -32,6 +37,7 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       Projectile projectile = new Projectile(graphicsDevice, characters, damageDone, startPosition, endPosition, 10f, 6f);
       _projectiles.Add(projectile);
       projectile.Start();
+      caster.CurrentResourcePoints -= Cost;
     }
     public override List<BaseCharacter> GetTargets(List<BaseCharacter> characters, BaseCharacter caster)
     {

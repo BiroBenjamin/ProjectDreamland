@@ -20,7 +20,7 @@ namespace ProjectDreamland.UI
       _healthBarMaxWidth = 100;
       _healthBarCurrentWidth = (int)MathHelper.Lerp(0, _healthBarMaxWidth, current / max);
     }
-    public void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, int x, int y, Color color)
+    public void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 position, Color color)
     {
       if (_baseTexture == null || _healthTexture == null)
       {
@@ -30,6 +30,8 @@ namespace ProjectDreamland.UI
         _healthTexture = new Texture2D(graphicsDevice, 1, 1);
         _healthTexture.SetData(new Color[] { color });
       }
+      int x = (int)(position.X - _healthBarMaxWidth / 2);
+      int y = (int)(position.Y - 11);
       spriteBatch.Draw(_baseTexture, new Rectangle(x, y, _healthBarMaxWidth, 5), Color.Black);
       spriteBatch.Draw(_healthTexture, new Rectangle(x, y, _healthBarCurrentWidth, 5), color);
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectDreamland.Data.GameFiles.Characters;
+using System;
 using System.Drawing;
 using System.Xml.Serialization;
 
@@ -23,13 +24,14 @@ namespace ProjectDreamland.Data.GameFiles.Objects
 
     public bool CursorIntersects(Microsoft.Xna.Framework.Vector2 cursor)
     {
-      return cursor.X > Position.X && cursor.X < Size.Width + Position.X &&
-        cursor.Y > Position.Y && cursor.Y < Size.Height + Position.Y;
+      return cursor.X > Position.X && cursor.X <= Size.Width + Position.X &&
+        cursor.Y > Position.Y && cursor.Y <= Size.Height + Position.Y;
     }
 
-    public override string ToString()
+    public void Interact(Player player)
     {
-      return $"ID: {ID}\nName: {Name}\nImagePath: {ImagePath}\nLocation: {Position}";
+      if (!IsInteractable) return;
+      
     }
   }
 }

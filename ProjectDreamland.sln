@@ -26,7 +26,6 @@ Global
 		{F66B2AF6-C0B3-43B3-8C2F-ABA64D07BD15}.Debug|x64.ActiveCfg = Debug|x64
 		{F66B2AF6-C0B3-43B3-8C2F-ABA64D07BD15}.Debug|x86.ActiveCfg = Debug|x86
 		{F66B2AF6-C0B3-43B3-8C2F-ABA64D07BD15}.Release|x64.ActiveCfg = Release|x86
-		{F66B2AF6-C0B3-43B3-8C2F-ABA64D07BD15}.Release|x64.Build.0 = Release|x86
 		{F66B2AF6-C0B3-43B3-8C2F-ABA64D07BD15}.Release|x86.ActiveCfg = Release|x86
 		{F66B2AF6-C0B3-43B3-8C2F-ABA64D07BD15}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
