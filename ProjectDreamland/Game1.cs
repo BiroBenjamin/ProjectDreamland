@@ -12,6 +12,8 @@ using ProjectDreamland.Data.GameFiles.Objects;
 using ProjectDreamland.Handlers;
 using ProjectDreamland.Data.Enums;
 using System;
+using ProjectDreamland.UI.QuestPanel;
+using ProjectDreamland.Data.GameFiles.Quests;
 
 namespace ProjectDreamland
 {
@@ -75,7 +77,7 @@ namespace ProjectDreamland
       _renderHandler = new RenderHandler();
 
       // Loading the player character
-      _player = new Player(GraphicsDevice, Content.Load<Texture2D>("Characters/CharacterBaseFront"), 100, 100);
+      _player = new Player(GraphicsDevice, Content.Load<Texture2D>("Characters/CharacterBaseFront"), _currentMap, 100, 100);
 
       //Load components
       _components = new List<BaseObject>();

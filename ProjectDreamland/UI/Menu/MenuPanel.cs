@@ -55,6 +55,7 @@ namespace ProjectDreamland.UI.Menu
     public void Update(GameTime gameTime)
     {
       HandleKeyboardInput();
+      if (!IsShown) return;
       _optionsMenu.Update(gameTime);
     }
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
