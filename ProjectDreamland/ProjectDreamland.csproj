@@ -27,4 +27,22 @@
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
   </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <!--Copy Maps to output directory--><!--
+    <Exec Command="copy $(ProjectDir)Content\Maps\* $(ProjectDir)$(OutDir)Content\Maps\"/>
+    --><!--Copy Characters to output directory--><!--
+    <Exec Command="copy $(ProjectDir)Content\Objects\Characters\* $(ProjectDir)$(OutDir)Content\Objects\Characters"/>
+    --><!--Copy Tiles to output directory--><!--
+    <Exec Command="copy $(ProjectDir)Content\Objects\Tiles\Dirt\* $(ProjectDir)$(OutDir)Content\Objects\Tiles\Dirt\"/>
+    <Exec Command="copy $(ProjectDir)Content\Objects\Tiles\DirtCliff\* $(ProjectDir)$(OutDir)Content\Objects\Tiles\DirtCliff\"/>
+    <Exec Command="copy $(ProjectDir)Content\Objects\Tiles\Grass\* $(ProjectDir)$(OutDir)Content\Objects\Tiles\Grass\"/>
+    --><!--Copy WorldObjects to output directory--><!--
+    <Exec Command="copy $(ProjectDir)Content\Objects\WorldObjects\* $(ProjectDir)$(OutDir)Content\Objects\WorldObjects\"/>
+    --><!--Copy Sprites to output directory--><!--
+    <Exec Command="copy $(ProjectDir)Content\Sprites\Characters\* $(ProjectDir)$(OutDir)Content\Sprites\Characters"/>
+    <Exec Command="copy $(ProjectDir)Content\Sprites\Tiles\Dirt\* $(ProjectDir)$(OutDir)Content\Sprites\Tiles\Dirt\"/>
+    <Exec Command="copy $(ProjectDir)Content\Sprites\Tiles\DirtCliff\* $(ProjectDir)$(OutDir)Content\Sprites\Tiles\DirtCliff\"/>
+    <Exec Command="copy $(ProjectDir)Content\Sprites\Tiles\Grass\* $(ProjectDir)$(OutDir)Content\Sprites\Tiles\Grass\"/>
+    <Exec Command="copy $(ProjectDir)Content\Sprites\WorldObjects\* $(ProjectDir)$(OutDir)Content\Sprites\WorldObjects\"/>-->
+  </Target>
 </Project>
