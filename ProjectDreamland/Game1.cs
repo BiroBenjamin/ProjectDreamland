@@ -3,20 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using ProjectDreamland.Core;
 using ProjectDreamland.UI.Menu;
-//using ProjectDreamland.UI.Debug;
 using ProjectDreamland.Managers;
 using ProjectDreamland.Data.GameFiles;
 using ProjectDreamland.Data.GameFiles.Characters;
 using System.Linq;
 using ProjectDreamland.Data.GameFiles.Objects;
 using ProjectDreamland.Handlers;
-using ProjectDreamland.Data.Enums;
-using System;
-using ProjectDreamland.UI.QuestPanel;
-using ProjectDreamland.Data.GameFiles.Quests;
 
-namespace ProjectDreamland
-{
+namespace ProjectDreamland {
   public class Game1 : Game
   {
     public static Game1 Self { get; set; }
@@ -29,7 +23,6 @@ namespace ProjectDreamland
     private List<BaseObject> _renderedComponents;
     private Player _player;
     private MenuPanel _characterPanel;
-    private Map _currentMap;
 
     private UIHandler _uiHandler;
 
@@ -70,30 +63,26 @@ namespace ProjectDreamland
 
       // Create Map Manager and load map0
       MapManager.LoadMaps(Content);
-      _currentMap = MapManager.Maps[0];
 
       // Load camera
       _camera = new Camera();
       _renderHandler = new RenderHandler();
 
       // Loading the player character
-      _player = new Player(GraphicsDevice, Content.Load<Texture2D>("Characters/CharacterBaseFront"), _currentMap, 100, 100);
+      _player = new Player(GraphicsDevice, Content.Load<Texture2D>("Sprites/Characters/CharacterBaseFront"), MapManager.CurrentMap, -64, -64);
 
       //Load components
-      _components = new List<BaseObject>();
-      _components.AddRange(_currentMap.Tiles);
-      _components.AddRange(_currentMap.WorldObjects);
-      _components.AddRange(_currentMap.Characters);
-      _components.Add(_player);
+      MapManager.LoadMapContent(_player);
       _renderedComponents = new List<BaseObject>();
 
       _uiHandler = new UIHandler(ScreenWidth, ScreenHeight, _player, Content);
     }
+    
 
     protected override void Update(GameTime gameTime)
     {
       // Update every component
-      _renderedComponents = _renderHandler.GetRenderableObjects(_components, _player, new Rectangle(0, 0, ScreenWidth, ScreenHeight));
+      _renderedComponents = _renderHandler.GetRenderableObjects(MapManager.CurrentMapComponents, _player, new Rectangle(0, 0, ScreenWidth, ScreenHeight));
       _player.Update(gameTime, _renderedComponents);
       foreach (BaseObject comp in _renderedComponents)
       {

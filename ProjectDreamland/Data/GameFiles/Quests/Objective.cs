@@ -28,14 +28,14 @@ namespace ProjectDreamland.Data.GameFiles.Quests
         Description = " - Completed";
         return;
       }
-      if (Target.GetType() == typeof(BaseCharacter))
+      /*if (Target.GetType() == typeof(BaseCharacter))
       {
         Description = $" - {Amount - Remaining} / {Amount} - {(Target as BaseCharacter).Name}";
       }
       else
       {
         Description = $" - {Amount - Remaining} / {Amount} - {(Target as BaseObject).Name}";
-      }
+      }*/
     }
   }
 }

@@ -82,6 +82,12 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       });
     }
 
+    public void SetPosition(System.Drawing.Point position)
+    {
+      Position = position;
+      SetCollision(Position.X, Position.Y, Texture.Width, Texture.Height);
+    }
+
     private void Move(List<BaseObject> components)
     {
       _currentKeyState = Keyboard.GetState();
@@ -111,7 +117,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       Collision(components);
       Position = new System.Drawing.Point((int)(Position.X + velocity.X), (int)(Position.Y + velocity.Y));
       CollisionPosition = new System.Drawing.Point(
-        (int)Math.Round(CollisionPosition.X + velocity.X), 
+        (int)Math.Round(CollisionPosition.X + velocity.X),
         (int)Math.Round(CollisionPosition.Y + velocity.Y)
       );
     }
@@ -146,7 +152,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       CharacterManager.HandleDeadCharacters(characters, this);
       SetLastStates();
     }
-    
+
     private void Collision(List<BaseObject> components)
     {
       foreach (BaseObject comp in components)
@@ -174,7 +180,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     private void HandleLevel()
     {
-      if(CurrentExperience >= ExperienceNeeded)
+      if (CurrentExperience >= ExperienceNeeded)
       {
         CurrentExperience -= ExperienceNeeded;
         Level++;
@@ -215,10 +221,10 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     {
       SetCurrentStates();
       Vector2 mousePosition = Vector2.Transform(_currentMouseState.Position.ToVector2(), Matrix.Invert(Camera.Transform));
-      foreach(WorldObject worldObject in components)
+      foreach (WorldObject worldObject in components)
       {
         if (worldObject.CursorIntersects(mousePosition) &&
-          _currentMouseState.RightButton == ButtonState.Pressed && _lastMouseState.RightButton == ButtonState.Released)
+          _currentMouseState.RightButton == ButtonState.Pressed /*&& _lastMouseState.RightButton == ButtonState.Released*/)
         {
           worldObject.Interact(this);
         }
@@ -228,7 +234,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     private void HandleQuests()
     {
       List<Quest> questsToRemove = new List<Quest>();
-      foreach(Quest quest in QuestManager.Quests)
+      foreach (Quest quest in QuestManager.Quests)
       {
         if (quest.IsDone)
         {

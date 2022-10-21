@@ -7,8 +7,8 @@
   <ZIndex>1</ZIndex>
   <ImagePath>Sprites\WorldObjects\tree_medium.png</ImagePath>
   <Position>
-    <X>2060</X>
-    <Y>2022</Y>
+    <X>-177</X>
+    <Y>-208</Y>
   </Position>
   <Size>
     <Width>104</Width>

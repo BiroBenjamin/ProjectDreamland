@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WorldObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>WorldObject</FileType>
+  <ID>dirt_cliff_entrance_open</ID>
+  <Name>DirtCliffEntranceOpen</Name>
+  <FilePath>Objects\WorldObjects\dirt_cliff_entrance_open.dex</FilePath>
+  <ZIndex>1</ZIndex>
+  <ImagePath>Sprites\WorldObjects\dirt_cliff_entrance_open.png</ImagePath>
+  <Position>
+    <X>-333</X>
+    <Y>-29</Y>
+  </Position>
+  <Size>
+    <Width>32</Width>
+    <Height>64</Height>
+  </Size>
+  <CollisionPosition>
+    <X>0</X>
+    <Y>0</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>0</Width>
+    <Height>0</Height>
+  </CollisionSize>
+  <IsCollidable>false</IsCollidable>
+  <IsInteractable>true</IsInteractable>
+</WorldObject>

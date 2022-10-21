@@ -12,7 +12,11 @@ namespace ProjectDreamland.Managers
 {
   public static class MapManager
   {
+    public static Map CurrentMap { get; set; }
+    public static List<BaseObject> CurrentMapComponents { get; set; } = new List<BaseObject>();
+    public static Map LastMap { get; set; }
     public static List<Map> Maps { get; set; } = new List<Map>();
+
     private static readonly string _mapsFolder = SystemPrefsManager.SystemPrefs.FolderStructure[FileTypesEnum.Map.ToString()][0];
 
     public static void LoadMaps(ContentManager content)
@@ -40,7 +44,24 @@ namespace ProjectDreamland.Managers
         }
         Maps.Add(map);
       }
+      CurrentMap = Maps.Where(x => x.ID == "testMap002").FirstOrDefault();
+      LastMap = CurrentMap;
     }
 
+    public static void LoadMapContent(Player player) {
+      CurrentMapComponents.Clear();
+      CurrentMapComponents.AddRange(CurrentMap.Tiles);
+      CurrentMapComponents.AddRange(CurrentMap.WorldObjects);
+      CurrentMapComponents.AddRange(CurrentMap.Characters);
+      CurrentMapComponents.Add(player);
+    }
+
+    public static void LoadNewMap(string id, Player player) {
+      if(LastMap != CurrentMap) {
+        LastMap = CurrentMap;
+      }
+      CurrentMap = Maps.Where(x => x.ID == id).FirstOrDefault();
+      LoadMapContent(player);
+    }
   }
 }

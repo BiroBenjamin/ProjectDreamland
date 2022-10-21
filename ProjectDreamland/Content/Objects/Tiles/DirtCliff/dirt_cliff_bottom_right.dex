@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>Tile</FileType>
+  <ID>dirt_cliff_bottom_right</ID>
+  <Name>DirtCliffBottomRight</Name>
+  <FilePath>Objects\Tiles\DirtCliff\dirt_cliff_bottom_right.dex</FilePath>
+  <ZIndex>-9999</ZIndex>
+  <ImagePath>Sprites\Tiles\DirtCliff\dirt_cliff_bottom_right.png</ImagePath>
+  <Position>
+    <X>0</X>
+    <Y>0</Y>
+  </Position>
+  <Size>
+    <Width>32</Width>
+    <Height>32</Height>
+  </Size>
+  <CollisionPosition>
+    <X>0</X>
+    <Y>0</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>32</Width>
+    <Height>32</Height>
+  </CollisionSize>
+  <IsCollidable>true</IsCollidable>
+</Tile>

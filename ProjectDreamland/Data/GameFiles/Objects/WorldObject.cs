@@ -1,4 +1,5 @@
 ﻿using ProjectDreamland.Data.GameFiles.Characters;
+using ProjectDreamland.Managers;
 using System;
 using System.Drawing;
 using System.Xml.Serialization;
@@ -31,7 +32,10 @@ namespace ProjectDreamland.Data.GameFiles.Objects
     public void Interact(Player player)
     {
       if (!IsInteractable) return;
-      
+      if(ID == "dirt_cliff_entrance_open") {
+        MapManager.LoadNewMap("testMap001", player);
+        player.SetPosition(new Point(0, 0));
+      }
     }
   }
 }
