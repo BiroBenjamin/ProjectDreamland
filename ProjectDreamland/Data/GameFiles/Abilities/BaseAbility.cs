@@ -55,6 +55,10 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
     {
       CanCast = false;
     }
+    public virtual void Cast(BaseCharacter target, BaseCharacter caster)
+    {
+      CanCast = false;
+    }
     public virtual List<BaseCharacter> GetTargets(List<BaseCharacter> characters, BaseCharacter caster) { return null; }
   }
 }

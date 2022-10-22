@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles.Abilities;
 using ProjectDreamland.Data.GameFiles.Objects;
+using ProjectDreamland.Data.GameFiles.Quests;
+using ProjectDreamland.Handlers;
+using ProjectDreamland.Managers;
 using ProjectDreamland.UI;
 using System;
 using System.Collections.Generic;
@@ -19,40 +22,48 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     public int MaxResourcePoints { get; set; }
     public int CurrentResourcePoints;
     public (int, int) AttackDamage { get; set; } = (5, 9);
-    public float AttackRange { get; set; } = 1.5f;
+    public float AttackRange { get; set; }
+    public float AggroRange { get; set; }
     public int MaxHealthPoints { get; set; }
     public int CurrentHealthPoints;
-    [XmlIgnore] public CharacterStatesEnum CharacterState { get; set; }
     public bool IsTakingDamage { get; set; } = false;
     public float Speed { get; set; } = 3f;
+    public CharacterAffiliationsEnum CharacterAffiliation { get; set; }
+    public CharacterStatesEnum CharacterState { get; set; }
+    public BehaviourStatesEnum BehaviourState { get; set; }
     public LookDirectionsEnum Facing { get; set; } = LookDirectionsEnum.South;
     [XmlIgnore] public Rectangle AttackBounds = new Rectangle();
+    [XmlIgnore] public MeleeAttack MeleeAttack { get; set; }
 
     protected Vector2 velocity;
     protected HealthBar _healthBar;
     protected ResourceBar _resourceBar;
 
     //Mana back per 5 second
-    protected int _manaInterval = 25;
+    protected int _manaInterval = 5;
     //Energy back per 2 second
     protected int _energyInterval = 10;
     protected int _timer;
+    protected AIHandler _aiHandler;
+
+    protected string _questGivenID;
+    protected bool _isQuestAccepted = false;
 
     public BaseCharacter()
     {
       IsCollidable = true;
-      SetupUI();
+      Initialize();
     }
     public BaseCharacter(Texture2D texture)
     {
       Texture = texture;
       IsCollidable = true;
-      SetupUI();
+      Initialize();
     }
     public BaseCharacter(BaseObject baseObject) : base(baseObject)
     {
       IsCollidable = true;
-      SetupUI();
+      Initialize();
     }
     public BaseCharacter(BaseCharacter baseCharacter) : base(baseCharacter)
     {
@@ -65,15 +76,23 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       CurrentResourcePoints = baseCharacter.CurrentResourcePoints;
       Speed = baseCharacter.Speed;
       IsCollidable = true;
+      Initialize();
+    }
+
+    private void Initialize()
+    {
       CharacterState = CharacterStatesEnum.Alive;
+      BehaviourState = BehaviourStatesEnum.Idle;
+      AggroRange = 10;
+      MeleeAttack = new MeleeAttack("Attack", "", ResourceTypesEnum.None, 0, 35, DamageTypesEnum.Physical, 64, 2, true);
+      _aiHandler = new AIHandler(this);
       SetupUI();
+      SetTimer();
     }
     private void SetupUI()
     {
       _healthBar = new HealthBar();
       _resourceBar = new ResourceBar(ResourceType);
-
-      SetTimer();
     }
 
     protected void SetTimer()
@@ -96,6 +115,10 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     {
       ability.Cast(characters, this);
     }
+    public void Attack(BaseCharacter character, BaseAbility ability)
+    {
+      ability.Cast(character, this);
+    }
     public void TakeDamage(int damage)
     {
       if (CharacterState != CharacterStatesEnum.Alive) return;
@@ -110,7 +133,55 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       }
       else
       {
-        CurrentHealthPoints -= damage;        
+        CurrentHealthPoints -= damage;
+      }
+    }
+
+    public void Move(Vector2 direction, List<BaseObject> components)
+    {
+      if(CharacterState != CharacterStatesEnum.Alive) return;
+      velocity = new Vector2(direction.X * Speed, direction.Y * Speed);
+      Collision(components);
+      Position = new System.Drawing.Point((int)(Position.X + velocity.X), (int)(Position.Y + velocity.Y));
+    }
+
+    private void Collision(List<BaseObject> components)
+    {
+      foreach(BaseObject comp in components)
+      {
+        if (velocity.X > 0 && IsCollidingLeft(comp.GetCollision()) || velocity.X < 0 && IsCollidingRight(comp.GetCollision()))
+          velocity.X = 0;
+        if (velocity.Y > 0 && IsCollidingTop(comp.GetCollision()) || velocity.Y < 0 && IsCollidingBottom(comp.GetCollision()))
+          velocity.Y = 0;
+      }
+    }
+
+    public bool CursorIntersects(Vector2 cursor)
+    {
+      return cursor.X > Position.X && cursor.X <= Size.Width + Position.X &&
+        cursor.Y > Position.Y && cursor.Y <= Size.Height + Position.Y;
+    }
+    public void Interact(Player player)
+    {
+      if (CharacterAffiliation != CharacterAffiliationsEnum.Friendly) return;
+      if (!_isQuestAccepted)
+      {
+        Quest quest = QuestManager.GetRandomQuest();
+        if (quest != null)
+        {
+          _questGivenID = quest.ID;
+          player.Quests.Add(quest);
+        }
+        _isQuestAccepted = true;
+      }
+      else
+      {
+        Quest quest = player.Quests.Find(x => x.ID == _questGivenID);
+        if (quest != null && quest.Objective.IsDone)
+        {
+          quest.IsDone = true;
+          _isQuestAccepted = false;
+        }
       }
     }
 
@@ -158,9 +229,13 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     {
       ZIndex = Position.Y + Size.Height;
 
+      _aiHandler.Update(gameTime, components);
+
       if (_healthBar == null || _resourceBar == null) return;
       _healthBar.Update(gameTime, MaxHealthPoints, CurrentHealthPoints);
       _resourceBar.Update(gameTime, MaxResourcePoints, CurrentHealthPoints);
+
+      MeleeAttack.Update(gameTime, components);
 
       _timer--;
       if (_timer == 0)
@@ -203,7 +278,8 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     public virtual void DrawUI(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
     {
       if (_healthBar == null || _resourceBar == null) return;
-      _healthBar.Draw(gameTime, spriteBatch, graphicsDevice, new Vector2(Position.X + Size.Width / 2, Position.Y), Color.IndianRed);
+      Color healtbarColor = CharacterAffiliation == CharacterAffiliationsEnum.Hostile ? Color.IndianRed : Color.LawnGreen;
+      _healthBar.Draw(gameTime, spriteBatch, graphicsDevice, new Vector2(Position.X + Size.Width / 2, Position.Y), healtbarColor);
       _resourceBar.Draw(gameTime, spriteBatch, graphicsDevice, new Vector2(Position.X + Size.Width / 2, Position.Y));
     }
   }

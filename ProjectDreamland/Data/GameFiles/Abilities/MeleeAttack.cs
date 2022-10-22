@@ -29,6 +29,16 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
         target.TakeDamage(damageDone);
       }
     }
+    public override void Cast(BaseCharacter target, BaseCharacter caster)
+    {
+      if (!CanCast) return;
+      base.Cast(target, caster);
+
+      Random rand = new Random();
+      (int, int) damageRange = ((int)(Damage * 0.8f), (int)(Damage * 1.2f));
+      int damageDone = rand.Next(damageRange.Item1, damageRange.Item2 + 1);
+      target.TakeDamage(damageDone);
+    }
     public override List<BaseCharacter> GetTargets(List<BaseCharacter> characters, BaseCharacter caster)
     {
       List<BaseCharacter> targets = new List<BaseCharacter>();
@@ -68,7 +78,10 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
           );
           break;
       }
-      targets = characters.Where(x => x.GetCollision().Intersects(caster.AttackBounds)).ToList();
+      targets = characters
+        .Where(x => x.GetCollision()
+          .Intersects(caster.AttackBounds) && x.CharacterAffiliation != CharacterAffiliationsEnum.Friendly)
+        .ToList();
 
       return targets;
     }

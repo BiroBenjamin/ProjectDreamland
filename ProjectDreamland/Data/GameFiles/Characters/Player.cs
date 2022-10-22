@@ -9,7 +9,6 @@ using ProjectDreamland.Data.GameFiles.Objects;
 using ProjectDreamland.Data.GameFiles.Quests;
 using ProjectDreamland.Managers;
 using ProjectDreamland.UI;
-using ProjectDreamland.UI.QuestPanel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +31,8 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     private KeyboardState _lastKeyState;
     private MouseState _currentMouseState;
     private MouseState _lastMouseState;
+
+    public List<Quest> Quests { get; set; }
 
     private Map _currentMap;
     public Player(GraphicsDevice graphicsDevice, Texture2D texture, Map currentMap) : base(texture)
@@ -62,7 +63,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     private void SetStatus()
     {
       MaxHealthPoints = 200;
-      CurrentHealthPoints = 125;
+      CurrentHealthPoints = MaxHealthPoints;
       Level = 4;
       ResourceType = ResourceTypesEnum.Mana.ToString();
       MaxResourcePoints = 238;
@@ -70,16 +71,12 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       _resourceBar = new ResourceBar(ResourceType);
       ExperienceNeeded = (int)Math.Pow(Level * 100, 1.1);
       _ability1 = new MeleeAttack("Attack", "Very big damage", ResourceTypesEnum.None, 0, 20,
-        DamageTypesEnum.Physical, 1.5f, .5f, true);
+        DamageTypesEnum.Physical, 1.5f, 1.5f, true);
       _ability2 = new RangedMagicAttack("Magic Attack", "Very big magic damage", ResourceTypesEnum.Mana, 30, 30,
         DamageTypesEnum.Fire, 10, 5f, true);
       _ability3 = new HealAbility("Heal", "Very big heal", ResourceTypesEnum.Mana, 35, 25,
         DamageTypesEnum.Nature, .5f, 5f, true);
-
-      QuestManager.Quests.AddRange(new List<Quest>()
-      {
-        new Quest("Monke dead", "You have to kill these monkes!!", "kill", 520, new Objective(_currentMap.Characters.FirstOrDefault(), 2)),
-      });
+      Quests = new List<Quest>();
     }
 
     public void SetPosition(System.Drawing.Point position)
@@ -132,7 +129,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     private void PerformAttack(GameTime gameTime, List<BaseCharacter> characters, List<BaseObject> objects)
     {
-      SetCurrentStates();
+      //SetCurrentStates();
       _ability1.Update(gameTime, objects);
       if (_currentMouseState.LeftButton == ButtonState.Pressed && _lastMouseState.LeftButton == ButtonState.Released)
       {
@@ -150,7 +147,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
         _ability3.Cast(characters, this);
       }
       CharacterManager.HandleDeadCharacters(characters, this);
-      SetLastStates();
+      //SetLastStates();
     }
 
     private void Collision(List<BaseObject> components)
@@ -201,6 +198,9 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     public override void Update(GameTime gameTime, List<BaseObject> components)
     {
+      if (CharacterState != CharacterStatesEnum.Alive) return;
+      SetCurrentStates();
+
       ZIndex = Position.Y + Size.Height;
       Move(components);
       PerformAttack(gameTime, components.Where(x => x.FileType == FileTypesEnum.Character.ToString()).Cast<BaseCharacter>().ToList(), components);
@@ -214,27 +214,36 @@ namespace ProjectDreamland.Data.GameFiles.Characters
         else CurrentResourcePoints = MaxResourcePoints;
         SetTimer();
       }
-      HandleInteraction(components.Where(x => x.GetType() == typeof(WorldObject)).Cast<WorldObject>().ToList());
+      HandleInteraction(components.Where(x => x.GetType() == typeof(WorldObject) || x.GetType() == typeof(BaseCharacter)).ToList());
       HandleQuests();
+
+      SetLastStates();
     }
-    private void HandleInteraction(List<WorldObject> components)
+    private void HandleInteraction(List<BaseObject> components)
     {
-      SetCurrentStates();
+      //SetCurrentStates();
       Vector2 mousePosition = Vector2.Transform(_currentMouseState.Position.ToVector2(), Matrix.Invert(Camera.Transform));
-      foreach (WorldObject worldObject in components)
+      foreach (BaseObject baseObject in components)
       {
-        if (worldObject.CursorIntersects(mousePosition) &&
-          _currentMouseState.RightButton == ButtonState.Pressed /*&& _lastMouseState.RightButton == ButtonState.Released*/)
+        if (Vector2.Distance(new Vector2(Position.X, Position.Y), new Vector2(baseObject.Position.X, baseObject.Position.Y)) > 64) 
+          continue;
+        if (baseObject.GetType() == typeof(WorldObject) && (baseObject as WorldObject).CursorIntersects(mousePosition) &&
+          _currentMouseState.RightButton == ButtonState.Pressed && _lastMouseState.RightButton == ButtonState.Released)
         {
-          worldObject.Interact(this);
+          (baseObject as WorldObject).Interact(this);
+        }
+        if(baseObject.GetType() == typeof(BaseCharacter) && (baseObject as BaseCharacter).CursorIntersects(mousePosition) &&
+          _currentMouseState.RightButton == ButtonState.Pressed && _lastMouseState.RightButton == ButtonState.Released)
+        {
+          (baseObject as BaseCharacter).Interact(this);
         }
       }
-      SetLastStates();
+      //SetLastStates();
     }
     private void HandleQuests()
     {
       List<Quest> questsToRemove = new List<Quest>();
-      foreach (Quest quest in QuestManager.Quests)
+      foreach (Quest quest in Quests)
       {
         if (quest.IsDone)
         {
@@ -244,7 +253,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       }
       foreach (Quest quest in questsToRemove)
       {
-        QuestManager.Quests.Remove(quest);
+        Quests.Remove(quest);
       }
     }
 
