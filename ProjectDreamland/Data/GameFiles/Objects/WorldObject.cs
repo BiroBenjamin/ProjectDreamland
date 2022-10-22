@@ -32,9 +32,15 @@ namespace ProjectDreamland.Data.GameFiles.Objects
     public void Interact(Player player)
     {
       if (!IsInteractable) return;
-      if(ID == "dirt_cliff_entrance_open") {
-        MapManager.LoadNewMap("testMap001", player);
-        player.SetPosition(new Point(0, 0));
+      if (OtherData != null && OtherData.Contains("@teleport"))
+      {
+        string tpData = OtherData.Replace("@teleport:", "").Replace("\"", "");
+        string map = tpData.Split(':')[0];
+        MapManager.LoadNewMap(map, player);
+        string coordinates = tpData.Split(':')[1];
+        int.TryParse(coordinates.Split("/")[0], out int x);
+        int.TryParse(coordinates.Split("/")[1], out int y);
+        player.SetPosition(new Point(x, y));
       }
     }
   }

@@ -28,12 +28,12 @@ namespace ProjectDreamland.Handlers
     public void Update(GameTime gameTime)
     {
       _experienceBar.Update(gameTime, _player.ExperienceNeeded, _player.CurrentExperience, _screenWidth, _player.Level);
-      _questPanel.Update(gameTime, _screenWidth, _screenHeight);
+      _questPanel.Update(gameTime, _player, _screenWidth, _screenHeight);
     }
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
     {
       _experienceBar.Draw(gameTime, spriteBatch, graphicsDevice, 0, _screenHeight);
-      _questPanel.Draw(gameTime, spriteBatch, graphicsDevice);
+      _questPanel.Draw(gameTime, spriteBatch, graphicsDevice, _player);
     }
   }
 }

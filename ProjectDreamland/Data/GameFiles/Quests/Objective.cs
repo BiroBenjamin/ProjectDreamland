@@ -7,15 +7,15 @@ namespace ProjectDreamland.Data.GameFiles.Quests
 {
   public class Objective
   {
-    public object Target { get; set; }
+    public string TargetID { get; set; }
     public int Amount { get; set; }
     public int Remaining { get; set; }
     public string Description { get; set; }
     public bool IsDone { get; set; }
 
-    public Objective(object target, int amount)
+    public Objective(string targetID, int amount)
     {
-      Target = target;
+      TargetID = targetID;
       Amount = amount;
       Remaining = amount;
     }
@@ -28,14 +28,7 @@ namespace ProjectDreamland.Data.GameFiles.Quests
         Description = " - Completed";
         return;
       }
-      /*if (Target.GetType() == typeof(BaseCharacter))
-      {
-        Description = $" - {Amount - Remaining} / {Amount} - {(Target as BaseCharacter).Name}";
-      }
-      else
-      {
-        Description = $" - {Amount - Remaining} / {Amount} - {(Target as BaseObject).Name}";
-      }*/
+      Description = $" - {Amount - Remaining} / {Amount} - {TargetID}";
     }
   }
 }
