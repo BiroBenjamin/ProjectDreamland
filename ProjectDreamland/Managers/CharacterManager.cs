@@ -9,15 +9,15 @@ namespace ProjectDreamland.Managers
 {
   public static class CharacterManager
   {
-    public static void HandleDeadCharacters(List<BaseCharacter> characters, Player player)
+    public static void HandleDeadCharacters(List<BaseCharacter> characters)
     {
       foreach (BaseCharacter character in characters)
       {
         if (character.CharacterState == CharacterStatesEnum.Dying)
         {
-          player.CurrentExperience += (int)Math.Pow(character.Level * 5, 1.1);
+          Player.CurrentExperience += (int)Math.Pow(character.Level * 5, 1.1);
           character.CharacterState = CharacterStatesEnum.Dead;
-          foreach (Quest quest in player.Quests)
+          foreach (Quest quest in Player.Quests)
           {
             if (quest.Objective.IsDone) continue;
             if (quest.Objective.TargetID == character.ID)

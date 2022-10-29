@@ -1,43 +1,31 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using ProjectDreamland.Data.Constants;
 using ProjectDreamland.Data.GameFiles.Characters;
 using ProjectDreamland.Managers;
+using ProjectDreamland.UI.Components;
 
 namespace ProjectDreamland.UI.QuestPanel
 {
-  internal class QuestPanel
+  internal class QuestPanel : BaseUI
   {
-    private Texture2D _texture;
     private SpriteFont _font;
-    private Rectangle _bounds;
-    private float _alpha;
 
-    public QuestPanel(ContentManager content)
+    public QuestPanel(GraphicsDevice graphicsDevice, Rectangle bounds, Color color) : base(graphicsDevice, bounds, color)
     {
-      _font = content.Load<SpriteFont>("Fonts/ArialSmall");
-      _alpha = .5f;
+      _font = Fonts.ArialSmall;
     }
 
-    public void Update(GameTime gameTime, Player player, int screenWidth, int screenHeight)
+    public override void Update(GameTime gameTime)
     {
-      int width = (int)(screenWidth * .15f);
-      int height = (int)(screenHeight * .4f);
-      int x = screenWidth - (width + 10);
-      int y = (screenHeight - height) - ((screenHeight - height) / 2);
-      _bounds = new Rectangle(x, y, width, height );
-      QuestManager.Update(gameTime, player, _bounds);
+      base.Update(gameTime);
+      QuestManager.Update(gameTime, Bounds);
     }
-    public void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Player player)
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, ContentManager content, float layerDepth)
     {
-      if (_texture == null)
-      {
-        _texture = new Texture2D(graphicsDevice, 1, 1);
-        _texture.SetData(new Color[] { Color.Black });
-      }
-      spriteBatch.Draw(_texture, _bounds, Color.Black * _alpha);
-      QuestManager.Draw(gameTime, spriteBatch, graphicsDevice, _font, player);
+      base.Draw(gameTime, spriteBatch, content, layerDepth - .02f);
+      QuestManager.Draw(gameTime, spriteBatch, _font, layerDepth - .01f);
     }
-
   }
 }

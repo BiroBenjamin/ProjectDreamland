@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using ProjectDreamland.Core;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using ProjectDreamland.Data.Constants;
 using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles.Abilities.Interfaces;
 using ProjectDreamland.Data.GameFiles.Characters;
@@ -9,11 +11,14 @@ using System.Collections.Generic;
 
 namespace ProjectDreamland.Data.GameFiles.Abilities
 {
-  public class HealAbility : BaseAbility, IAbility
+    public class HealAbility : BaseAbility, IAbility
   {
-    public HealAbility(string name, string description, ResourceTypesEnum resourceType, int cost, int damage,
-      DamageTypesEnum damageType, float range, float cooldown, bool triggersInternalCooldown) :
-      base(name, description, resourceType, cost, damage, damageType, range, cooldown, triggersInternalCooldown) { }
+    public HealAbility(string name, string description, ResourceTypesEnum resourceType, int cost, int damage, DamageTypesEnum damageType, 
+      AbilityTypesEnum abilityType, float range, float cooldown, bool triggersInternalCooldown, Texture2D icon = null) :
+      base(name, description, resourceType, cost, damage, damageType, abilityType, range, cooldown, triggersInternalCooldown, icon) 
+    {
+      KeyBind = KeyBinds.AbilityTwo;
+    }
 
     public override void Cast(List<BaseCharacter> characters, BaseCharacter caster)
     {

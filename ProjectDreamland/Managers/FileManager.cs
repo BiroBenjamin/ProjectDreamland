@@ -24,7 +24,7 @@ namespace ProjectDreamland.Managers
       }
       catch (Exception ex)
       {
-        DebugManager.Log($"{ex.Message}\r\n{ex.InnerException}\r\n{ex.StackTrace}");
+        
       }
     }
 
@@ -47,7 +47,7 @@ namespace ProjectDreamland.Managers
         }
         catch (Exception ex)
         {
-          DebugManager.Log($"{ex.Message}\r\n{ex.InnerException}\r\n{ex.StackTrace}");
+          
         }
       }
 

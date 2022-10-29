@@ -8,6 +8,7 @@ using ProjectDreamland.Data.GameFiles.Quests;
 using ProjectDreamland.Handlers;
 using ProjectDreamland.Managers;
 using ProjectDreamland.UI;
+using ProjectDreamland.UI.QuestPanel;
 using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -40,9 +41,9 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     protected ResourceBar _resourceBar;
 
     //Mana back per 5 second
-    protected int _manaInterval = 5;
+    public int ManaInterval = 5;
     //Energy back per 2 second
-    protected int _energyInterval = 10;
+    public int EnergyInterval = 10;
     protected int _timer;
     protected AIHandler _aiHandler;
 
@@ -84,7 +85,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       CharacterState = CharacterStatesEnum.Alive;
       BehaviourState = BehaviourStatesEnum.Idle;
       AggroRange = 10;
-      MeleeAttack = new MeleeAttack("Attack", "", ResourceTypesEnum.None, 0, 35, DamageTypesEnum.Physical, 64, 2, true);
+      MeleeAttack = new MeleeAttack("Attack", "", ResourceTypesEnum.None, 0, 35, DamageTypesEnum.Physical, AbilityTypesEnum.Damage, 64, 2, true);
       _aiHandler = new AIHandler(this);
       SetupUI();
       SetTimer();
@@ -139,7 +140,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     public void Move(Vector2 direction, List<BaseObject> components)
     {
-      if(CharacterState != CharacterStatesEnum.Alive) return;
+      if (CharacterState != CharacterStatesEnum.Alive) return;
       velocity = new Vector2(direction.X * Speed, direction.Y * Speed);
       Collision(components);
       Position = new System.Drawing.Point((int)(Position.X + velocity.X), (int)(Position.Y + velocity.Y));
@@ -147,7 +148,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     private void Collision(List<BaseObject> components)
     {
-      foreach(BaseObject comp in components)
+      foreach (BaseObject comp in components)
       {
         if (velocity.X > 0 && IsCollidingLeft(comp.GetCollision()) || velocity.X < 0 && IsCollidingRight(comp.GetCollision()))
           velocity.X = 0;
@@ -164,25 +165,8 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     public void Interact(Player player)
     {
       if (CharacterAffiliation != CharacterAffiliationsEnum.Friendly) return;
-      if (!_isQuestAccepted)
-      {
-        Quest quest = QuestManager.GetRandomQuest();
-        if (quest != null)
-        {
-          _questGivenID = quest.ID;
-          player.Quests.Add(quest);
-        }
-        _isQuestAccepted = true;
-      }
-      else
-      {
-        Quest quest = player.Quests.Find(x => x.ID == _questGivenID);
-        if (quest != null && quest.Objective.IsDone)
-        {
-          quest.IsDone = true;
-          _isQuestAccepted = false;
-        }
-      }
+      QuestWindow.IsShown = true;
+      if (QuestWindow.Quest == null) QuestWindow.Quest = QuestManager.GetRandomQuest();
     }
 
     #region Collision
@@ -246,21 +230,21 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     }
     protected void AddResource()
     {
-      if (ResourceType == ResourceTypesEnum.Mana.ToString() && CurrentResourcePoints + _manaInterval >= MaxResourcePoints)
+      if (ResourceType == ResourceTypesEnum.Mana.ToString() && CurrentResourcePoints + ManaInterval >= MaxResourcePoints)
       {
         CurrentResourcePoints = MaxResourcePoints;
       }
       else
       {
-        CurrentResourcePoints += _manaInterval;
+        CurrentResourcePoints += ManaInterval;
       }
-      if (ResourceType == ResourceTypesEnum.Energy.ToString() && CurrentResourcePoints + _energyInterval >= MaxResourcePoints)
+      if (ResourceType == ResourceTypesEnum.Energy.ToString() && CurrentResourcePoints + EnergyInterval >= MaxResourcePoints)
       {
         CurrentResourcePoints = MaxResourcePoints;
       }
       else
       {
-        CurrentResourcePoints += _energyInterval;
+        CurrentResourcePoints += EnergyInterval;
       }
     }
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using ProjectDreamland.Core;
+using ProjectDreamland.Components;
 using ProjectDreamland.Data.GameFiles.Characters;
 using ProjectDreamland.Data.GameFiles.Objects;
 using ProjectDreamland.GameStates;
@@ -17,58 +17,56 @@ namespace ProjectDreamland.GameStates
   {
     private Camera _camera;
     private RenderHandler _renderHandler;
-    private List<BaseObject> _components;
     private List<BaseObject> _renderedComponents;
     private Player _player;
-    private MenuPanel _characterPanel;
     private UIHandler _uiHandler;
+    private InputHandler _inputHandler;
 
-    public PlayState(GraphicsDevice graphicsDevice, ContentManager contentManager, int screenWidth, int screenHeight) : 
-      base(graphicsDevice, contentManager, screenWidth, screenHeight) { }
+    public PlayState(GraphicsDevice graphicsDevice, ContentManager contentManager) : 
+      base(graphicsDevice, contentManager) { }
 
     public override void LoadContent()
     {
-      //Load UI
-      _characterPanel = new MenuPanel(_contentManager);
-
-      // Create Map Manager and load map0
       MapManager.LoadMaps(_contentManager);
+      QuestManager.Initialize();
 
-      // Load camera
       _camera = new Camera();
       _renderHandler = new RenderHandler();
-
-      // Loading the player character
       _player = new Player(_graphicsDevice, _contentManager.Load<Texture2D>("Sprites/Characters/CharacterBaseFront"), MapManager.CurrentMap, -64, -64);
 
-      //Load components
       MapManager.LoadMapContent(_player);
       _renderedComponents = new List<BaseObject>();
 
-      _uiHandler = new UIHandler(_screenWidth, _screenHeight, _player, _contentManager);
+      _uiHandler = new UIHandler(_graphicsDevice, _contentManager, _player);
+      _inputHandler = new InputHandler();
     }
 
     public override void Update(GameTime gameTime)
     {
-      // Update every component
-      _renderedComponents = _renderHandler
-        .GetRenderableObjects(MapManager.CurrentMapComponents, _player, new Rectangle(0, 0, _screenWidth, _screenHeight));
-      _player.Update(gameTime, _renderedComponents);
-      foreach (BaseObject comp in _renderedComponents)
-      {
-        comp.Update(gameTime, _renderedComponents);
-      }
-      _camera.Follow(_player);
-      _characterPanel.Update(gameTime);
+      _inputHandler.Update(gameTime);
       _uiHandler.Update(gameTime);
+
+      if (!GameMenuWindow.IsShown)
+      {
+        _renderedComponents = _renderHandler
+          .GetRenderableObjects(MapManager.CurrentMapComponents, _player, new Rectangle(0, 0, _screenWidth, _screenHeight));
+        _player.Update(gameTime, _renderedComponents);
+        foreach (BaseObject comp in _renderedComponents)
+        {
+          comp.Update(gameTime, _renderedComponents);
+        }
+        _camera.Follow(_player);
+      }
+
+      CursorManager.Update(gameTime, _renderedComponents);
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
       _graphicsDevice.Clear(Color.Gray);
 
-      // Draw every component
       spriteBatch.Begin(transformMatrix: Camera.Transform);
+
       foreach (BaseObject comp in _renderedComponents.OrderBy(x => x.ZIndex))
       {
         comp.Draw(_contentManager, gameTime, spriteBatch);
@@ -78,12 +76,11 @@ namespace ProjectDreamland.GameStates
         }
       }
       _player.DrawAbilities(gameTime, spriteBatch, _graphicsDevice);
+
       spriteBatch.End();
 
-      //Static elements, like UI
-      spriteBatch.Begin();
-      _uiHandler.Draw(gameTime, spriteBatch, _graphicsDevice);
-      _characterPanel.Draw(gameTime, spriteBatch);
+      spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack);
+      _uiHandler.Draw(gameTime, spriteBatch, _contentManager);
       spriteBatch.End();
     }
   }

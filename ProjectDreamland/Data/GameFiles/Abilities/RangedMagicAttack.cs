@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using ProjectDreamland.Data.Constants;
 using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles.Abilities.Interfaces;
 using ProjectDreamland.Data.GameFiles.Characters;
@@ -9,15 +11,18 @@ using System.Collections.Generic;
 
 namespace ProjectDreamland.Data.GameFiles.Abilities
 {
-  public class RangedMagicAttack : BaseAbility, IAbility
+    public class RangedMagicAttack : BaseAbility, IAbility
   {
     private List<Projectile> _projectiles;
+    private Texture2D _projectileTexture;
 
-    public RangedMagicAttack(string name, string description, ResourceTypesEnum resourceType, int cost, int damage,
-      DamageTypesEnum damageType, float range, float cooldown, bool triggersInternalCooldown) :
-      base(name, description, resourceType, cost, damage, damageType, range, cooldown, triggersInternalCooldown)
+    public RangedMagicAttack(string name, string description, ResourceTypesEnum resourceType, int cost, int damage, DamageTypesEnum damageType, 
+      AbilityTypesEnum abilityType, float range, float cooldown, bool triggersInternalCooldown, Texture2D projectileTexture, Texture2D icon = null) :
+      base(name, description, resourceType, cost, damage, damageType, abilityType, range, cooldown, triggersInternalCooldown, icon)
     {
       _projectiles = new List<Projectile>();
+      _projectileTexture = projectileTexture;
+      KeyBind = KeyBinds.AbilityThree;
     }
 
     public void Cast(GraphicsDevice graphicsDevice, List<BaseCharacter> characters, BaseCharacter caster, Vector2 startPosition, Vector2 endPosition)
@@ -34,7 +39,7 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       (int, int) damageRange = ((int)(Damage * 0.8f), (int)(Damage * 1.5f));
       int damageDone = rand.Next(damageRange.Item1, damageRange.Item2 + 1);
       characters.Remove(caster);
-      Projectile projectile = new Projectile(graphicsDevice, characters, damageDone, startPosition, endPosition, 10f, 6f);
+      Projectile projectile = new Projectile(graphicsDevice, characters, damageDone, startPosition, endPosition, 10f, 6f, _projectileTexture);
       _projectiles.Add(projectile);
       projectile.Start();
       caster.CurrentResourcePoints -= Cost;

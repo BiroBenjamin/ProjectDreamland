@@ -2,11 +2,12 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using ProjectDreamland.Core;
+using ProjectDreamland.Components;
 using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles.Abilities;
 using ProjectDreamland.Data.GameFiles.Objects;
 using ProjectDreamland.Data.GameFiles.Quests;
+using ProjectDreamland.Handlers;
 using ProjectDreamland.Managers;
 using ProjectDreamland.UI;
 using System;
@@ -17,30 +18,30 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 {
   public class Player : BaseCharacter
   {
-    new public float Speed { get; set; } = 2f;
-    public int ExperienceNeeded { get; set; }
-    public int CurrentExperience { get; set; }
-
     private GraphicsDevice _graphicsDevice;
 
-    private BaseAbility _ability1;
-    private BaseAbility _ability2;
-    private BaseAbility _ability3;
+    new public float Speed { get; set; } = 2f;
+    public int ExperienceNeeded { get; set; }
+    public static int CurrentExperience { get; set; }
+    public Stats BaseStats { get; set; }
+    public Stats BonusStats { get; set; }
+
+    public new static BaseAbility MeleeAttack { get; set; }
+    public static BaseAbility NurturingWinds { get; set; }
+    public static BaseAbility Fireball { get; set; }
 
     private KeyboardState _currentKeyState;
     private KeyboardState _lastKeyState;
     private MouseState _currentMouseState;
     private MouseState _lastMouseState;
 
-    public List<Quest> Quests { get; set; }
+    public static List<Quest> Quests { get; set; }
 
-    private Map _currentMap;
     public Player(GraphicsDevice graphicsDevice, Texture2D texture, Map currentMap) : base(texture)
     {
       Size = new System.Drawing.Size(texture.Width, texture.Height);
       SetCollision(Position.X, Position.Y, texture.Width, texture.Height);
       _graphicsDevice = graphicsDevice;
-      _currentMap = currentMap;
       SetStatus();
     }
     public Player(GraphicsDevice graphicsDevice, Texture2D texture, Map currentMap, int x, int y) : base(texture)
@@ -49,7 +50,6 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       Position = new System.Drawing.Point(x, y);
       SetCollision(Position.X, Position.Y, texture.Width, texture.Height);
       _graphicsDevice = graphicsDevice;
-      _currentMap = currentMap;
       SetStatus();
     }
     private void SetCollision(int posX, int posY, int textWidth, int textHeight)
@@ -62,21 +62,20 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     }
     private void SetStatus()
     {
+      Level = 4;
+      AttackDamage = (1, 3);
       MaxHealthPoints = 200;
       CurrentHealthPoints = MaxHealthPoints;
-      Level = 4;
       ResourceType = ResourceTypesEnum.Mana.ToString();
       MaxResourcePoints = 238;
       CurrentResourcePoints = 238;
       _resourceBar = new ResourceBar(ResourceType);
       ExperienceNeeded = (int)Math.Pow(Level * 100, 1.1);
-      _ability1 = new MeleeAttack("Attack", "Very big damage", ResourceTypesEnum.None, 0, 20,
-        DamageTypesEnum.Physical, 1.5f, 1.5f, true);
-      _ability2 = new RangedMagicAttack("Magic Attack", "Very big magic damage", ResourceTypesEnum.Mana, 30, 30,
-        DamageTypesEnum.Fire, 10, 5f, true);
-      _ability3 = new HealAbility("Heal", "Very big heal", ResourceTypesEnum.Mana, 35, 25,
-        DamageTypesEnum.Nature, .5f, 5f, true);
+      MeleeAttack = AbilitiesList.AbilitiesList.MeleeAttack;
+      NurturingWinds = AbilitiesList.AbilitiesList.NurturingWinds;
+      Fireball = AbilitiesList.AbilitiesList.Fireball;
       Quests = new List<Quest>();
+      BaseStats = new Stats(AttackDamage, MaxHealthPoints, MaxResourcePoints, ManaInterval);
     }
 
     public void SetPosition(System.Drawing.Point position)
@@ -90,7 +89,6 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       _currentKeyState = Keyboard.GetState();
       velocity = new Vector2();
 
-      // Getting player movement input
       if (_currentKeyState.IsKeyDown(Keys.W))
       {
         Facing = LookDirectionsEnum.North;
@@ -129,25 +127,24 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     private void PerformAttack(GameTime gameTime, List<BaseCharacter> characters, List<BaseObject> objects)
     {
-      //SetCurrentStates();
-      _ability1.Update(gameTime, objects);
-      if (_currentMouseState.LeftButton == ButtonState.Pressed && _lastMouseState.LeftButton == ButtonState.Released)
+      MeleeAttack.Update(gameTime, objects);
+      if (_currentMouseState.LeftButton == ButtonState.Pressed && _lastMouseState.LeftButton == ButtonState.Released && 
+        !UIHandler.IsHoveredOver)
       {
-        _ability1.Cast(characters, this);
+        MeleeAttack.Cast(characters, this);
       }
-      _ability2.Update(gameTime, objects);
-      if (_currentKeyState.IsKeyDown(Keys.E) && _lastKeyState.IsKeyUp(Keys.E) && Level >= 4)
+      NurturingWinds.Update(gameTime, objects);
+      if (_currentKeyState.IsKeyDown(NurturingWinds.KeyBind.Value) && _lastKeyState.IsKeyUp(NurturingWinds.KeyBind.Value) && Level >= 4)
       {
-        (_ability2 as RangedMagicAttack).Cast(_graphicsDevice, characters, this, new Vector2(Position.X + Size.Width / 2, Position.Y + Size.Height / 2),
+        NurturingWinds.Cast(characters, this);
+      }
+      Fireball.Update(gameTime, objects);
+      if (_currentKeyState.IsKeyDown(Fireball.KeyBind.Value) && _lastKeyState.IsKeyUp(Fireball.KeyBind.Value) && Level >= 2)
+      {
+        (Fireball as RangedMagicAttack).Cast(_graphicsDevice, characters, this, new Vector2(Position.X + Size.Width / 2, Position.Y + Size.Height / 2),
           _currentMouseState.Position.ToVector2());
       }
-      _ability3.Update(gameTime, objects);
-      if (_currentKeyState.IsKeyDown(Keys.Q) && _lastKeyState.IsKeyUp(Keys.Q) && Level >= 2)
-      {
-        _ability3.Cast(characters, this);
-      }
-      CharacterManager.HandleDeadCharacters(characters, this);
-      //SetLastStates();
+      CharacterManager.HandleDeadCharacters(characters);
     }
 
     private void Collision(List<BaseObject> components)
@@ -202,6 +199,8 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       SetCurrentStates();
 
       ZIndex = Position.Y + Size.Height;
+      BonusStats = EquipmentManager.AddStats();
+      SetStats();
       Move(components);
       PerformAttack(gameTime, components.Where(x => x.FileType == FileTypesEnum.Character.ToString()).Cast<BaseCharacter>().ToList(), components);
       HandleLevel();
@@ -215,13 +214,20 @@ namespace ProjectDreamland.Data.GameFiles.Characters
         SetTimer();
       }
       HandleInteraction(components.Where(x => x.GetType() == typeof(WorldObject) || x.GetType() == typeof(BaseCharacter)).ToList());
-      HandleQuests();
 
       SetLastStates();
     }
+
+    private void SetStats()
+    {
+      AttackDamage = (BaseStats.AttackDamage.Item1 + BonusStats.AttackDamage.Item1, 
+        BaseStats.AttackDamage.Item2 + BonusStats.AttackDamage.Item2);
+      MaxHealthPoints = BaseStats.HealthPoints + BonusStats.HealthPoints;
+      MaxResourcePoints = BaseStats.ManaPoints + BonusStats.ManaPoints;
+      ManaInterval = BaseStats.ManaInterval + BonusStats.ManaInterval;
+    }
     private void HandleInteraction(List<BaseObject> components)
     {
-      //SetCurrentStates();
       Vector2 mousePosition = Vector2.Transform(_currentMouseState.Position.ToVector2(), Matrix.Invert(Camera.Transform));
       foreach (BaseObject baseObject in components)
       {
@@ -238,23 +244,6 @@ namespace ProjectDreamland.Data.GameFiles.Characters
           (baseObject as BaseCharacter).Interact(this);
         }
       }
-      //SetLastStates();
-    }
-    private void HandleQuests()
-    {
-      List<Quest> questsToRemove = new List<Quest>();
-      foreach (Quest quest in Quests)
-      {
-        if (quest.IsDone)
-        {
-          CurrentExperience += quest.RewardExp;
-          questsToRemove.Add(quest);
-        }
-      }
-      foreach (Quest quest in questsToRemove)
-      {
-        Quests.Remove(quest);
-      }
     }
 
     public override void Draw(ContentManager content, GameTime gameTime, SpriteBatch spriteBatch)
@@ -263,13 +252,24 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     }
     public void DrawAbilities(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
     {
-      _ability2.Draw(gameTime, spriteBatch, graphicsDevice);
+      Fireball.Draw(gameTime, spriteBatch, graphicsDevice);
     }
     public override void DrawUI(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
     {
       if (_healthBar == null) return;
       _healthBar.Draw(gameTime, spriteBatch, graphicsDevice, new Vector2(Position.X + Size.Width / 2, Position.Y), Color.GreenYellow);
       _resourceBar.Draw(gameTime, spriteBatch, graphicsDevice, new Vector2(Position.X + Size.Width / 2, Position.Y));
+    }
+
+    public override string ToString()
+    {
+      return $"Level: {Level}\\n" +
+        $"Health: {CurrentHealthPoints}/{MaxHealthPoints}\\n" +
+        $"{ResourceType}: {CurrentResourcePoints}/{MaxResourcePoints}\\n" +
+        $"Attack Damage: {AttackDamage.Item1} - {AttackDamage.Item2}\\n" +
+        $"Attack Range: {(AttackRange == 0 ? "Melee" : AttackRange)}\\n" +
+        $"Mana per five seconds: {ManaInterval}\\n\\n\\n" +
+        $"Quests accepted: {Quests.Count}";
     }
   }
 }

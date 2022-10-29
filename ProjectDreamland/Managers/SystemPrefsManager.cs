@@ -1,4 +1,4 @@
-﻿using ProjectDreamland.Data;
+﻿using ProjectDreamland.Data.Constants;
 using ProjectDreamland.UI;
 using System;
 using System.IO;
@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace ProjectDreamland.Managers
 {
-  public static class SystemPrefsManager
+    public static class SystemPrefsManager
   {
     private static readonly XmlSerializer serializer = new XmlSerializer(typeof(SystemPrefs));
     private static readonly string pathDirectory = $@"C:\Users\{Environment.UserName}\Documents\DreamlandEditor\";

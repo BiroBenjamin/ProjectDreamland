@@ -15,16 +15,15 @@ namespace ProjectDreamland.GameStates
     protected ContentManager _contentManager;
     protected readonly int _screenWidth, _screenHeight;
 
-    public GameState(GraphicsDevice graphicsDevice, ContentManager contentManager, int screendWidth, int screenHeight)
+    public GameState(GraphicsDevice graphicsDevice, ContentManager contentManager)
     {
       _graphicsDevice = graphicsDevice;
       _contentManager = contentManager;
-      _screenWidth = screendWidth;
-      _screenHeight = screenHeight;
+      _screenWidth = Game1.ScreenWidth;
+      _screenHeight = Game1.ScreenHeight;
     }
 
     public abstract void LoadContent();
-
     public abstract void Update(GameTime gameTime);
     public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
   }

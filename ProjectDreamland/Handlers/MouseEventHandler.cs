@@ -1,47 +1,64 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using ProjectDreamland.Managers;
 using System;
 
 namespace ProjectDreamland.Handlers
 {
   public class MouseEventHandler
   {
-    public Action OnClick { get; set; }
-    public Action MouseEnter { get; set; }
-    public Action MouseLeave { get; set; }
+    public Action OnLeftClick { get; set; }
+    public Action OnRightClick { get; set; }
+    public Action OnMouseEnter { get; set; }
+    public Action OnMouseLeave { get; set; }
+    public Rectangle Bounds { get; set; }
 
-    private Rectangle _objectBounds;
+    private MouseState _currentMouseState;
+    private MouseState _lastMouseState;
 
     public MouseEventHandler(Rectangle objectBounds)
     {
-      _objectBounds = objectBounds;
+      Bounds = objectBounds;
     }
 
-    private void ActionOnClick(MouseState currentMouseState, MouseState previousMouseState)
+    private void ActionOnLeftClick()
     {
-      if (currentMouseState.X >= _objectBounds.X && currentMouseState.X < _objectBounds.X + _objectBounds.Width &&
-        currentMouseState.Y >= _objectBounds.Y && currentMouseState.Y < _objectBounds.Y + _objectBounds.Height &&
-        currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
+      if (_currentMouseState.X >= Bounds.X && _currentMouseState.X < Bounds.X + Bounds.Width &&
+        _currentMouseState.Y >= Bounds.Y && _currentMouseState.Y < Bounds.Y + Bounds.Height &&
+        _currentMouseState.LeftButton == ButtonState.Pressed && _lastMouseState.LeftButton == ButtonState.Released)
       {
-        OnClick?.Invoke();
+        OnLeftClick?.Invoke();
       }
     }
-    private void ActionOnMouseHover(MouseState currentMouseState)
+    private void ActionOnRightClick()
     {
-      if (currentMouseState.X >= _objectBounds.X && currentMouseState.X < _objectBounds.X + _objectBounds.Width &&
-        currentMouseState.Y >= _objectBounds.Y && currentMouseState.Y < _objectBounds.Y + _objectBounds.Height)
+      if (_currentMouseState.X >= Bounds.X && _currentMouseState.X < Bounds.X + Bounds.Width &&
+        _currentMouseState.Y >= Bounds.Y && _currentMouseState.Y < Bounds.Y + Bounds.Height &&
+        _currentMouseState.RightButton == ButtonState.Pressed && _lastMouseState.RightButton == ButtonState.Released)
       {
-        MouseEnter?.Invoke();
+        OnRightClick?.Invoke();
+      }
+    }
+    private void ActionOnMouseHover()
+    {
+      if (_currentMouseState.X >= Bounds.X && _currentMouseState.X < Bounds.X + Bounds.Width &&
+        _currentMouseState.Y >= Bounds.Y && _currentMouseState.Y < Bounds.Y + Bounds.Height)
+      {
+        OnMouseEnter?.Invoke();
         return;
       }
-      MouseLeave?.Invoke();
+      OnMouseLeave?.Invoke();
     }
    
-    public void Update(GameTime gameTime, MouseState currentMouseState, MouseState previousMouseState)
+    public void Update(GameTime gameTime, Rectangle bounds)
     {
-      ActionOnClick(currentMouseState, previousMouseState);
-      ActionOnMouseHover(currentMouseState);
+      _currentMouseState = Mouse.GetState();
+
+      Bounds = bounds;
+      ActionOnLeftClick();
+      ActionOnRightClick();
+      ActionOnMouseHover();
+
+      _lastMouseState = _currentMouseState;
     }
   }
 }

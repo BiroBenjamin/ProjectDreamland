@@ -2,6 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using ProjectDreamland.Managers;
 using ProjectDreamland.GameStates;
+using System;
+using Microsoft.Xna.Framework.Input;
+using ProjectDreamland.Handlers;
+using ProjectDreamland.Components;
+using Microsoft.Xna.Framework.Content;
+using ProjectDreamland.Data.GameFiles.Characters;
 
 namespace ProjectDreamland
 {
@@ -12,8 +18,6 @@ namespace ProjectDreamland
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    private PlayState _playState;
-
     public static int ScreenWidth { get; set; }
     public static int ScreenHeight { get; set; }
 
@@ -22,12 +26,11 @@ namespace ProjectDreamland
       Self = this;
       _graphics = new GraphicsDeviceManager(this);
       Content.RootDirectory = "Content";
-      IsMouseVisible = true;
+      IsMouseVisible = false;
     }
 
     protected override void Initialize()
     {
-      // Initialize the window data
       _graphics.IsFullScreen = false;
       if (_graphics.IsFullScreen)
       {
@@ -46,32 +49,35 @@ namespace ProjectDreamland
 
       SystemPrefsManager.SetUpSystemPrefs();
 
-      _playState = new PlayState(GraphicsDevice, Content, ScreenWidth, ScreenHeight);
-
       base.Initialize();
     }
 
     protected override void LoadContent()
     {
       _spriteBatch = new SpriteBatch(GraphicsDevice);
-      QuestManager.Initialize();
-
-      _playState.LoadContent();
+      GameStateManager.LoadContent();
+      CursorManager.Initialize();
     }
     
 
     protected override void Update(GameTime gameTime)
     {
-      _playState.Update(gameTime);
-
+      if (!IsActive) return;
+      GameStateManager.Update(gameTime);
       base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
-      _playState.Draw(gameTime, _spriteBatch);
+      if (!IsActive) return;
+      GraphicsDevice.Clear(Color.Gray);
 
+      GameStateManager.Draw(gameTime, _spriteBatch);
       base.Draw(gameTime);
+
+      _spriteBatch.Begin();
+      CursorManager.Draw(gameTime, _spriteBatch);
+      _spriteBatch.End();
     }
   }
 }

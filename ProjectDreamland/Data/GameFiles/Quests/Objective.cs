@@ -18,6 +18,7 @@ namespace ProjectDreamland.Data.GameFiles.Quests
       TargetID = targetID;
       Amount = amount;
       Remaining = amount;
+      Description = $" - {Amount - Remaining} / {Amount} - {TargetID}";
     }
 
     public void Update(GameTime gameTime)

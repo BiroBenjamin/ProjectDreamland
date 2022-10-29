@@ -4,18 +4,32 @@ using ProjectDreamland.Data.GameFiles.Quests;
 using System;
 using System.Collections.Generic;
 using ProjectDreamland.Data.GameFiles.Characters;
+using Microsoft.Xna.Framework.Content;
+using ProjectDreamland.Data.Constants;
+using ProjectDreamland.Data.Enums;
+using ProjectDreamland.Data.GameFiles.Items;
 
 namespace ProjectDreamland.Managers
 {
   public static class QuestManager
   {
+    private static ContentManager _contentManager = Game1.Self.Content;
     public static List<Quest> Quests { get; set; } = new List<Quest>();
 
     public static void Initialize()
     {
       Quests.AddRange(
         new List<Quest>() {
-          new Quest("testQuest001", "Monke dead", "You have to kill these monkes!!", "kill", 520, new Objective("gorilla_front", 1))
+          new Quest("testQuest001", "Test quest 1", "This is the first test quest...", "kill", 520, new Objective("gorilla_front", 1),
+            new Weapon("weapon_001", "Iron Sword", ItemTypesEnum.Weapon,
+            _contentManager.Load<Texture2D>("Sprites/Items/sword_icon"), StatList.Stat1)),
+          new Quest("testQuest002", "Test quest 2", "This is the second test quest...", "kill", 136, new Objective("gorilla_front", 1),
+            new Weapon("weapon_002", "Enchanted Iron Sword", ItemTypesEnum.Weapon,
+            _contentManager.Load<Texture2D>("Sprites/Items/sword_icon"), StatList.Stat5)),
+          new Quest("testQuest003", "Test quest 3", "This is the third test quest...", "kill", 389, new Objective("gorilla_front", 1),
+            new Armor("armor_001", "Iron Helmet", ItemTypesEnum.Head,
+            _contentManager.Load<Texture2D>("Sprites/Items/helmet_icon"), StatList.Stat2)),
+          new Quest("testQuest004", "Test quest 4", "This is the fourth test quest...", "kill", 1034, new Objective("gorilla_front", 1)),
         }
       );
     }
@@ -27,20 +41,32 @@ namespace ProjectDreamland.Managers
       return Quests[random.Next(0, Quests.Count)];
     }
 
-    public static void Update(GameTime gameTime, Player player, Rectangle panelBounds)
+    public static void Update(GameTime gameTime, Rectangle panelBounds)
     {
       int y = (int)(panelBounds.Y + panelBounds.Height * .05f);
-      foreach (Quest quest in player.Quests)
+      List<Quest> questsToRemove = new List<Quest>();
+      foreach (Quest quest in Player.Quests)
       {
+
         quest.Update(gameTime, panelBounds, y);
         y += quest.Bounds.Height;
+        if (quest.IsDone)
+        {
+          Player.CurrentExperience += quest.RewardExp;
+          if (quest.RewardItem != null) InventoryManager.AddItem(quest.RewardItem);
+          questsToRemove.Add(quest);
+        }
+      }
+      foreach (Quest quest in questsToRemove)
+      {
+        Player.Quests.Remove(quest);
       }
     }
-    public static void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, SpriteFont font, Player player)
+    public static void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteFont font, float layerDepth)
     {
-      foreach (Quest quest in Quests)
+      foreach (Quest quest in Player.Quests)
       {
-        quest.Draw(gameTime, spriteBatch, graphicsDevice, font);
+        quest.Draw(gameTime, spriteBatch, font, layerDepth);
       }
     }
   }

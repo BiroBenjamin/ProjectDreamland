@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectDreamland.Data.GameFiles.Characters;
+using ProjectDreamland.Data.GameFiles.Items;
 using ProjectDreamland.Managers;
 using System;
 using System.Linq;
@@ -15,11 +16,13 @@ namespace ProjectDreamland.Data.GameFiles.Quests
     public string Type { get; set; }
     public Objective Objective { get; set; }
     public int RewardExp { get; set; }
+    public Item RewardItem { get; set; }
     public BaseCharacter QuestGiver { get; set; }
     public Rectangle Bounds { get; set; }
     public bool IsDone { get; set; }
+    public bool IsAccepted { get; set; }
 
-    public Quest(string id, string title, string description, string type, int rewardExp, Objective objective)
+    public Quest(string id, string title, string description, string type, int rewardExp, Objective objective, Item rewardItem = null)
     {
       if (QuestManager.Quests.Any(x => x.ID == id))
       {
@@ -31,6 +34,7 @@ namespace ProjectDreamland.Data.GameFiles.Quests
       Type = type;
       RewardExp = rewardExp;
       Objective = objective;
+      if (rewardItem != null) RewardItem = rewardItem;
     }
 
     public void Update(GameTime gameTime, Rectangle panelBounds, int y)
@@ -41,10 +45,12 @@ namespace ProjectDreamland.Data.GameFiles.Quests
       Bounds = new Rectangle(x, y, width, height);
       Objective.Update(gameTime);
     }
-    public void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, SpriteFont font)
+    public void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteFont font, float layerDepth)
     {
-      spriteBatch.DrawString(font, $"{Title}:", new Vector2(Bounds.X, Bounds.Y), Color.White);
-      spriteBatch.DrawString(font, $"{Objective.Description}", new Vector2(Bounds.X, Bounds.Y + 15), Color.White);
+      spriteBatch.DrawString(font, $"{Title}:", new Vector2(Bounds.X, Bounds.Y), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None,
+        layerDepth);
+      spriteBatch.DrawString(font, $"{Objective.Description}", new Vector2(Bounds.X, Bounds.Y + 20), Color.White, 0f, Vector2.Zero, 1f,
+        SpriteEffects.None, layerDepth);
     }
   }
 }

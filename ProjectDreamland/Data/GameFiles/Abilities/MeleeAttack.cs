@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles.Abilities.Interfaces;
 using ProjectDreamland.Data.GameFiles.Characters;
 using ProjectDreamland.Data.GameFiles.Objects;
+using ProjectDreamland.Handlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +13,9 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
 {
   public class MeleeAttack : BaseAbility, IAbility
   {
-    public MeleeAttack(string name, string description, ResourceTypesEnum resourceType, int cost, int damage, 
-      DamageTypesEnum damageType, float range, float cooldown, bool triggersInternalCooldown) : 
-      base(name, description, resourceType, cost, damage, damageType, range, cooldown, triggersInternalCooldown) { }
+    public MeleeAttack(string name, string description, ResourceTypesEnum resourceType, int cost, int damage, DamageTypesEnum damageType, 
+      AbilityTypesEnum abilityType, float range, float cooldown, bool triggersInternalCooldown, Texture2D icon = null) : 
+      base(name, description, resourceType, cost, damage, damageType, abilityType, range, cooldown, triggersInternalCooldown, icon) { }
 
     public override void Cast(List<BaseCharacter> characters, BaseCharacter caster)
     {

@@ -13,5 +13,7 @@ namespace ProjectDreamland.Data.Enums
 		WorldObject,
 		[Description("Tile"), Displayable]
 		Tile,
-	}
+    [Description("Item"), Displayable]
+    Item,
+  }
 }
