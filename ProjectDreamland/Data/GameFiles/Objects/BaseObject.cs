@@ -17,7 +17,6 @@ namespace ProjectDreamland.Data.GameFiles.Objects
     public System.Drawing.Point CollisionPosition { get; set; } = new System.Drawing.Point(0, 0);
     public System.Drawing.Size CollisionSize { get; set; } = new System.Drawing.Size(0, 0);
     public bool IsCollidable { get; set; } = false;
-    public string OtherData { get; set; }
 
     public BaseObject() { }
     public BaseObject(BaseFile baseFile) : base(baseFile) { }

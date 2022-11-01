@@ -10,6 +10,7 @@ namespace ProjectDreamland.Data.GameFiles
     public string ID { get; set; }
     public string Name { get; set; }
     public string FilePath { get; set; }
+    public string Instructions { get; set; }
 
     public BaseFile() { }
     public BaseFile(BaseFile baseFile)

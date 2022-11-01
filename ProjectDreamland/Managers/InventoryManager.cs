@@ -8,11 +8,19 @@ namespace ProjectDreamland.Managers
   {
     public static List<Item> Items { get; } = new List<Item>();
 
-    public static void AddItem(Item item)
+    public static void AddItem(Item item, int count = 1)
     {
-      int index = Items.IndexOf(null);
-      if (index != -1) Items[index] = item;
-      else Items.Add(item);
+      for(int i = 0; i < count; i++)
+      {
+        int index = Items.IndexOf(null);
+        if (index != -1) Items[index] = item;
+        else Items.Add(item);
+      }
+    }
+    public static void RemoveItem(Item item)
+    {
+      int index = Items.IndexOf(item);
+      if (index != -1) Items[index] = null;
     }
 
     public static void Update(GameTime gameTime)

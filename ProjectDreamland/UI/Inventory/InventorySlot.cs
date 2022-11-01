@@ -22,6 +22,7 @@ namespace ProjectDreamland.UI.Inventory
       {
         if (SlotIndex >= InventoryManager.Items.Count) return;
         Item item = InventoryManager.Items[SlotIndex];
+        if (item == null || !item.IsEquipable) return;
         switch (item.GetType() == typeof(Armor) ? (item as Armor).Type : (item as Weapon).Type)
         {
           case ItemTypesEnum.Head:
@@ -60,6 +61,10 @@ namespace ProjectDreamland.UI.Inventory
         {
           Slot.Texture = item.Texture;
           Slot.Tooltip = new Tooltip(_graphicsDevice, Vector2.Zero, item.ToString());
+        }
+        else
+        {
+          Slot.ResetTexture();
         }
       }
       else

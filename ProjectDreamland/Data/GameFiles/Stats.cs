@@ -28,10 +28,10 @@
 
     public override string ToString()
     {
-      return $"{(AttackDamage.Item1 == 0 && AttackDamage.Item2 == 0 ? "" : $"Attack Damage: {AttackDamage.Item1} - {AttackDamage.Item2}")}\\n" +
-        $"{(HealthPoints == 0 ? "" : $"Bonus Health: {HealthPoints}")}\\n" +
-        $"{(ManaPoints == 0 ? "" : $"Bonus Mana: {ManaPoints}")}\\n" +
-        $"{(ManaInterval == 0 ? "" : $"Bonus Mana Regen: {ManaInterval}")}\\n";
+      return $"{(AttackDamage.Item1 == 0 && AttackDamage.Item2 == 0 ? "" : $"Attack Damage: {AttackDamage.Item1} - {AttackDamage.Item2}")}\n" +
+        $"{(HealthPoints == 0 ? "" : $"Bonus Health: {HealthPoints}")}\n" +
+        $"{(ManaPoints == 0 ? "" : $"Bonus Mana: {ManaPoints}")}\n" +
+        $"{(ManaInterval == 0 ? "" : $"Bonus Mana Regen: {ManaInterval}")}\n";
     }
   }
 }

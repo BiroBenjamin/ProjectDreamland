@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using ProjectDreamland.Components;
 using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles.Abilities;
 using ProjectDreamland.Data.GameFiles.Objects;
@@ -44,11 +45,14 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     public int ManaInterval = 5;
     //Energy back per 2 second
     public int EnergyInterval = 10;
-    protected int _timer;
+    protected Timer _resourceTimer;
     protected AIHandler _aiHandler;
 
     protected string _questGivenID;
     protected bool _isQuestAccepted = false;
+
+    private Timer _respawnTimer;
+    private Vector2 _origin;
 
     public BaseCharacter()
     {
@@ -87,6 +91,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       AggroRange = 10;
       MeleeAttack = new MeleeAttack("Attack", "", ResourceTypesEnum.None, 0, 35, DamageTypesEnum.Physical, AbilityTypesEnum.Damage, 64, 2, true);
       _aiHandler = new AIHandler(this);
+      _origin = new Vector2(Position.X, Position.Y);
       SetupUI();
       SetTimer();
     }
@@ -101,15 +106,16 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       switch (ResourceType)
       {
         case "Mana":
-          _timer = 60 * 5;
+          _resourceTimer = new Timer(5);
           break;
         case "Energy":
-          _timer = 60 * 2;
+          _resourceTimer = new Timer(2);
           break;
         default:
-          _timer = 60 * 2;
+          _resourceTimer = new Timer(2);
           break;
       }
+      _respawnTimer = new Timer(60);
     }
 
     public void Attack(List<BaseCharacter> characters, BaseAbility ability)
@@ -221,11 +227,17 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
       MeleeAttack.Update(gameTime, components);
 
-      _timer--;
-      if (_timer == 0)
+      if (_resourceTimer.Count(gameTime) == 0)
       {
         AddResource();
-        SetTimer();
+        _resourceTimer.Reset();
+      }
+      if(_respawnTimer.Count(gameTime) == 0 && CharacterState == CharacterStatesEnum.Dead)
+      {
+        CharacterState = CharacterStatesEnum.Alive;
+        Position = new System.Drawing.Point((int)_origin.X, (int)_origin.Y);
+        CurrentHealthPoints = MaxHealthPoints;
+        _respawnTimer.Reset();
       }
     }
     protected void AddResource()

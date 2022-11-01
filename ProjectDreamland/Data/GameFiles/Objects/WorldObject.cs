@@ -1,6 +1,9 @@
-﻿using ProjectDreamland.Data.GameFiles.Characters;
+﻿using Microsoft.Xna.Framework;
+using ProjectDreamland.Components;
+using ProjectDreamland.Data.GameFiles.Characters;
 using ProjectDreamland.Managers;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Xml.Serialization;
 
@@ -10,6 +13,9 @@ namespace ProjectDreamland.Data.GameFiles.Objects
   public class WorldObject : BaseObject
   {
     public bool IsInteractable { get; set; } = false;
+    public bool IsLooted { get; set; }
+
+    private Timer _respawnTimer = new Timer(30);
 
     public WorldObject() { }
     public WorldObject(BaseObject baseObject) : base(baseObject) { }
@@ -32,15 +38,19 @@ namespace ProjectDreamland.Data.GameFiles.Objects
     public void Interact(Player player)
     {
       if (!IsInteractable) return;
-      if (OtherData != null && OtherData.Contains("@teleport"))
+      if (Instructions != null)
       {
-        string tpData = OtherData.Replace("@teleport:", "").Replace("\"", "");
-        string map = tpData.Split(':')[0];
-        MapManager.LoadNewMap(map, player);
-        string coordinates = tpData.Split(':')[1];
-        int.TryParse(coordinates.Split("/")[0], out int x);
-        int.TryParse(coordinates.Split("/")[1], out int y);
-        player.SetPosition(new Point(x, y));
+        CommandManager.LoadCommand(Instructions, player, this);
+      }
+    }
+
+    public override void Update(GameTime gameTime, List<BaseObject> components)
+    {
+      if (!IsLooted) return;
+      if (_respawnTimer.Count(gameTime) == 0)
+      {
+        IsLooted = false;
+        _respawnTimer.Reset();
       }
     }
   }

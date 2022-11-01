@@ -4,26 +4,25 @@ namespace ProjectDreamland.Components
 {
   public class Timer
   {
-    public float Time { get; set; }
-
+    private float _time;
     private readonly float _timeLimit;
 
     public Timer(float timeLimit)
     {
-      Time = 0f;
+      _time = 0f;
       _timeLimit = timeLimit;
     }
 
     public float Count(GameTime gameTime)
     {
-      Time += (float)gameTime.ElapsedGameTime.TotalSeconds / 2;
-      float timeRemaining = Time >= _timeLimit ? 0 : _timeLimit - Time;
+      _time += (float)gameTime.ElapsedGameTime.TotalSeconds / 2;
+      float timeRemaining = _time >= _timeLimit ? 0 : _timeLimit - _time;
       return timeRemaining;
     }
 
     public void Reset()
     {
-      Time = 0f;
+      _time = 0f;
     }
   }
 }

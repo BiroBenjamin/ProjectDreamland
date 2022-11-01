@@ -7,6 +7,7 @@
     Gloves,
     Pants,
     Boots,
-    Weapon
+    Weapon,
+    Quest
   }
 }

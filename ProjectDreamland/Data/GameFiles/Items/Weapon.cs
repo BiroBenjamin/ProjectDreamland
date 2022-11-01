@@ -7,14 +7,15 @@ namespace ProjectDreamland.Data.GameFiles.Items
   {
     public Stats Stats { get; set; }
 
-    public Weapon(string id, string name, ItemTypesEnum weaponType, Texture2D texture, Stats stats) : base(id, name, weaponType, texture)
+    public Weapon(string id, string name, ItemTypesEnum weaponType, Texture2D texture, Stats stats) : 
+      base(id, name, weaponType, texture, true)
     {
       Stats = stats;
     }
 
     public override string ToString()
     {
-      return $"{Name}\\n\\n{Stats}";
+      return $"{Name}\n\n{Stats}";
     }
   }
 }

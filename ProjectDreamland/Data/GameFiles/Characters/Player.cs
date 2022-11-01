@@ -206,12 +206,11 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       HandleLevel();
       _healthBar.Update(gameTime, MaxHealthPoints, CurrentHealthPoints);
       _resourceBar.Update(gameTime, MaxResourcePoints, CurrentResourcePoints);
-      _timer--;
-      if (_timer == 0)
+      if (_resourceTimer.Count(gameTime) == 0)
       {
         if (CurrentResourcePoints < MaxResourcePoints) AddResource();
         else CurrentResourcePoints = MaxResourcePoints;
-        SetTimer();
+        _resourceTimer.Reset();
       }
       HandleInteraction(components.Where(x => x.GetType() == typeof(WorldObject) || x.GetType() == typeof(BaseCharacter)).ToList());
 
@@ -263,12 +262,12 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     public override string ToString()
     {
-      return $"Level: {Level}\\n" +
-        $"Health: {CurrentHealthPoints}/{MaxHealthPoints}\\n" +
-        $"{ResourceType}: {CurrentResourcePoints}/{MaxResourcePoints}\\n" +
-        $"Attack Damage: {AttackDamage.Item1} - {AttackDamage.Item2}\\n" +
-        $"Attack Range: {(AttackRange == 0 ? "Melee" : AttackRange)}\\n" +
-        $"Mana per five seconds: {ManaInterval}\\n\\n\\n" +
+      return $"Level: {Level}\n" +
+        $"Health: {CurrentHealthPoints}/{MaxHealthPoints}\n" +
+        $"{ResourceType}: {CurrentResourcePoints}/{MaxResourcePoints}\n" +
+        $"Attack Damage: {AttackDamage.Item1} - {AttackDamage.Item2}\n" +
+        $"Attack Range: {(AttackRange == 0 ? "Melee" : AttackRange)}\n" +
+        $"Mana per five seconds: {ManaInterval}\n\n\n" +
         $"Quests accepted: {Quests.Count}";
     }
   }
