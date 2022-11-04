@@ -33,4 +33,5 @@
   <MaxHealthPoints>200</MaxHealthPoints>
   <IsDead>false</IsDead>
   <Speed>3</Speed>
+  <CharacterAffiliation>Friendly</CharacterAffiliation>
 </BaseCharacter>

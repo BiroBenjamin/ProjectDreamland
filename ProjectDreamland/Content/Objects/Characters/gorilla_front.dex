@@ -2,7 +2,7 @@
 <BaseCharacter xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <FileType>Character</FileType>
   <ID>gorilla_front</ID>
-  <Name>GorillaFront</Name>
+  <Name>Gorilla</Name>
   <FilePath>Objects\Characters\gorilla_front.dex</FilePath>
   <ZIndex>0</ZIndex>
   <ImagePath>Sprites\Characters\gorilla_front.png</ImagePath>
@@ -23,11 +23,15 @@
     <Height>27</Height>
   </CollisionSize>
   <IsCollidable>true</IsCollidable>
+  <CurrentResourcePoints>0</CurrentResourcePoints>
+  <CurrentHealthPoints>125</CurrentHealthPoints>
   <Level>10</Level>
   <ResourceType>Rage</ResourceType>
   <MaxResourcePoints>100</MaxResourcePoints>
-  <CurrentResourcePoints>0</CurrentResourcePoints>
+  <AttackDamage>0</AttackDamage>
+  <AttackRange>1.5</AttackRange>
   <MaxHealthPoints>125</MaxHealthPoints>
-  <CurrentHealthPoints>125</CurrentHealthPoints>
+  <IsDead>false</IsDead>
   <Speed>3</Speed>
+  <CharacterAffiliation>Hostile</CharacterAffiliation>
 </BaseCharacter>
