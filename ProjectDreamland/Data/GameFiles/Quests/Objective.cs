@@ -3,6 +3,7 @@ using ProjectDreamland.Data.GameFiles.Characters;
 using ProjectDreamland.Data.GameFiles.Objects;
 using ProjectDreamland.Managers;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ProjectDreamland.Data.GameFiles.Quests
 {
@@ -43,8 +44,13 @@ namespace ProjectDreamland.Data.GameFiles.Quests
       Description = $" - {Amount - Remaining} / {Amount} - {Target.Name}";
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, string questType)
     {
+      if(questType == "collect")
+      {
+        int alreadyHave = InventoryManager.Items.Where(x => x.ID == Target.ID).Count();
+        Remaining = alreadyHave < 0 ? 0 : Amount - alreadyHave;
+      }
       if (Remaining == 0) IsDone = true;
       if (IsDone)
       {

@@ -43,7 +43,7 @@ namespace ProjectDreamland.Data.GameFiles.Quests
       int height = (int)(panelBounds.Height * .1f);
       int x = (int)(panelBounds.X + panelBounds.Width * .1f);
       Bounds = new Rectangle(x, y, width, height);
-      Objective.Update(gameTime);
+      Objective.Update(gameTime, Type);
     }
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteFont font, float layerDepth)
     {

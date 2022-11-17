@@ -112,8 +112,8 @@ namespace ProjectDreamland.Managers
         else if (args.Length == 3)
         {
           Random random = new Random();
-          _ = int.TryParse(args[1], out int countMin);
-          _ = int.TryParse(args[2], out int countMax);
+          int.TryParse(args[1], out int countMin);
+          int.TryParse(args[2], out int countMax);
           givenAmount = random.Next(countMin, countMax + 1);
           InventoryManager.AddItem(itemToGive, givenAmount);
         }
