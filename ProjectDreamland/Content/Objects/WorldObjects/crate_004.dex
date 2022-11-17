@@ -7,8 +7,8 @@
   <ZIndex>1</ZIndex>
   <ImagePath>Sprites\WorldObjects\crate_004.png</ImagePath>
   <Position>
-    <X>1914</X>
-    <Y>2254</Y>
+    <X>-136</X>
+    <Y>330</Y>
   </Position>
   <Size>
     <Width>32</Width>

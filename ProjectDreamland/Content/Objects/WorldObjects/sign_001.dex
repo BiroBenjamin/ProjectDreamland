@@ -7,8 +7,8 @@
   <ZIndex>1</ZIndex>
   <ImagePath>Sprites\WorldObjects\sign_001.png</ImagePath>
   <Position>
-    <X>1855</X>
-    <Y>2348</Y>
+    <X>-61</X>
+    <Y>-146</Y>
   </Position>
   <Size>
     <Width>32</Width>

@@ -9,6 +9,7 @@ using ProjectDreamland.Handlers;
 using ProjectDreamland.Managers;
 using ProjectDreamland.UI.Menu;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace ProjectDreamland.GameStates
@@ -32,7 +33,9 @@ namespace ProjectDreamland.GameStates
 
       _camera = new Camera();
       _renderHandler = new RenderHandler();
-      _player = new Player(_graphicsDevice, _contentManager.Load<Texture2D>("Sprites/Characters/CharacterBaseFront"), MapManager.CurrentMap, -64, -64);
+      _player = new Player(_graphicsDevice, 
+        _contentManager.Load<Texture2D>(Path.Combine(SystemPrefsManager.SystemPrefs.RootPath, "Sprites/Characters/CharacterBaseFront")), 
+        MapManager.CurrentMap, -64, -64);
 
       MapManager.LoadMapContent(_player);
       _renderedComponents = new List<BaseObject>();

@@ -7,8 +7,8 @@
   <ZIndex>1</ZIndex>
   <ImagePath>Sprites\WorldObjects\tree_trunk_002.png</ImagePath>
   <Position>
-    <X>-203</X>
-    <Y>-127</Y>
+    <X>112</X>
+    <Y>107</Y>
   </Position>
   <Size>
     <Width>64</Width>

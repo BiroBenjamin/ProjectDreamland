@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles.Items;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ProjectDreamland.Managers
 {
@@ -13,7 +14,7 @@ namespace ProjectDreamland.Managers
     public static List<Item> Items = new List<Item>()
     {
       new Item("apple_001", "Apple", ItemTypesEnum.Quest, 
-        _contentManager.Load<Texture2D>("Sprites/Items/apple_icon"), false),
+        _contentManager.Load<Texture2D>(Path.Combine(SystemPrefsManager.SystemPrefs.RootPath, "Sprites/Items/apple_icon")), false),
     };
   }
 }

@@ -7,8 +7,8 @@
   <ZIndex>1</ZIndex>
   <ImagePath>Sprites\WorldObjects\barrel_001.png</ImagePath>
   <Position>
-    <X>1742</X>
-    <Y>2097</Y>
+    <X>-145</X>
+    <Y>-675</Y>
   </Position>
   <Size>
     <Width>28</Width>

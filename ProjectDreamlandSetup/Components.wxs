@@ -12,7 +12,7 @@
     </ComponentGroup>
 
     <!--Inastalled files-->
-    <DirectoryRef Id="INSTALLFOLDER" FileSource="..\ProjectDreamland\bin\$(var.Configuration)\net6.0\win-$(var.Platform)\publish\">
+    <DirectoryRef Id="INSTALLFOLDER" FileSource="..\ProjectDreamland\bin\$(var.Configuration)\net6.0\win-$(var.Platform)\">
       
       <!--Shortcut to main application-->
       <Component Id="MainAppShortcut" Guid="{65EDAC9B-3848-4CF0-9AEA-0AAA695B3ED1}">

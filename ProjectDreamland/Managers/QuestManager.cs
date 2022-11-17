@@ -70,6 +70,7 @@ namespace ProjectDreamland.Managers
       }
       foreach (Quest quest in questsToRemove)
       {
+        quest.Objective.Remaining = quest.Objective.Amount;
         Player.Quests.Remove(quest);
       }
     }

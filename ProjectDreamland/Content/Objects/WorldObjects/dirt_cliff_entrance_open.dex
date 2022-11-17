@@ -7,8 +7,8 @@
   <ZIndex>1</ZIndex>
   <ImagePath>Sprites\WorldObjects\dirt_cliff_entrance_open.png</ImagePath>
   <Position>
-    <X>-333</X>
-    <Y>-29</Y>
+    <X>-129</X>
+    <Y>-32</Y>
   </Position>
   <Size>
     <Width>32</Width>

@@ -7,8 +7,8 @@
   <ZIndex>1</ZIndex>
   <ImagePath>Sprites\WorldObjects\toombstone_001.png</ImagePath>
   <Position>
-    <X>1535</X>
-    <Y>2261</Y>
+    <X>59</X>
+    <Y>-98</Y>
   </Position>
   <Size>
     <Width>32</Width>

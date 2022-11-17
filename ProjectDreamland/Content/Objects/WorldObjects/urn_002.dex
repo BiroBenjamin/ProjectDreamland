@@ -7,8 +7,8 @@
   <ZIndex>1</ZIndex>
   <ImagePath>Sprites\WorldObjects\urn_002.png</ImagePath>
   <Position>
-    <X>1934</X>
-    <Y>2196</Y>
+    <X>70</X>
+    <Y>97</Y>
   </Position>
   <Size>
     <Width>32</Width>

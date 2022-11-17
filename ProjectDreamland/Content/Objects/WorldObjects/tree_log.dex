@@ -7,8 +7,8 @@
   <ZIndex>1</ZIndex>
   <ImagePath>Sprites\WorldObjects\tree_log.png</ImagePath>
   <Position>
-    <X>-99</X>
-    <Y>42</Y>
+    <X>-66</X>
+    <Y>118</Y>
   </Position>
   <Size>
     <Width>96</Width>

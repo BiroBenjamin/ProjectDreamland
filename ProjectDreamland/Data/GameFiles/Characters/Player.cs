@@ -18,18 +18,19 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 {
   public class Player : BaseCharacter
   {
-    private GraphicsDevice _graphicsDevice;
-
     new public float Speed { get; set; } = 2f;
     public int ExperienceNeeded { get; set; }
     public static int CurrentExperience { get; set; }
     public Stats BaseStats { get; set; }
     public Stats BonusStats { get; set; }
 
+    public static Player Self { get; set; }
+    public static RespawnPoint RespawnPoint { get; set; } = new RespawnPoint();
     public new static BaseAbility MeleeAttack { get; set; }
     public static BaseAbility NurturingWinds { get; set; }
     public static BaseAbility Fireball { get; set; }
 
+    private GraphicsDevice _graphicsDevice;
     private KeyboardState _currentKeyState;
     private KeyboardState _lastKeyState;
     private MouseState _currentMouseState;
@@ -76,6 +77,8 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       Fireball = AbilitiesList.AbilitiesList.Fireball;
       Quests = new List<Quest>();
       BaseStats = new Stats(AttackDamage, MaxHealthPoints, MaxResourcePoints, ManaInterval);
+      CommandManager.Player = this;
+      Self = this;
     }
 
     public void SetPosition(System.Drawing.Point position)
@@ -86,6 +89,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     private void Move(List<BaseObject> components)
     {
+      if (CharacterState != CharacterStatesEnum.Alive) return;
       _currentKeyState = Keyboard.GetState();
       velocity = new Vector2();
 
@@ -127,6 +131,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     private void PerformAttack(GameTime gameTime, List<BaseCharacter> characters, List<BaseObject> objects)
     {
+      if (CharacterState != CharacterStatesEnum.Alive) return;
       MeleeAttack.Update(gameTime, objects);
       if (_currentMouseState.LeftButton == ButtonState.Pressed && _lastMouseState.LeftButton == ButtonState.Released && 
         !UIHandler.IsHoveredOver)
@@ -195,7 +200,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     public override void Update(GameTime gameTime, List<BaseObject> components)
     {
-      if (CharacterState != CharacterStatesEnum.Alive) return;
+      //if (CharacterState != CharacterStatesEnum.Alive) return;
       SetCurrentStates();
 
       ZIndex = Position.Y + Size.Height;
@@ -213,6 +218,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
         _resourceTimer.Reset();
       }
       HandleInteraction(components.Where(x => x.GetType() == typeof(WorldObject) || x.GetType() == typeof(BaseCharacter)).ToList());
+      HandleDeath();
 
       SetLastStates();
     }
@@ -227,6 +233,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     }
     private void HandleInteraction(List<BaseObject> components)
     {
+      if (CharacterState != CharacterStatesEnum.Alive) return;
       Vector2 mousePosition = Vector2.Transform(_currentMouseState.Position.ToVector2(), Matrix.Invert(Camera.Transform));
       foreach (BaseObject baseObject in components)
       {
@@ -242,6 +249,13 @@ namespace ProjectDreamland.Data.GameFiles.Characters
         {
           (baseObject as BaseCharacter).Interact(this);
         }
+      }
+    }
+    private void HandleDeath()
+    {
+      if (CharacterState != CharacterStatesEnum.Alive)
+      {
+        RespawnWindow.IsShown = true;
       }
     }
 

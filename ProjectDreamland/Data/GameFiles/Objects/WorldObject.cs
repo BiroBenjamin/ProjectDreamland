@@ -29,7 +29,7 @@ namespace ProjectDreamland.Data.GameFiles.Objects
       return new Microsoft.Xna.Framework.Rectangle(Position.X, Position.Y, Size.Width, Size.Height);
     }
 
-    public bool CursorIntersects(Microsoft.Xna.Framework.Vector2 cursor)
+    public bool CursorIntersects(Vector2 cursor)
     {
       return cursor.X > Position.X && cursor.X <= Size.Width + Position.X &&
         cursor.Y > Position.Y && cursor.Y <= Size.Height + Position.Y;
@@ -38,14 +38,12 @@ namespace ProjectDreamland.Data.GameFiles.Objects
     public void Interact(Player player)
     {
       if (!IsInteractable) return;
-      if (Instructions != null)
-      {
-        CommandManager.LoadCommand(Instructions, player, this);
-      }
+      CommandManager.LoadCommand(Instructions, this, Enums.CommandLoadStateEnum.OnInteract);
     }
 
     public override void Update(GameTime gameTime, List<BaseObject> components)
     {
+      CommandManager.LoadCommand(Instructions, this, Enums.CommandLoadStateEnum.OnUpdate);
       if (!IsLooted) return;
       if (_respawnTimer.Count(gameTime) == 0)
       {

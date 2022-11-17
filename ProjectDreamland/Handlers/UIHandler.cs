@@ -71,6 +71,11 @@ namespace ProjectDreamland.Handlers
         (int)(100),
         (int)(0),
         (int)(0));
+      Rectangle respawnWindowBounds = new Rectangle(
+        (int)(screenWidth / 2 - screenWidth * .075f),
+        (int)(screenHeight * .2f),
+        (int)(screenWidth * .15f),
+        (int)(screenHeight * .15f));
 
       _components = new List<BaseUI>()
       {
@@ -81,6 +86,7 @@ namespace ProjectDreamland.Handlers
         new ActionBar(graphicsDevice, actionbarBounds, Color.Black * .9f),
         new MenuBar(graphicsDevice, menuBarBounds, Color.Black * .9f),
         new InventoryWindow(graphicsDevice, inventoryBounds, Color.Black * .8f, 32),
+        new RespawnWindow(graphicsDevice, respawnWindowBounds, Color.Black * .8f),
       };
     }
 

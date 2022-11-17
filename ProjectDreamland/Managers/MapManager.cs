@@ -30,12 +30,12 @@ namespace ProjectDreamland.Managers
         {
           string imagePath = Path.Combine(SystemPrefsManager.SystemPrefs.RootPath, tile.ImagePath.Split('.')[0]);
           tile.Texture = content.Load<Texture2D>(imagePath);
-          tile.ZIndex = -9999999;
         }
         foreach (WorldObject obj in map.WorldObjects)
         {
           string imagePath = Path.Combine(SystemPrefsManager.SystemPrefs.RootPath, obj.ImagePath.Split('.')[0]);
           obj.Texture = content.Load<Texture2D>(imagePath);
+          CommandManager.LoadCommand(obj.Instructions, obj, CommandLoadStateEnum.OnLoad);
         }
         foreach(BaseCharacter character in map.Characters)
         {
