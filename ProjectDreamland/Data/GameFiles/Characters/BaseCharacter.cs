@@ -36,6 +36,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     public LookDirectionsEnum Facing { get; set; } = LookDirectionsEnum.South;
     [XmlIgnore] public Rectangle AttackBounds = new Rectangle();
     [XmlIgnore] public MeleeAttack MeleeAttack { get; set; }
+    [XmlIgnore] public Quest Quest { get; set; }
 
     protected Vector2 velocity;
     protected HealthBar _healthBar;
@@ -170,9 +171,10 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     }
     public void Interact(Player player)
     {
-      if (CharacterAffiliation != CharacterAffiliationsEnum.Friendly) return;
+      if (CharacterAffiliation != CharacterAffiliationsEnum.Friendly || Quest == null) return;
+      QuestWindow.Quest = Quest;
+      if (QuestWindow.Quest.IsDone) return;
       QuestWindow.IsShown = true;
-      if (QuestWindow.Quest == null) QuestWindow.Quest = QuestManager.GetRandomQuest();
     }
 
     #region Collision

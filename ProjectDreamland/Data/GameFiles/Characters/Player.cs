@@ -63,7 +63,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     }
     private void SetStatus()
     {
-      Level = 4;
+      Level = 1;
       AttackDamage = (1, 3);
       MaxHealthPoints = 200;
       CurrentHealthPoints = MaxHealthPoints;
@@ -183,8 +183,21 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       {
         CurrentExperience -= ExperienceNeeded;
         Level++;
+        AddStats();
         ExperienceNeeded = (int)Math.Pow(Level * 100, 1.1);
       }
+    }
+    private void AddStats()
+    {
+      BaseStats.HealthPoints = BaseStats.HealthPoints + CalculateBonus(BaseStats.HealthPoints);
+      CurrentHealthPoints = MaxHealthPoints;
+      BaseStats.ManaPoints = BaseStats.ManaPoints + CalculateBonus(BaseStats.ManaPoints);
+      CurrentResourcePoints = MaxResourcePoints;
+    }
+    private int CalculateBonus(int source)
+    {
+      int multiplier = (int)Math.Pow(source, .3);
+      return multiplier;
     }
 
     private void SetCurrentStates()

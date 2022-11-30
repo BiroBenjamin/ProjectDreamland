@@ -28,8 +28,8 @@ namespace ProjectDreamland.GameStates
 
     public override void LoadContent()
     {
-      MapManager.LoadMaps(_contentManager);
       QuestManager.Initialize();
+      MapManager.LoadMaps(_contentManager);
 
       _camera = new Camera();
       _renderHandler = new RenderHandler();

@@ -21,12 +21,10 @@ namespace ProjectDreamland.UI.Character
     private int _spacing;
     private Rectangle _slotBounds;
     private CharacterInfoPanel _infoPanel;
-    private Player _player;
 
     public CharacterWindow(ContentManager content, GraphicsDevice graphicsDevice, Rectangle bounds, Color color, Player player) :
       base(graphicsDevice, bounds, color)
     {
-      _player = player;
       Rectangle closeButtonBounds = new Rectangle(
         (int)(Bounds.X + Bounds.Width - 35),
         (int)(Bounds.Y),

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace ProjectDreamland.Data.GameFiles.Abilities
 {
-    public class RangedMagicAttack : BaseAbility, IAbility
+    public class RangedMagicAttack : BaseAbility
   {
     private List<Projectile> _projectiles;
     private Texture2D _projectileTexture;

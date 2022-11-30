@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace ProjectDreamland.Data.GameFiles.Abilities
 {
-  public class MeleeAttack : BaseAbility, IAbility
+  public class MeleeAttack : BaseAbility
   {
     public MeleeAttack(string name, string description, ResourceTypesEnum resourceType, int cost, int damage, DamageTypesEnum damageType, 
       AbilityTypesEnum abilityType, float range, float cooldown, bool triggersInternalCooldown, Texture2D icon = null) : 

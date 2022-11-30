@@ -22,10 +22,5 @@ namespace ProjectDreamland.Managers
       int index = Items.IndexOf(item);
       if (index != -1) Items[index] = null;
     }
-
-    public static void Update(GameTime gameTime)
-    {
-
-    }
   }
 }

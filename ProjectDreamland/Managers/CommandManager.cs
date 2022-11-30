@@ -26,9 +26,6 @@ namespace ProjectDreamland.Managers
         case CommandLoadStateEnum.OnLoad:
           commandToUse = GetPartOfCommand(command, "OnLoad;", "OnLoadEnd;");
           break;
-        case CommandLoadStateEnum.OnUpdate:
-          commandToUse = GetPartOfCommand(command, "OnUpdate;", "OnUpdateEnd;");
-          break;
         case CommandLoadStateEnum.OnInteract:
           commandToUse = GetPartOfCommand(command, "OnInteract;", "OnInteractEnd;");
           break;
@@ -68,11 +65,15 @@ namespace ProjectDreamland.Managers
           case "setRespawn":
             SetRespawnPoint(cmd.Value);
             break;
+          case "setQuest":
+            SetQuest(cmd.Value, emitter as BaseCharacter);
+            break;
         }
       }
 
       _commandList.Clear();
     }
+
     private static string GetPartOfCommand(string command, string startSubStr, string endSubStr)
     {
       if (!command.Contains(startSubStr)) return null;
@@ -89,7 +90,7 @@ namespace ProjectDreamland.Managers
       {
         string[] args = line.Split(',');
         string map = args[0];
-        MapManager.LoadNewMap(map, player);
+        if (!MapManager.LoadNewMap(map, player)) return;
         int.TryParse(args[1], out int x);
         int.TryParse(args[2], out int y);
         player.SetPosition(new Point(x, y));
@@ -120,7 +121,7 @@ namespace ProjectDreamland.Managers
         foreach (Quest quest in Player.Quests)
         {
           if (quest.Objective.IsDone) continue;
-          if (quest.Objective.Target.ID == itemToGive.ID)
+          if (quest.Objective.TargetID == itemToGive.ID)
           {
             int remaining = quest.Objective.Remaining - givenAmount;
             quest.Objective.Remaining = remaining < 0 ? 0 : remaining;
@@ -150,6 +151,16 @@ namespace ProjectDreamland.Managers
         Player.RespawnPoint.Map = map;
         Player.RespawnPoint.X = x;
         Player.RespawnPoint.Y = y;
+      }
+    }
+
+    private static void SetQuest(List<string> command, BaseCharacter emitter)
+    {
+      foreach (string line in command)
+      {
+        Quest quest = QuestManager.Quests.Where(x => x.ID == line).FirstOrDefault();
+        if (quest == null) return;
+        emitter.Quest = quest;
       }
     }
   }

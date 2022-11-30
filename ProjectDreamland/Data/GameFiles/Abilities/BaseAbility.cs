@@ -28,7 +28,7 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
     public Timer Timer { get; set; }
     public Keys? KeyBind { get; set; }
 
-    public BaseAbility(string name, string description, ResourceTypesEnum resourceType, int cost, int damage,DamageTypesEnum damageType, 
+    public BaseAbility(string name, string description, ResourceTypesEnum resourceType, int cost, int damage, DamageTypesEnum damageType,
       AbilityTypesEnum abilityType, float range, float cooldown, bool triggersInternalCooldown, Texture2D icon)
     {
       Name = name;

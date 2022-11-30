@@ -11,7 +11,7 @@ namespace ProjectDreamland.UI
   {
     public static bool IsShown { get; set; } = false;
 
-    private string _title = "You died";
+    private string _title = "You died!";
     private Vector2 _titlePosition;
     private Button _respawnButton;
     private SpriteFont _font;

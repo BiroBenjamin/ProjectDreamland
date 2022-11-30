@@ -20,7 +20,7 @@ namespace ProjectDreamland.Managers
           foreach (Quest quest in Player.Quests)
           {
             if (quest.Objective.IsDone) continue;
-            if (quest.Objective.Target.ID == character.ID)
+            if (quest.Objective.TargetID == character.ID)
             {
               quest.Objective.Remaining--;
             }

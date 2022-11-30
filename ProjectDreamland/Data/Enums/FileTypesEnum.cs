@@ -3,17 +3,17 @@ using System.ComponentModel;
 
 namespace ProjectDreamland.Data.Enums
 {
-    public enum FileTypesEnum
-	{
-		[Description("Map")]
-		Map,
-		[Description("Character"), Displayable]
-		Character,
-		[Description("World Object"), Displayable]
-		WorldObject,
-		[Description("Tile"), Displayable]
-		Tile,
-    [Description("Item"), Displayable]
+  public enum FileTypesEnum
+  {
+    [Description("Map")]
+    Map,
+    [Description("Character")]
+    Character,
+    [Description("World Object")]
+    WorldObject,
+    [Description("Tile")]
+    Tile,
+    [Description("Item")]
     Item,
   }
 }

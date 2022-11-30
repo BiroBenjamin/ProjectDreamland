@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace ProjectDreamland.Data.GameFiles.Abilities
 {
-    public class HealAbility : BaseAbility, IAbility
+    public class HealAbility : BaseAbility
   {
     public HealAbility(string name, string description, ResourceTypesEnum resourceType, int cost, int damage, DamageTypesEnum damageType, 
       AbilityTypesEnum abilityType, float range, float cooldown, bool triggersInternalCooldown, Texture2D icon = null) :

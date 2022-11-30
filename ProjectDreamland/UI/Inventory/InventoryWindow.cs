@@ -84,7 +84,6 @@ namespace ProjectDreamland.UI.Inventory
     {
       if (!IsShown) return;
       base.Update(gameTime);
-      InventoryManager.Update(gameTime);
       foreach (InventorySlot slot in _inventorySlots)
       {
         slot.Update(gameTime);

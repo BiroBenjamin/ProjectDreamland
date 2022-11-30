@@ -7,11 +7,12 @@ using ProjectDreamland.Data.GameFiles.Quests;
 using ProjectDreamland.ExtensionClasses;
 using ProjectDreamland.UI.Components;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ProjectDreamland.UI.QuestPanel
 {
-    public class QuestWindow : BaseUI
+  public class QuestWindow : BaseUI
   {
     public static bool IsShown { get; set; } = false;
     public static Quest Quest { get; set; }
@@ -28,12 +29,12 @@ namespace ProjectDreamland.UI.QuestPanel
     private SpriteFont _fontSmall;
     private Button _rewardItem;
 
-    public QuestWindow(GraphicsDevice graphicsDevice, Rectangle bounds, Color color) : 
+    public QuestWindow(GraphicsDevice graphicsDevice, Rectangle bounds, Color color) :
       base(graphicsDevice, bounds, color)
     {
       _fontBig = Fonts.ArialBig;
       _fontSmall = Fonts.ArialSmall;
-      _buttonWidth = Math.Max(Math.Max((byte)_fontBig.MeasureString("Accept").X, (byte)_fontBig.MeasureString("Cancel").X), 
+      _buttonWidth = Math.Max(Math.Max((byte)_fontBig.MeasureString("Accept").X, (byte)_fontBig.MeasureString("Cancel").X),
         (byte)_fontBig.MeasureString("Complete").X) + 10;
       Rectangle acceptButtonBounds = new Rectangle(
         (int)(Bounds.X + Bounds.Width * .3f - _buttonWidth / 2),
@@ -47,7 +48,7 @@ namespace ProjectDreamland.UI.QuestPanel
         Quest.IsAccepted = true;
       };
       _completeButton = new Button(graphicsDevice, acceptButtonBounds, ColorCodes.OK, Color.Black, _fontBig, "Complete");
-      _completeButton.MouseEventHandler.OnLeftClick += () => 
+      _completeButton.MouseEventHandler.OnLeftClick += () =>
       {
         Quest playersQuest = Player.Quests.Where(x => x.ID == Quest.ID).FirstOrDefault();
         if (playersQuest != null && playersQuest.Objective.IsDone)
@@ -70,11 +71,12 @@ namespace ProjectDreamland.UI.QuestPanel
     {
       if (Quest == null) return;
       base.Update(gameTime);
-      if(Quest.RewardItem != null)
+      Quest.Objective.Update(gameTime, Quest.Type);
+      if (Quest.RewardItem != null)
       {
         Rectangle rewardItemBounds = new Rectangle((int)(_rewardBounds.X + _rewardBounds.Width * .6f),
           (int)(_rewardBounds.Y + _fontBig.MeasureString("Reward:").Y + 10), 64, 64);
-        _rewardItem = new Button(_graphicsDevice, rewardItemBounds, Color.White, Color.White, Fonts.ArialBig, 
+        _rewardItem = new Button(_graphicsDevice, rewardItemBounds, Color.White, Color.White, Fonts.ArialBig,
           texture: Quest.RewardItem.Texture);
         _rewardItem.Tooltip = new Tooltip(_graphicsDevice, Vector2.Zero, Quest.RewardItem.ToString());
         _rewardItem.Update(gameTime);
@@ -93,7 +95,7 @@ namespace ProjectDreamland.UI.QuestPanel
       _summaryBounds = new Rectangle(
         Bounds.X + 20,
         Bounds.Y + _titleBounds.Height + _descriptionBounds.Height + 10,
-        Bounds.Width  - 20,
+        Bounds.Width - 20,
         (int)(Bounds.Height * .2f));
       _rewardBounds = new Rectangle(
         Bounds.X + 20,
@@ -119,16 +121,25 @@ namespace ProjectDreamland.UI.QuestPanel
       if (Quest == null) return;
       spriteBatch.DrawString(_fontBig, Quest.Title, new Vector2(_titleBounds.X, _titleBounds.Y), ColorCodes.TitleColor, 0f, Vector2.Zero,
         1f, SpriteEffects.None, layerDepth + .01f);
-      spriteBatch.DrawString(_fontSmall, Quest.Description, new Vector2(_descriptionBounds.X, _descriptionBounds.Y), _color.Invert(), 
-        0f, Vector2.Zero, 1f, SpriteEffects.None, layerDepth + .01f);
+
+      List<string> description = GetLines(Quest.Description, Bounds.Width - 150);
+      float lineHeight = _fontSmall.MeasureString(description[0]).Y;
+      float modifiedY = lineHeight;
+      foreach (string desc in description)
+      {
+        spriteBatch.DrawString(_fontSmall, desc, new Vector2(_descriptionBounds.X, _descriptionBounds.Y + modifiedY), _color.Invert(),
+          0f, Vector2.Zero, 1f, SpriteEffects.None, layerDepth + .01f);
+        modifiedY += lineHeight * 1.1f;
+      }
+
       spriteBatch.DrawString(_fontBig, "Summary:", new Vector2(_summaryBounds.X, _summaryBounds.Y), _color.Invert(), 0f, Vector2.Zero,
         1f, SpriteEffects.None, layerDepth + .01f);
-      spriteBatch.DrawString(_fontSmall, Quest.Objective.Description, 
+      spriteBatch.DrawString(_fontSmall, Quest.Objective.Description,
         new Vector2(_summaryBounds.X + 10, _summaryBounds.Y + _fontBig.MeasureString("Summary:").Y + 10), _color.Invert(), 0f, Vector2.Zero,
         1f, SpriteEffects.None, layerDepth + .01f);
       spriteBatch.DrawString(_fontBig, "Reward:", new Vector2(_rewardBounds.X, _rewardBounds.Y), _color.Invert(), 0f, Vector2.Zero, 1f,
         SpriteEffects.None, layerDepth + .01f);
-      spriteBatch.DrawString(_fontSmall, $"{Quest.RewardExp} EXP", 
+      spriteBatch.DrawString(_fontSmall, $"{Quest.RewardExp} EXP",
         new Vector2(_rewardBounds.X + 10, _rewardBounds.Y + _fontBig.MeasureString("Reward:").Y + 10), _color.Invert(), 0f, Vector2.Zero,
         1f, SpriteEffects.None, layerDepth + .01f);
       if (_rewardItem != null)
@@ -143,6 +154,27 @@ namespace ProjectDreamland.UI.QuestPanel
         _completeButton.Draw(gameTime, spriteBatch, content, layerDepth + .01f);
       }
       _closeButton.Draw(gameTime, spriteBatch, content, layerDepth + .01f);
+    }
+
+    private List<string> GetLines(string text, int width)
+    {
+      List<string> result = new List<string>();
+      string line = String.Empty;
+      foreach(string word in text.Split(' '))
+      {
+        string newLine = line + " " + word;
+        if(_fontSmall.MeasureString(newLine).X >= width)
+        {
+          result.Add(newLine);
+          line = word;
+        }
+        else
+        {
+          line = newLine;
+        }
+      }
+      if (result.Count <= 0) result.Add(line);
+      return result;
     }
   }
 }

@@ -43,7 +43,6 @@ namespace ProjectDreamland.Data.GameFiles.Objects
 
     public override void Update(GameTime gameTime, List<BaseObject> components)
     {
-      CommandManager.LoadCommand(Instructions, this, Enums.CommandLoadStateEnum.OnUpdate);
       if (!IsLooted) return;
       if (_respawnTimer.Count(gameTime) == 0)
       {

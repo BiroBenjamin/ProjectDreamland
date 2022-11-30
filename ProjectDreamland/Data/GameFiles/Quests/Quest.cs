@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProjectDreamland.Data.Constants;
 using ProjectDreamland.Data.GameFiles.Characters;
 using ProjectDreamland.Data.GameFiles.Items;
 using ProjectDreamland.Managers;
@@ -40,7 +41,7 @@ namespace ProjectDreamland.Data.GameFiles.Quests
     public void Update(GameTime gameTime, Rectangle panelBounds, int y)
     {
       int width = (int)(panelBounds.Width * .8f);
-      int height = (int)(panelBounds.Height * .1f);
+      int height = (int)(panelBounds.Height * .2f);
       int x = (int)(panelBounds.X + panelBounds.Width * .1f);
       Bounds = new Rectangle(x, y, width, height);
       Objective.Update(gameTime, Type);

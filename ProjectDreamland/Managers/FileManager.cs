@@ -24,7 +24,7 @@ namespace ProjectDreamland.Managers
       }
       catch (Exception ex)
       {
-        
+        ///TODO: Logging implementation
       }
     }
 
@@ -47,7 +47,7 @@ namespace ProjectDreamland.Managers
         }
         catch (Exception ex)
         {
-          
+          ///TODO: Logging implementation
         }
       }
 

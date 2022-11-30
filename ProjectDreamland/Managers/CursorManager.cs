@@ -40,7 +40,7 @@ namespace ProjectDreamland.Managers
       }
       foreach(BaseCharacter comp in components.Where(x => x.GetType() == typeof(BaseCharacter))){
         if (comp.CharacterAffiliation == Data.Enums.CharacterAffiliationsEnum.Friendly && 
-          comp.CursorIntersects(mousePosition))
+          comp.Quest != null && comp.CursorIntersects(mousePosition))
         {
           _currentCursor = _cursorTalk;
         }

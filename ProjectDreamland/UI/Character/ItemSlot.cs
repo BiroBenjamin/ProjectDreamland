@@ -24,7 +24,6 @@ namespace ProjectDreamland.UI.Character
       {
         Item item = EquipmentManager.TakeEquipment(ItemType);
         InventoryManager.AddItem(item);
-        //Texture = BaseTexture;
         Tooltip = BaseTooltip;
         EquipmentButton = null;
       };

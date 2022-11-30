@@ -1,0 +1,629 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ProjectDreamland.Game1" Collapsed="true">
+    <Position X="36.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAEAAAwAAAAABAAAAAABAAAACAIAAAAAAAAQ=</HashCode>
+      <FileName>Game1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Components.Camera" Collapsed="true">
+    <Position X="38.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Components\Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Components.Timer" Collapsed="true">
+    <Position X="40.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAgBAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\Timer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.Attributes.DisplayableAttribute" Collapsed="true">
+    <Position X="36.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Attributes\DisplayableAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.Attributes.ElevatedTileAttribute" Collapsed="true">
+    <Position X="38.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Attributes\ElevatedTileAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.Constants.Actions" Collapsed="true">
+    <Position X="35" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAACAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Constants\Actions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.Constants.ColorCodes" Collapsed="true">
+    <Position X="42" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAACAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Data\Constants\ColorCodes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.Constants.Fonts" Collapsed="true">
+    <Position X="35" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAABAAA=</HashCode>
+      <FileName>Data\Constants\Fonts.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.Constants.ImagePaths" Collapsed="true">
+    <Position X="43.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAACAAAAAAAgCAAAAAEAQAAAAAAAA=</HashCode>
+      <FileName>Data\Constants\ImagePaths.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.Constants.KeyBinds" Collapsed="true">
+    <Position X="38.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAgAACEA=</HashCode>
+      <FileName>Data\Constants\KeyBinds.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.Constants.StatList" Collapsed="true">
+    <Position X="42" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAgAAAAAAAQCAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Constants\StatList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.Constants.SystemPrefs" Collapsed="true">
+    <Position X="35" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgEAAAAAAAAAAAAAAAAAAgABAAAAkA=</HashCode>
+      <FileName>Data\Constants\SystemPrefs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.AbilitiesList.AbilitiesList" Collapsed="true">
+    <Position X="33.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Data\GameFiles\Abilities\AbilitiesList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Abilities.BaseAbility" Collapsed="true">
+    <Position X="2.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAECAAAAgDgAEAAAAQBQkAAAAAAAgAAACAAEEABA=</HashCode>
+      <FileName>Data\GameFiles\Abilities\BaseAbility.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Abilities.HealAbility" Collapsed="true">
+    <Position X="2.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\GameFiles\Abilities\HealAbility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Abilities.MeleeAttack" Collapsed="true">
+    <Position X="5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\GameFiles\Abilities\MeleeAttack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Abilities.RangedMagicAttack" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAAAAABgAABAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Data\GameFiles\Abilities\RangedMagicAttack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Characters.BaseCharacter" Collapsed="true">
+    <Position X="7.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kgQAAAQAAsAwAyAQAQAAQACBIoEwAAMBjARAlASABAE=</HashCode>
+      <FileName>Data\GameFiles\Characters\BaseCharacter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Characters.Player" Collapsed="true">
+    <Position X="7.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EiQWAEAABoggIgEEAQABAAhBQAggAkAkAAIQAgAEEAA=</HashCode>
+      <FileName>Data\GameFiles\Characters\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Items.Armor" Collapsed="true">
+    <Position X="3" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\GameFiles\Items\Armor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Items.Item" Collapsed="true">
+    <Position X="4.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAEAAAAAAAAAAAAAAAAAQIAAAAAAAA=</HashCode>
+      <FileName>Data\GameFiles\Items\Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Items.Weapon" Collapsed="true">
+    <Position X="5.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\GameFiles\Items\Weapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Objects.BaseObject" Collapsed="true">
+    <Position X="11" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABAAgAAggQgAAAAAIAAAAAAABABAAIAQAAAAAA=</HashCode>
+      <FileName>Data\GameFiles\Objects\BaseObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Objects.Projectile" Collapsed="true">
+    <Position X="9.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAARAAKAAAgAQEAAAAAAAAABAAABABAAIAAAABAA=</HashCode>
+      <FileName>Data\GameFiles\Objects\Projectile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Objects.Tile" Collapsed="true">
+    <Position X="12" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\GameFiles\Objects\Tile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Objects.WorldObject" Collapsed="true">
+    <Position X="14.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAAAIAAAAIAAAAAAAACAIAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\GameFiles\Objects\WorldObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Quests.Objective" Collapsed="true">
+    <Position X="43.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAACAAAAAgAAAAAAAAAQCAAAAAAAAgBAAAAAAAAEA=</HashCode>
+      <FileName>Data\GameFiles\Quests\Objective.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Quests.Quest" Collapsed="true">
+    <Position X="33.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAACEAAAAggkEAAAQAAAAAAAAgAAAAAQAAAAAAAgA=</HashCode>
+      <FileName>Data\GameFiles\Quests\Quest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.BaseFile" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAgAAAAAAAAAQAAAAIAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Data\GameFiles\BaseFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Map" Collapsed="true">
+    <Position X="0.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAEAAAAAIAAQAAAAAAAgA=</HashCode>
+      <FileName>Data\GameFiles\Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.RespawnPoint" Collapsed="true">
+    <Position X="40.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAABAAAAAAAAAAAAAAAYAA=</HashCode>
+      <FileName>Data\GameFiles\RespawnPoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Data.GameFiles.Stats" Collapsed="true">
+    <Position X="43.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAQAAAACAEAAAAAAAAAAAAAAABAAAAEAAAAAA=</HashCode>
+      <FileName>Data\GameFiles\Stats.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.ExtensionClasses.ColorExtensions" Collapsed="true">
+    <Position X="43.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ExtensionClasses\ColorExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.ExtensionClasses.EnumExtensions" Collapsed="true">
+    <Position X="40.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>ExtensionClasses\EnumExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.ExtensionClasses.ICollectionExtensions" Collapsed="true">
+    <Position X="42" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>ExtensionClasses\ICollectionExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.ExtensionClasses.StringExtensions" Collapsed="true">
+    <Position X="33.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ExtensionClasses\StringExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.ExtensionClasses.Texture2DExtensions" Collapsed="true">
+    <Position X="38.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ExtensionClasses\Texture2DExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.GameStates.GameState" Collapsed="true">
+    <Position X="9.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAABAAAAgAAAAAAAABAAAAAAAAgAAAAAgAAAAQ=</HashCode>
+      <FileName>GameStates\GameState.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ProjectDreamland.GameStates.MenuState" Collapsed="true">
+    <Position X="8.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAIQAAgAAAgAAAAAAAACBAAIAAAAAAAEIAAQ=</HashCode>
+      <FileName>GameStates\MenuState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.GameStates.PlayState" Collapsed="true">
+    <Position X="10.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAAAAAAAAAgAAAAAgCAABAAAAAAAAAAAAACAAAAQ=</HashCode>
+      <FileName>GameStates\PlayState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Handlers.AIHandler" Collapsed="true">
+    <Position X="36.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAAAAAAAAACAgAAAAAAAAAAAAAAAIAAgAAAAAAAA=</HashCode>
+      <FileName>Handlers\AIHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Handlers.InputHandler" Collapsed="true">
+    <Position X="33.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAEAAA=</HashCode>
+      <FileName>Handlers\InputHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Handlers.MouseEventHandler" Collapsed="true">
+    <Position X="42" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAAIAAACIAAAQABAAAAAAAAAAAAAgAAAAgAAAgA=</HashCode>
+      <FileName>Handlers\MouseEventHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Handlers.RenderHandler" Collapsed="true">
+    <Position X="36.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Handlers\RenderHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Handlers.UIHandler" Collapsed="true">
+    <Position X="42" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwAAAAAAAAAIgAAAABACABAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Handlers\UIHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Managers.CharacterManager" Collapsed="true">
+    <Position X="40.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Managers\CharacterManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Managers.CommandManager" Collapsed="true">
+    <Position X="33.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAgAAAAIBAAAAAACCAAABQAAABA=</HashCode>
+      <FileName>Managers\CommandManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Managers.CursorManager" Collapsed="true">
+    <Position X="35" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAwAAAAAEAQAAAgAQAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Managers\CursorManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Managers.EquipmentManager" Collapsed="true">
+    <Position X="42" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ggAQAAAAAAgAAIAAAAAAAAAgAAAAAAAAAAAAAACACAI=</HashCode>
+      <FileName>Managers\EquipmentManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Managers.FileManager" Collapsed="true">
+    <Position X="33.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAABAA=</HashCode>
+      <FileName>Managers\FileManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Managers.GameStateManager" Collapsed="true">
+    <Position X="38.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAAAAAAAAgAAAgAAACBAAAAAAAAgAAAAAAAgAAQ=</HashCode>
+      <FileName>Managers\GameStateManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Managers.InventoryManager" Collapsed="true">
+    <Position X="35" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAACAAAAAAAAAAAgAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Managers\InventoryManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Managers.ItemManager" Collapsed="true">
+    <Position X="36.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Managers\ItemManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Managers.MapManager" Collapsed="true">
+    <Position X="40.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAgACAAAAAAgAAAAAAAAABAAGAAACAAAA=</HashCode>
+      <FileName>Managers\MapManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Managers.QuestManager" Collapsed="true">
+    <Position X="35" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAgAwAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Managers\QuestManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.Managers.SystemPrefsManager" Collapsed="true">
+    <Position X="36.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQQAAAMAAgAAAAAAgCAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Managers\SystemPrefsManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.ActionBar.AbilityHolder" Collapsed="true">
+    <Position X="3.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABAAAAAAAAgAAAAgAAABAEQCAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>UI\ActionBar\AbilityHolder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.ActionBar.ActionBar" Collapsed="true">
+    <Position X="8.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>UI\ActionBar\ActionBar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.Character.CharacterInfoPanel" Collapsed="true">
+    <Position X="12.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAACAAAAAAAAQAAAEAAAAAAAAA=</HashCode>
+      <FileName>UI\Character\CharacterInfoPanel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.Character.CharacterWindow" Collapsed="true">
+    <Position X="17.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABYAAAAAAQgAAAAAACAAABAAAAAYAAAAAAAAAAIA=</HashCode>
+      <FileName>UI\Character\CharacterWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.Character.ItemSlot" Collapsed="true">
+    <Position X="21.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAAAAAAACkAAAAAIAAEAACAAAAAAAAAAIAAAAgA=</HashCode>
+      <FileName>UI\Character\ItemSlot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.Components.BaseUI" Collapsed="true">
+    <Position X="16.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUAAAAAAAAIAgAAAARAAABAAAAAAAAAAAIAAAgAAgA=</HashCode>
+      <FileName>UI\Components\BaseUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.Components.Button" Collapsed="true">
+    <Position X="24" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAAAAAAAAgAAAEAAAAAAEACAAAAAAAAAKgAAAAA=</HashCode>
+      <FileName>UI\Components\Button.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.Components.Tooltip" Collapsed="true">
+    <Position X="26.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAIAAAACAAgAAAAAAAAAAABAAAwIAAEAAAEAAAAA=</HashCode>
+      <FileName>UI\Components\Tooltip.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.Inventory.InventorySlot" Collapsed="true">
+    <Position X="30.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAIAAgA=</HashCode>
+      <FileName>UI\Inventory\InventorySlot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.Inventory.InventoryWindow" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAIAAAACAQgAAAAAACAAACBAAAAYACAAAAAAAAAA=</HashCode>
+      <FileName>UI\Inventory\InventoryWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.Menu.GameMenuWindow" Collapsed="true">
+    <Position X="6" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAIABAIAAAgAAAAAAAAAAAACBAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>UI\Menu\GameMenuWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.MenuBar.MenuBar" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\MenuBar\MenuBar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.QuestPanel.QuestPanel" Collapsed="true">
+    <Position X="15" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\QuestPanel\QuestPanel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.QuestPanel.QuestWindow" Collapsed="true">
+    <Position X="19.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAIAAAEAgQgkAAAAAAAAAAABIBAgQAAAQAAAAAAA=</HashCode>
+      <FileName>UI\QuestPanel\QuestWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.ExperienceBar" Collapsed="true">
+    <Position X="43.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAgAAAAAAAAgAAAAAAAwAIAACAABAAgAAAAAAAAAA=</HashCode>
+      <FileName>UI\ExperienceBar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.HealthBar" Collapsed="true">
+    <Position X="40.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAhAAACAAEAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\HealthBar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.ResourceBar" Collapsed="true">
+    <Position X="38.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAgAAAAAAIAgAAAAAAAAAAAAAAAAAAIAAIAAAAAAA=</HashCode>
+      <FileName>UI\ResourceBar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectDreamland.UI.RespawnWindow" Collapsed="true">
+    <Position X="28.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAIgAAIAAAgAAAAAAAAAAAACAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>UI\RespawnWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="ProjectDreamland.Data.GameFiles.Abilities.Interfaces.IAbility" Collapsed="true">
+    <Position X="33.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\GameFiles\Abilities\Interfaces\IAbility.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ProjectDreamland.GameStates.IGameState" Collapsed="true">
+    <Position X="35" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>GameStates\IGameState.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="ProjectDreamland.Data.Enums.AbilityTypesEnum" Collapsed="true">
+    <Position X="33.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Enums\AbilityTypesEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProjectDreamland.Data.Enums.BehaviourStatesEnum" Collapsed="true">
+    <Position X="35" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAABAAAAAAAAAAAAAAAAAAIAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Enums\BehaviourStatesEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProjectDreamland.Data.Enums.CharacterAffiliationsEnum" Collapsed="true">
+    <Position X="36.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAAIAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Data\Enums\CharacterAffiliationsEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProjectDreamland.Data.Enums.CharacterStatesEnum" Collapsed="true">
+    <Position X="38.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAACAAAAAA=</HashCode>
+      <FileName>Data\Enums\CharacterStatesEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProjectDreamland.Data.Enums.CommandLoadStateEnum" Collapsed="true">
+    <Position X="40.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Enums\CommandLoadStateEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProjectDreamland.Data.Enums.DamageTypesEnum" Collapsed="true">
+    <Position X="42" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAgAQAAAEAAJAAAAAAAAAQAA=</HashCode>
+      <FileName>Data\Enums\DamageTypesEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProjectDreamland.Data.Enums.FileTypesEnum" Collapsed="true">
+    <Position X="43.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAEAAAAAAAAAAAAAAAACwA=</HashCode>
+      <FileName>Data\Enums\FileTypesEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProjectDreamland.Data.Enums.GameStatesEnum" Collapsed="true">
+    <Position X="33.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Data\Enums\GameStatesEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProjectDreamland.Data.Enums.ItemTypesEnum" Collapsed="true">
+    <Position X="35" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgQIAAABABAAAAAQAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Enums\ItemTypesEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProjectDreamland.Data.Enums.LookDirectionsEnum" Collapsed="true">
+    <Position X="36.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAABAAQ=</HashCode>
+      <FileName>Data\Enums\LookDirectionsEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProjectDreamland.Data.Enums.ResourceTypesEnum" Collapsed="true">
+    <Position X="38.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAIAEAAAA=</HashCode>
+      <FileName>Data\Enums\ResourceTypesEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProjectDreamland.Data.Enums.TileTypesEnum" Collapsed="true">
+    <Position X="40.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Enums\TileTypesEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProjectDreamland.Data.Enums.WorldObjectTypesEnum" Collapsed="true">
+    <Position X="42" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Enums\WorldObjectTypesEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

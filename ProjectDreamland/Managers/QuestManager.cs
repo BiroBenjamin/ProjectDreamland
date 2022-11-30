@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using ProjectDreamland.Data.Constants;
 using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles.Items;
+using System.Linq;
 
 namespace ProjectDreamland.Managers
 {
@@ -24,25 +25,18 @@ namespace ProjectDreamland.Managers
             new Objective("apple_001", 5, "collect"),
             new Weapon("weapon_001", "Iron Sword", ItemTypesEnum.Weapon,
             _contentManager.Load<Texture2D>("Sprites/Items/sword_icon"), StatList.Stat1)),
-          //new Quest("testQuest002", "Test quest 2", "This is the second test quest...", "kill", 136,
-          //new Objective("gorilla_front", 1, "kill"),
-          //  new Weapon("weapon_002", "Enchanted Iron Sword", ItemTypesEnum.Weapon,
-          //  _contentManager.Load<Texture2D>("Sprites/Items/sword_icon"), StatList.Stat5)),
-          //new Quest("testQuest003", "Test quest 3", "This is the third test quest...", "kill", 389,
-          //new Objective("gorilla_front", 1, "kill"),
-          //  new Armor("armor_001", "Iron Helmet", ItemTypesEnum.Head,
-          //  _contentManager.Load<Texture2D>("Sprites/Items/helmet_icon"), StatList.Stat2)),
-          //new Quest("testQuest004", "Test quest 4", "This is the fourth test quest...", "kill", 1034,
-          //new Objective("gorilla_front", 1, "kill")),
+          new Quest("testQuest002", "Test quest 2", "This is the second test quest... sbhabhfbafbf ab ba bahaazwg abw awdbasd sasdg awdnsoahd naosldn saju bawn uaihgudsbadgasdnauwig zwa zui", "kill", 136,
+          new Objective("gorilla_front", 1, "kill"),
+            new Weapon("weapon_002", "Enchanted Iron Sword", ItemTypesEnum.Weapon,
+            _contentManager.Load<Texture2D>("Sprites/Items/sword_icon"), StatList.Stat5)),
+          new Quest("testQuest003", "Test quest 3", "This is the third test quest...", "kill", 389,
+          new Objective("gorilla_front", 1, "kill"),
+            new Armor("armor_001", "Iron Helmet", ItemTypesEnum.Head,
+            _contentManager.Load<Texture2D>("Sprites/Items/helmet_icon"), StatList.Stat2)),
+          new Quest("testQuest004", "Test quest 4", "This is the fourth test quest...", "kill", 1034,
+          new Objective("gorilla_front", 1, "kill")),
         }
       );
-    }
-
-    public static Quest GetRandomQuest()
-    {
-      if (Quests.Count <= 0) return null;
-      Random random = new Random();
-      return Quests[random.Next(0, Quests.Count)];
     }
 
     public static void Update(GameTime gameTime, Rectangle panelBounds)
@@ -58,7 +52,8 @@ namespace ProjectDreamland.Managers
           Player.CurrentExperience += quest.RewardExp;
           if(quest.Type == "collect")
           {
-            Item itemToRemove = quest.Objective.Target as Item;
+            string id = quest.Objective.TargetID;
+            Item itemToRemove = ItemManager.Items.Where(x => x.ID == id).FirstOrDefault() as Item;
             for(int i = quest.Objective.Amount - 1; i >= 0 ; i--)
             {
               InventoryManager.RemoveItem(itemToRemove);

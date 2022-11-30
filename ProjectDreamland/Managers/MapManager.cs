@@ -37,10 +37,11 @@ namespace ProjectDreamland.Managers
           obj.Texture = content.Load<Texture2D>(imagePath);
           CommandManager.LoadCommand(obj.Instructions, obj, CommandLoadStateEnum.OnLoad);
         }
-        foreach(BaseCharacter character in map.Characters)
+        foreach (BaseCharacter character in map.Characters)
         {
           string imagePath = Path.Combine(SystemPrefsManager.SystemPrefs.RootPath, character.ImagePath.Split('.')[0]);
           character.Texture = content.Load<Texture2D>(imagePath);
+          CommandManager.LoadCommand(character.Instructions, character, CommandLoadStateEnum.OnLoad);
         }
         Maps.Add(map);
       }
@@ -48,20 +49,27 @@ namespace ProjectDreamland.Managers
       LastMap = CurrentMap;
     }
 
-    public static void LoadMapContent(Player player) {
+    public static bool LoadNewMap(string id, Player player)
+    {
+      if (LastMap != CurrentMap)
+      {
+        LastMap = CurrentMap;
+      }
+      CurrentMap = Maps.Where(x => x.ID == id).FirstOrDefault();
+      if (CurrentMap != null)
+      {
+        LoadMapContent(player);
+        return true;
+      }
+      return false;
+    }
+    public static void LoadMapContent(Player player)
+    {
       CurrentMapComponents.Clear();
       CurrentMapComponents.AddRange(CurrentMap.Tiles);
       CurrentMapComponents.AddRange(CurrentMap.WorldObjects);
       CurrentMapComponents.AddRange(CurrentMap.Characters);
       CurrentMapComponents.Add(player);
-    }
-
-    public static void LoadNewMap(string id, Player player) {
-      if(LastMap != CurrentMap) {
-        LastMap = CurrentMap;
-      }
-      CurrentMap = Maps.Where(x => x.ID == id).FirstOrDefault();
-      LoadMapContent(player);
     }
   }
 }

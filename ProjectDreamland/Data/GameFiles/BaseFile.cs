@@ -19,6 +19,7 @@ namespace ProjectDreamland.Data.GameFiles
       ID = baseFile.ID;
       Name = baseFile.Name;
       FilePath = baseFile.FilePath;
+      Instructions = baseFile.Instructions;
     }
   }
 }
