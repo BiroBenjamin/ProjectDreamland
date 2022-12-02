@@ -90,7 +90,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       CharacterState = CharacterStatesEnum.Alive;
       BehaviourState = BehaviourStatesEnum.Idle;
       AggroRange = 10;
-      MeleeAttack = new MeleeAttack("Attack", "", ResourceTypesEnum.None, 0, 35, DamageTypesEnum.Physical, AbilityTypesEnum.Damage, 64, 2, true);
+      MeleeAttack = new MeleeAttack("Attack", "", ResourceTypesEnum.None, 0, 35, DamageTypesEnum.Physical, AbilityTypesEnum.Damage, 64, 2);
       _aiHandler = new AIHandler(this);
       _origin = new Vector2(Position.X, Position.Y);
       SetupUI();

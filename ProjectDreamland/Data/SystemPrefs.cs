@@ -3,9 +3,10 @@ using ProjectDreamland.ExtensionClasses;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
-namespace ProjectDreamland.Data.Constants
+namespace ProjectDreamland.Data
 {
   [Serializable]
   public class SystemPrefs
@@ -26,9 +27,9 @@ namespace ProjectDreamland.Data.Constants
       FolderStructure = new Dictionary<string, string[]>()
       {
         { FileTypesEnum.Map.GetDescription(), new string[2] {Path.Combine(RootPath, "Maps"), "map" } },
-        { FileTypesEnum.Character.GetDescription(), new string[2] {$@"{RootPath}\Objects\Characters", "dex" } },
-        { FileTypesEnum.WorldObject.GetDescription(), new string[2] {$@"{RootPath}\Objects\WorldObjects", "dex" } },
-        { FileTypesEnum.Tile.GetDescription(), new string[2] {$@"{RootPath}\Objects\Tiles", "dex" } },
+        { FileTypesEnum.Character.GetDescription(), new string[2] {Path.Combine(RootPath, "Objects\\Characters"), "dex" } },
+        { FileTypesEnum.WorldObject.GetDescription(), new string[2] { Path.Combine(RootPath, "Objects\\WorldObjects"), "dex" } },
+        { FileTypesEnum.Tile.GetDescription(), new string[2] { Path.Combine(RootPath, "Objects\\Tiles"), "dex" } },
       };
 
       foreach (KeyValuePair<string, string[]> file in FolderStructure)
@@ -40,13 +41,5 @@ namespace ProjectDreamland.Data.Constants
         }
       }
     }
-
-    public override string ToString()
-    {
-      return $"[ rootPath: {RootPath} ]" +
-          $"  [ isDevMode: {IsDevMode} ]" +
-          $"  [ debugLogPath: {DebugLogPath} ]";
-    }
-
   }
 }

@@ -17,8 +17,8 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
     private Texture2D _projectileTexture;
 
     public RangedMagicAttack(string name, string description, ResourceTypesEnum resourceType, int cost, int damage, DamageTypesEnum damageType, 
-      AbilityTypesEnum abilityType, float range, float cooldown, bool triggersInternalCooldown, Texture2D projectileTexture, Texture2D icon = null) :
-      base(name, description, resourceType, cost, damage, damageType, abilityType, range, cooldown, triggersInternalCooldown, icon)
+      AbilityTypesEnum abilityType, float range, float cooldown, Texture2D projectileTexture, Texture2D icon = null) :
+      base(name, description, resourceType, cost, damage, damageType, abilityType, range, cooldown, icon)
     {
       _projectiles = new List<Projectile>();
       _projectileTexture = projectileTexture;
@@ -30,13 +30,10 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       if (!CanCast) return;
       base.Cast(characters, caster);
 
-      if(caster.CurrentResourcePoints < Cost)
-      {
-        return;
-      }
+      if(caster.CurrentResourcePoints < Cost) return;
 
       Random rand = new Random();
-      (int, int) damageRange = ((int)(Damage * 0.8f), (int)(Damage * 1.5f));
+      (int, int) damageRange = ((int)(Damage * .8f + caster.AttackDamage.Item1 * .8f), (int)(Damage * 1.5f + caster.AttackDamage.Item2 * 1.5f));
       int damageDone = rand.Next(damageRange.Item1, damageRange.Item2 + 1);
       characters.Remove(caster);
       Projectile projectile = new Projectile(graphicsDevice, characters, damageDone, startPosition, endPosition, 10f, 6f, _projectileTexture);

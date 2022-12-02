@@ -22,14 +22,13 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
     public float Range { get; set; }
     public float Cooldown { get; set; }
     public float RemainingCooldown { get; set; }
-    public bool TriggersInternalCooldown { get; set; }
     public Texture2D Icon { get; set; }
     public bool CanCast { get; set; }
     public Timer Timer { get; set; }
     public Keys? KeyBind { get; set; }
 
     public BaseAbility(string name, string description, ResourceTypesEnum resourceType, int cost, int damage, DamageTypesEnum damageType,
-      AbilityTypesEnum abilityType, float range, float cooldown, bool triggersInternalCooldown, Texture2D icon)
+      AbilityTypesEnum abilityType, float range, float cooldown, Texture2D icon)
     {
       Name = name;
       Description = description;
@@ -40,7 +39,6 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       AbilityType = abilityType;
       Range = range;
       Cooldown = cooldown;
-      TriggersInternalCooldown = triggersInternalCooldown;
       Icon = icon;
       CanCast = true;
       Timer = new Timer(cooldown);

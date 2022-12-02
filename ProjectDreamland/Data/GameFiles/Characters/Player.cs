@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ProjectDreamland.Components;
+using ProjectDreamland.Data.Constants;
 using ProjectDreamland.Data.Enums;
 using ProjectDreamland.Data.GameFiles.Abilities;
 using ProjectDreamland.Data.GameFiles.Objects;
@@ -72,9 +73,9 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       CurrentResourcePoints = 238;
       _resourceBar = new ResourceBar(ResourceType);
       ExperienceNeeded = (int)Math.Pow(Level * 100, 1.1);
-      MeleeAttack = AbilitiesList.AbilitiesList.MeleeAttack;
-      NurturingWinds = AbilitiesList.AbilitiesList.NurturingWinds;
-      Fireball = AbilitiesList.AbilitiesList.Fireball;
+      MeleeAttack = AbilitiesList.MeleeAttack;
+      NurturingWinds = AbilitiesList.NurturingWinds;
+      Fireball = AbilitiesList.Fireball;
       Quests = new List<Quest>();
       BaseStats = new Stats(AttackDamage, MaxHealthPoints, MaxResourcePoints, ManaInterval);
       CommandManager.Player = this;
@@ -93,22 +94,22 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       _currentKeyState = Keyboard.GetState();
       velocity = new Vector2();
 
-      if (_currentKeyState.IsKeyDown(Keys.W))
+      if (_currentKeyState.IsKeyDown(KeyBinds.MoveForwards))
       {
         Facing = LookDirectionsEnum.North;
         velocity.Y -= Speed;
       }
-      if (_currentKeyState.IsKeyDown(Keys.S))
+      if (_currentKeyState.IsKeyDown(KeyBinds.MoveBackwards))
       {
         Facing = LookDirectionsEnum.South;
         velocity.Y += Speed;
       }
-      if (_currentKeyState.IsKeyDown(Keys.A))
+      if (_currentKeyState.IsKeyDown(KeyBinds.MoveLeft))
       {
         Facing = LookDirectionsEnum.West;
         velocity.X -= Speed;
       }
-      if (_currentKeyState.IsKeyDown(Keys.D))
+      if (_currentKeyState.IsKeyDown(KeyBinds.MoveRight))
       {
         Facing = LookDirectionsEnum.East;
         velocity.X += Speed;

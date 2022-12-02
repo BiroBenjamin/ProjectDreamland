@@ -14,8 +14,8 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
   public class MeleeAttack : BaseAbility
   {
     public MeleeAttack(string name, string description, ResourceTypesEnum resourceType, int cost, int damage, DamageTypesEnum damageType, 
-      AbilityTypesEnum abilityType, float range, float cooldown, bool triggersInternalCooldown, Texture2D icon = null) : 
-      base(name, description, resourceType, cost, damage, damageType, abilityType, range, cooldown, triggersInternalCooldown, icon) { }
+      AbilityTypesEnum abilityType, float range, float cooldown, Texture2D icon = null) : 
+      base(name, description, resourceType, cost, damage, damageType, abilityType, range, cooldown, icon) { }
 
     public override void Cast(List<BaseCharacter> characters, BaseCharacter caster)
     {
@@ -26,7 +26,7 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       foreach (BaseCharacter target in targets)
       {
         Random rand = new Random();
-        (int, int) damageRange = ((int)(Damage * 0.8f), (int)(Damage * 1.2f));
+        (int, int) damageRange = ((int)(Damage * .8f + caster.AttackDamage.Item1 * .8f), (int)(Damage * 1.2f + caster.AttackDamage.Item2 * 1.2f));
         int damageDone = rand.Next(damageRange.Item1, damageRange.Item2 + 1);
         target.TakeDamage(damageDone);
       }
@@ -37,7 +37,7 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       base.Cast(target, caster);
 
       Random rand = new Random();
-      (int, int) damageRange = ((int)(Damage * 0.8f), (int)(Damage * 1.2f));
+      (int, int) damageRange = ((int)(Damage * .8f + caster.AttackDamage.Item1 * .8f), (int)(Damage * 1.2f + caster.AttackDamage.Item2 * 1.2f));
       int damageDone = rand.Next(damageRange.Item1, damageRange.Item2 + 1);
       target.TakeDamage(damageDone);
     }

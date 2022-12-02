@@ -14,8 +14,8 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
     public class HealAbility : BaseAbility
   {
     public HealAbility(string name, string description, ResourceTypesEnum resourceType, int cost, int damage, DamageTypesEnum damageType, 
-      AbilityTypesEnum abilityType, float range, float cooldown, bool triggersInternalCooldown, Texture2D icon = null) :
-      base(name, description, resourceType, cost, damage, damageType, abilityType, range, cooldown, triggersInternalCooldown, icon) 
+      AbilityTypesEnum abilityType, float range, float cooldown, Texture2D icon = null) :
+      base(name, description, resourceType, cost, damage, damageType, abilityType, range, cooldown, icon) 
     {
       KeyBind = KeyBinds.AbilityTwo;
     }
@@ -25,13 +25,10 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       if (!CanCast) return;
       base.Cast(characters, caster);
 
-      if(caster.CurrentResourcePoints < Cost)
-      {
-        return;
-      }
+      if(caster.CurrentResourcePoints < Cost) return;
 
       Random rand = new Random();
-      (int, int) healRange = ((int)(Damage * 0.7f), (int)(Damage * 1.3f));
+      (int, int) healRange = ((int)(Damage * .7f + caster.AttackDamage.Item1 * .7f), (int)(Damage * 1.3f + caster.AttackDamage.Item1 * 1.3f));
       int healingDone = -rand.Next(healRange.Item1, healRange.Item2 + 1);
       caster.TakeDamage(healingDone);
       caster.CurrentResourcePoints -= Cost;
