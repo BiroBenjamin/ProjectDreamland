@@ -20,29 +20,7 @@ namespace ProjectDreamland.Data.GameFiles.Quests
     public Objective(string targetID, int amount, string type)
     {
       TargetID = targetID;
-      QuestType = type;
-      if (type == "kill")
-      {
-        //foreach (Map map in MapManager.Maps)
-        //{
-        //  foreach (BaseFile objective in map.Characters)
-        //  {
-        //    if (objective.ID == targteID)
-        //      TargetID = objective;
-        //  }
-        //}
-      }
-      else if (type == "collect")
-      {
-        foreach(BaseFile item in ItemManager.Items)
-        {
-          //if(item.ID == targteID)
-          //{
-          //  Target = item;
-          //}
-        }
-      }
-      
+      QuestType = type;      
       Amount = amount;
       Remaining = amount;
       Description = $" - {Amount - Remaining} / {Amount} - ???";

@@ -92,33 +92,33 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     {
       if (CharacterState != CharacterStatesEnum.Alive) return;
       _currentKeyState = Keyboard.GetState();
-      velocity = new Vector2();
+      _velocity = new Vector2();
 
       if (_currentKeyState.IsKeyDown(KeyBinds.MoveForwards))
       {
         Facing = LookDirectionsEnum.North;
-        velocity.Y -= Speed;
+        _velocity.Y -= Speed;
       }
       if (_currentKeyState.IsKeyDown(KeyBinds.MoveBackwards))
       {
         Facing = LookDirectionsEnum.South;
-        velocity.Y += Speed;
+        _velocity.Y += Speed;
       }
       if (_currentKeyState.IsKeyDown(KeyBinds.MoveLeft))
       {
         Facing = LookDirectionsEnum.West;
-        velocity.X -= Speed;
+        _velocity.X -= Speed;
       }
       if (_currentKeyState.IsKeyDown(KeyBinds.MoveRight))
       {
         Facing = LookDirectionsEnum.East;
-        velocity.X += Speed;
+        _velocity.X += Speed;
       }
       Collision(components);
-      Position = new System.Drawing.Point((int)(Position.X + velocity.X), (int)(Position.Y + velocity.Y));
+      Position = new System.Drawing.Point((int)(Position.X + _velocity.X), (int)(Position.Y + _velocity.Y));
       CollisionPosition = new System.Drawing.Point(
-        (int)Math.Round(CollisionPosition.X + velocity.X),
-        (int)Math.Round(CollisionPosition.Y + velocity.Y)
+        (int)Math.Round(CollisionPosition.X + _velocity.X),
+        (int)Math.Round(CollisionPosition.Y + _velocity.Y)
       );
     }
     public override Rectangle GetCollision()
@@ -171,10 +171,10 @@ namespace ProjectDreamland.Data.GameFiles.Characters
           comp.Alpha = 1f;
         }
 
-        if (velocity.X > 0 && IsCollidingLeft(comp.GetCollision()) || velocity.X < 0 && IsCollidingRight(comp.GetCollision()))
-          velocity.X = 0;
-        if (velocity.Y > 0 && IsCollidingTop(comp.GetCollision()) || velocity.Y < 0 && IsCollidingBottom(comp.GetCollision()))
-          velocity.Y = 0;
+        if (_velocity.X > 0 && IsCollidingLeft(comp.GetCollision()) || _velocity.X < 0 && IsCollidingRight(comp.GetCollision()))
+          _velocity.X = 0;
+        if (_velocity.Y > 0 && IsCollidingTop(comp.GetCollision()) || _velocity.Y < 0 && IsCollidingBottom(comp.GetCollision()))
+          _velocity.Y = 0;
       }
     }
 
@@ -197,7 +197,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     }
     private int CalculateBonus(int source)
     {
-      int multiplier = (int)Math.Pow(source, .3);
+      int multiplier = (int)Math.Pow(source, .3f);
       return multiplier;
     }
 
@@ -214,7 +214,6 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     public override void Update(GameTime gameTime, List<BaseObject> components)
     {
-      //if (CharacterState != CharacterStatesEnum.Alive) return;
       SetCurrentStates();
 
       ZIndex = Position.Y + Size.Height;
@@ -240,7 +239,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     private void SetStats()
     {
       AttackDamage = (BaseStats.AttackDamage.Item1 + BonusStats.AttackDamage.Item1, 
-        BaseStats.AttackDamage.Item2 + BonusStats.AttackDamage.Item2);
+      BaseStats.AttackDamage.Item2 + BonusStats.AttackDamage.Item2);
       MaxHealthPoints = BaseStats.HealthPoints + BonusStats.HealthPoints;
       MaxResourcePoints = BaseStats.ManaPoints + BonusStats.ManaPoints;
       ManaInterval = BaseStats.ManaInterval + BonusStats.ManaInterval;
