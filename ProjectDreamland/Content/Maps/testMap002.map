@@ -71078,6 +71078,7 @@
       <ID>quest_npc_001</ID>
       <Name>George</Name>
       <FilePath>Objects\Characters\quest_npc_001.dex</FilePath>
+      <Instructions>OnLoad;setQuest(testQuest001)OnLoadEnd;</Instructions>
       <ZIndex>-24</ZIndex>
       <ImagePath>Sprites\Characters\quest_npc_001.png</ImagePath>
       <Position>

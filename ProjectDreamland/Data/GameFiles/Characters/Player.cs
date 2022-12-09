@@ -31,7 +31,6 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     public static BaseAbility NurturingWinds { get; set; }
     public static BaseAbility Fireball { get; set; }
 
-    private GraphicsDevice _graphicsDevice;
     private KeyboardState _currentKeyState;
     private KeyboardState _lastKeyState;
     private MouseState _currentMouseState;
@@ -39,19 +38,18 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     public static List<Quest> Quests { get; set; }
 
-    public Player(GraphicsDevice graphicsDevice, Texture2D texture, Map currentMap) : base(texture)
+    public Player() { }
+    public Player(Texture2D texture, Map currentMap) : base(texture)
     {
       Size = new System.Drawing.Size(texture.Width, texture.Height);
       SetCollision(Position.X, Position.Y, texture.Width, texture.Height);
-      _graphicsDevice = graphicsDevice;
       SetStatus();
     }
-    public Player(GraphicsDevice graphicsDevice, Texture2D texture, Map currentMap, int x, int y) : base(texture)
+    public Player(Texture2D texture, Map currentMap, int x, int y) : base(texture)
     {
       Size = new System.Drawing.Size(texture.Width, texture.Height);
       Position = new System.Drawing.Point(x, y);
       SetCollision(Position.X, Position.Y, texture.Width, texture.Height);
-      _graphicsDevice = graphicsDevice;
       SetStatus();
     }
     private void SetCollision(int posX, int posY, int textWidth, int textHeight)
@@ -85,6 +83,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     public void SetPosition(System.Drawing.Point position)
     {
       Position = position;
+      if (Texture == null) return;
       SetCollision(Position.X, Position.Y, Texture.Width, Texture.Height);
     }
 
@@ -134,7 +133,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
     {
       if (CharacterState != CharacterStatesEnum.Alive) return;
       MeleeAttack.Update(gameTime, objects);
-      if (_currentMouseState.LeftButton == ButtonState.Pressed && _lastMouseState.LeftButton == ButtonState.Released && 
+      if (_currentMouseState.LeftButton == ButtonState.Pressed && _lastMouseState.LeftButton == ButtonState.Released &&
         !UIHandler.IsHoveredOver)
       {
         MeleeAttack.Cast(characters, this);
@@ -147,7 +146,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       Fireball.Update(gameTime, objects);
       if (_currentKeyState.IsKeyDown(Fireball.KeyBind.Value) && _lastKeyState.IsKeyUp(Fireball.KeyBind.Value) && Level >= 2)
       {
-        (Fireball as RangedMagicAttack).Cast(_graphicsDevice, characters, this, new Vector2(Position.X + Size.Width / 2, Position.Y + Size.Height / 2),
+        (Fireball as RangedMagicAttack).Cast(characters, this, new Vector2(Position.X + Size.Width / 2, Position.Y + Size.Height / 2),
           _currentMouseState.Position.ToVector2());
       }
       CharacterManager.HandleDeadCharacters(characters);
@@ -178,7 +177,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       }
     }
 
-    private void HandleLevel()
+    public void HandleLevel()
     {
       if (CurrentExperience >= ExperienceNeeded)
       {
@@ -214,7 +213,6 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     public override void Update(GameTime gameTime, List<BaseObject> components)
     {
-      //if (CharacterState != CharacterStatesEnum.Alive) return;
       SetCurrentStates();
 
       ZIndex = Position.Y + Size.Height;
@@ -239,7 +237,7 @@ namespace ProjectDreamland.Data.GameFiles.Characters
 
     private void SetStats()
     {
-      AttackDamage = (BaseStats.AttackDamage.Item1 + BonusStats.AttackDamage.Item1, 
+      AttackDamage = (BaseStats.AttackDamage.Item1 + BonusStats.AttackDamage.Item1,
         BaseStats.AttackDamage.Item2 + BonusStats.AttackDamage.Item2);
       MaxHealthPoints = BaseStats.HealthPoints + BonusStats.HealthPoints;
       MaxResourcePoints = BaseStats.ManaPoints + BonusStats.ManaPoints;
@@ -251,14 +249,14 @@ namespace ProjectDreamland.Data.GameFiles.Characters
       Vector2 mousePosition = Vector2.Transform(_currentMouseState.Position.ToVector2(), Matrix.Invert(Camera.Transform));
       foreach (BaseObject baseObject in components)
       {
-        if (Vector2.Distance(new Vector2(Position.X, Position.Y), new Vector2(baseObject.Position.X, baseObject.Position.Y)) > 64) 
+        if (Vector2.Distance(new Vector2(Position.X, Position.Y), new Vector2(baseObject.Position.X, baseObject.Position.Y)) > 64)
           continue;
         if (baseObject.GetType() == typeof(WorldObject) && (baseObject as WorldObject).CursorIntersects(mousePosition) &&
           _currentMouseState.RightButton == ButtonState.Pressed && _lastMouseState.RightButton == ButtonState.Released)
         {
           (baseObject as WorldObject).Interact(this);
         }
-        if(baseObject.GetType() == typeof(BaseCharacter) && (baseObject as BaseCharacter).CursorIntersects(mousePosition) &&
+        if (baseObject.GetType() == typeof(BaseCharacter) && (baseObject as BaseCharacter).CursorIntersects(mousePosition) &&
           _currentMouseState.RightButton == ButtonState.Pressed && _lastMouseState.RightButton == ButtonState.Released)
         {
           (baseObject as BaseCharacter).Interact(this);

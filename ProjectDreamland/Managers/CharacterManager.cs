@@ -17,6 +17,7 @@ namespace ProjectDreamland.Managers
         {
           Player.CurrentExperience += (int)Math.Pow(character.Level * 5, 1.1);
           character.CharacterState = CharacterStatesEnum.Dead;
+          if (Player.Quests == null || Player.Quests.Count == 0) return;
           foreach (Quest quest in Player.Quests)
           {
             if (quest.Objective.IsDone) continue;

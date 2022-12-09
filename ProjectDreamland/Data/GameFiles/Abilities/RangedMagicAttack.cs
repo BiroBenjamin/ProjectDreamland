@@ -17,7 +17,7 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
     private Texture2D _projectileTexture;
 
     public RangedMagicAttack(string name, string description, ResourceTypesEnum resourceType, int cost, int damage, DamageTypesEnum damageType, 
-      AbilityTypesEnum abilityType, float range, float cooldown, Texture2D projectileTexture, Texture2D icon = null) :
+      AbilityTypesEnum abilityType, float range, float cooldown, Texture2D projectileTexture = null, Texture2D icon = null) :
       base(name, description, resourceType, cost, damage, damageType, abilityType, range, cooldown, icon)
     {
       _projectiles = new List<Projectile>();
@@ -25,7 +25,7 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       KeyBind = KeyBinds.AbilityThree;
     }
 
-    public void Cast(GraphicsDevice graphicsDevice, List<BaseCharacter> characters, BaseCharacter caster, Vector2 startPosition, Vector2 endPosition)
+    public void Cast(List<BaseCharacter> characters, BaseCharacter caster, Vector2 startPosition, Vector2 endPosition)
     {
       if (!CanCast) return;
       base.Cast(characters, caster);
@@ -36,7 +36,7 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
       (int, int) damageRange = ((int)(Damage * .8f + caster.AttackDamage.Item1 * .8f), (int)(Damage * 1.5f + caster.AttackDamage.Item2 * 1.5f));
       int damageDone = rand.Next(damageRange.Item1, damageRange.Item2 + 1);
       characters.Remove(caster);
-      Projectile projectile = new Projectile(graphicsDevice, characters, damageDone, startPosition, endPosition, 10f, 6f, _projectileTexture);
+      Projectile projectile = new Projectile(characters, damageDone, startPosition, endPosition, 10f, 6f, _projectileTexture);
       _projectiles.Add(projectile);
       projectile.Start();
       caster.CurrentResourcePoints -= Cost;
@@ -68,7 +68,7 @@ namespace ProjectDreamland.Data.GameFiles.Abilities
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
     {
       base.Draw(gameTime, spriteBatch, graphicsDevice);
-      if (_projectiles.Count <= 0 || _projectiles == null) return;
+      if (_projectiles.Count <= 0 || _projectiles == null || _projectileTexture == null) return;
       foreach (Projectile projectile in _projectiles)
       {
         projectile.Draw(gameTime, spriteBatch);

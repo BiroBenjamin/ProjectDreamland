@@ -33,9 +33,8 @@ namespace ProjectDreamland.GameStates
 
       _camera = new Camera();
       _renderHandler = new RenderHandler();
-      _player = new Player(_graphicsDevice, 
-        _contentManager.Load<Texture2D>(Path.Combine(SystemPrefsManager.SystemPrefs.RootPath, "Sprites/Characters/CharacterBaseFront")), 
-        MapManager.CurrentMap, -64, -64);
+      _player = new Player(_contentManager.Load<Texture2D>(Path.Combine(SystemPrefsManager.SystemPrefs.RootPath, 
+        "Sprites/Characters/CharacterBaseFront")), MapManager.CurrentMap, -64, -64);
 
       MapManager.LoadMapContent(_player);
       _renderedComponents = new List<BaseObject>();

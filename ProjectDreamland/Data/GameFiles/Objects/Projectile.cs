@@ -22,7 +22,7 @@ namespace ProjectDreamland.Data.GameFiles.Objects
     Vector2 _direction;
     private float _rotation;
 
-    public Projectile(GraphicsDevice graphicsDevice, List<BaseCharacter> characters, int damage, Vector2 startPosition, Vector2 endPosition, 
+    public Projectile(List<BaseCharacter> characters, int damage, Vector2 startPosition, Vector2 endPosition, 
       float range, float speed, Texture2D texture)
     {
       IsStarted = false;

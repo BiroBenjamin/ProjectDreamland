@@ -24,13 +24,13 @@
   </CollisionSize>
   <IsCollidable>true</IsCollidable>
   <CurrentResourcePoints>0</CurrentResourcePoints>
-  <CurrentHealthPoints>125</CurrentHealthPoints>
-  <Level>10</Level>
-  <ResourceType>Rage</ResourceType>
+  <CurrentHealthPoints>75</CurrentHealthPoints>
+  <Level>3</Level>
+  <ResourceType>None</ResourceType>
   <MaxResourcePoints>100</MaxResourcePoints>
   <AttackDamage>0</AttackDamage>
   <AttackRange>1.5</AttackRange>
-  <MaxHealthPoints>125</MaxHealthPoints>
+  <MaxHealthPoints>75</MaxHealthPoints>
   <IsDead>false</IsDead>
   <Speed>3</Speed>
   <CharacterAffiliation>Hostile</CharacterAffiliation>

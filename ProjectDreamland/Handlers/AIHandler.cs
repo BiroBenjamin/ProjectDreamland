@@ -30,7 +30,7 @@ namespace ProjectDreamland.Handlers
       }
     }
 
-    private void HandleEnemyAI(List<BaseObject> components)
+    public void HandleEnemyAI(List<BaseObject> components)
     {
       Player player = components.Where(x => x.GetType() == typeof(Player)).Cast<Player>().FirstOrDefault();
       Vector2 targetPosition = new Vector2(player.Position.X + player.Size.Width / 2, player.Position.Y + player.Size.Height / 2);
@@ -38,7 +38,7 @@ namespace ProjectDreamland.Handlers
       Vector2 direction = Vector2.Subtract(targetPosition, thisPosition);
 
       switch (_baseCharacter.BehaviourState)
-      {          
+      {
         case Data.Enums.BehaviourStatesEnum.Chase:
           if (player.CharacterState != Data.Enums.CharacterStatesEnum.Alive) _baseCharacter.BehaviourState = Data.Enums.BehaviourStatesEnum.Idle;
           HandleChasing(direction, components);
