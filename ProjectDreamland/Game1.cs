@@ -31,7 +31,7 @@ namespace ProjectDreamland
 
     protected override void Initialize()
     {
-      _graphics.IsFullScreen = false;
+      _graphics.IsFullScreen = true;
       if (_graphics.IsFullScreen)
       {
         _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
