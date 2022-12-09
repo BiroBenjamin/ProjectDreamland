@@ -18,7 +18,7 @@ namespace ProjectDreamland.Data.GameFiles.Quests
     public Objective Objective { get; set; }
     public int RewardExp { get; set; }
     public Item RewardItem { get; set; }
-    public BaseCharacter QuestGiver { get; set; }
+    //public BaseCharacter QuestGiver { get; set; }
     public Rectangle Bounds { get; set; }
     public bool IsDone { get; set; }
     public bool IsAccepted { get; set; }

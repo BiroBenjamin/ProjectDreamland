@@ -16,11 +16,5 @@ namespace ProjectDreamland.Data.GameFiles.Objects
     {
       TileType = tile.TileType;
     }
-
-    public bool CursorIntersects(Microsoft.Xna.Framework.Vector2 cursor)
-    {
-      return cursor.X > Position.X && cursor.X < Size.Width + Position.X &&
-        cursor.Y > Position.Y && cursor.Y < Size.Height + Position.Y;
-    }
   }
 }

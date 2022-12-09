@@ -22,11 +22,7 @@ namespace ProjectDreamland.Data.GameFiles.Objects
     public WorldObject(WorldObject worldObject) : base(worldObject)
     {
       IsInteractable = worldObject.IsInteractable;
-    }
-
-    public Microsoft.Xna.Framework.Rectangle GetRectangle()
-    {
-      return new Microsoft.Xna.Framework.Rectangle(Position.X, Position.Y, Size.Width, Size.Height);
+      IsLooted = worldObject.IsLooted;
     }
 
     public bool CursorIntersects(Vector2 cursor)

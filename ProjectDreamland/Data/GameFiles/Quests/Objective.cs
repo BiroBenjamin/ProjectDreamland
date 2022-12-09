@@ -22,6 +22,48 @@ namespace ProjectDreamland.Data.GameFiles.Quests
       TargetID = targetID;
       QuestType = type;
       
+      {
+        //foreach (Map map in MapManager.Maps)
+        //{
+        //  foreach (BaseFile objective in map.Characters)
+        //  {
+        //    if (objective.ID == targteID)
+        //      TargetID = objective;
+        //  }
+        //}
+      }
+      else if (type == "collect")
+      {
+        foreach(BaseFile item in ItemManager.Items)
+        {
+          //if(item.ID == targteID)
+          //{
+          //  Target = item;
+          //}
+        }
+      }
+      
+      {
+        //foreach (Map map in MapManager.Maps)
+        //{
+        //  foreach (BaseFile objective in map.Characters)
+        //  {
+        //    if (objective.ID == targteID)
+        //      TargetID = objective;
+        //  }
+        //}
+      }
+      else if (type == "collect")
+      {
+        foreach(BaseFile item in ItemManager.Items)
+        {
+          //if(item.ID == targteID)
+          //{
+          //  Target = item;
+          //}
+        }
+      }
+      
       Amount = amount;
       Remaining = amount;
       Description = $" - {Amount - Remaining} / {Amount} - ???";
