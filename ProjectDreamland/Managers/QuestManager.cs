@@ -21,16 +21,16 @@ namespace ProjectDreamland.Managers
     {
       Quests.AddRange(
         new List<Quest>() {
-          new Quest("testQuest001", "My apple collection", "You need to bring me some apples!", "collect", 520,
+          new Quest("testQuest001", "My apple collection", "You need to bring me some apples!", "collect", 350,
             new Objective("apple_001", 5, "collect"),
             new Weapon("weapon_001", "Iron Sword", ItemTypesEnum.Weapon,
             _contentManager.Load<Texture2D>("Sprites/Items/sword_icon"), StatList.Stat1)),
-          new Quest("testQuest002", "The gorilla problem", "These gorillas here pose a big problem. I would like to ask you to eliminate some of them.", "kill", 136,
-            new Objective("gorilla_front", 1, "kill"),
+          new Quest("testQuest002", "The gorilla problem", "These gorillas here pose a big problem. I would like to ask you to eliminate some of them.", "kill", 550,
+            new Objective("gorilla_front", 2, "kill"),
             new Weapon("weapon_002", "Enchanted Iron Sword", ItemTypesEnum.Weapon,
             _contentManager.Load<Texture2D>("Sprites/Items/sword_icon"), StatList.Stat5)),
-          new Quest("testQuest003", "Undead Cleansing", "The skeletons swarmed the place in the valley north of here. People are affraid to collect their apples. Please aid them.", "kill", 389,
-            new Objective("gorilla_front", 1, "kill"),
+          new Quest("testQuest003", "Undead Cleansing", "The skeletons swarmed the place in the valley north of here. People are affraid to collect their apples. Please aid them.", "kill", 625,
+            new Objective("skeleton_001", 3, "kill"),
             new Armor("armor_001", "Iron Helmet", ItemTypesEnum.Head,
             _contentManager.Load<Texture2D>("Sprites/Items/helmet_icon"), StatList.Stat2)),
         }
