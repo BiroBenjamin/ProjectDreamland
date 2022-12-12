@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BaseCharacter xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>Character</FileType>
+  <ID>skeleton_003</ID>
+  <Name>Skeleton Warrior</Name>
+  <FilePath>Objects\Characters\skeleton_003.dex</FilePath>
+  <ZIndex>0</ZIndex>
+  <ImagePath>Sprites\Characters\skeleton_003.png</ImagePath>
+  <Position>
+    <X>0</X>
+    <Y>0</Y>
+  </Position>
+  <Size>
+    <Width>46</Width>
+    <Height>64</Height>
+  </Size>
+  <CollisionPosition>
+    <X>7</X>
+    <Y>48</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>31</Width>
+    <Height>16</Height>
+  </CollisionSize>
+  <IsCollidable>true</IsCollidable>
+  <CurrentResourcePoints>0</CurrentResourcePoints>
+  <CurrentHealthPoints>175</CurrentHealthPoints>
+  <Level>7</Level>
+  <ResourceType>None</ResourceType>
+  <MaxResourcePoints>0</MaxResourcePoints>
+  <AttackDamage>0</AttackDamage>
+  <AttackRange>1.5</AttackRange>
+  <MaxHealthPoints>175</MaxHealthPoints>
+  <IsDead>false</IsDead>
+  <Speed>3</Speed>
+  <CharacterAffiliation>Hostile</CharacterAffiliation>
+</BaseCharacter>

@@ -21,20 +21,18 @@ namespace ProjectDreamland.Managers
     {
       Quests.AddRange(
         new List<Quest>() {
-          new Quest("testQuest001", "My apple collection", "You need to bring me some apples!", "collect", 520, 
+          new Quest("testQuest001", "My apple collection", "You need to bring me some apples!", "collect", 520,
             new Objective("apple_001", 5, "collect"),
             new Weapon("weapon_001", "Iron Sword", ItemTypesEnum.Weapon,
             _contentManager.Load<Texture2D>("Sprites/Items/sword_icon"), StatList.Stat1)),
-          new Quest("testQuest002", "Test quest 2", "This is the second test quest... sbhabhfbafbf ab ba bahaazwg abw awdbasd sasdg awdnsoahd naosldn saju bawn uaihgudsbadgasdnauwig zwa zui", "kill", 136,
-          new Objective("gorilla_front", 1, "kill"),
+          new Quest("testQuest002", "The gorilla problem", "These gorillas here pose a big problem. I would like to ask you to eliminate some of them.", "kill", 136,
+            new Objective("gorilla_front", 1, "kill"),
             new Weapon("weapon_002", "Enchanted Iron Sword", ItemTypesEnum.Weapon,
             _contentManager.Load<Texture2D>("Sprites/Items/sword_icon"), StatList.Stat5)),
-          new Quest("testQuest003", "Test quest 3", "This is the third test quest...", "kill", 389,
-          new Objective("gorilla_front", 1, "kill"),
+          new Quest("testQuest003", "Undead Cleansing", "The skeletons swarmed the place in the valley north of here. People are affraid to collect their apples. Please aid them.", "kill", 389,
+            new Objective("gorilla_front", 1, "kill"),
             new Armor("armor_001", "Iron Helmet", ItemTypesEnum.Head,
             _contentManager.Load<Texture2D>("Sprites/Items/helmet_icon"), StatList.Stat2)),
-          new Quest("testQuest004", "Test quest 4", "This is the fourth test quest...", "kill", 1034,
-          new Objective("gorilla_front", 1, "kill")),
         }
       );
     }
@@ -50,11 +48,11 @@ namespace ProjectDreamland.Managers
         if (quest.IsDone)
         {
           Player.CurrentExperience += quest.RewardExp;
-          if(quest.Type == "collect")
+          if (quest.Type == "collect")
           {
             string id = quest.Objective.TargetID;
             Item itemToRemove = ItemManager.Items.Where(x => x.ID == id).FirstOrDefault() as Item;
-            for(int i = quest.Objective.Amount - 1; i >= 0 ; i--)
+            for (int i = quest.Objective.Amount - 1; i >= 0; i--)
             {
               InventoryManager.RemoveItem(itemToRemove);
             }

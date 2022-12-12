@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BaseCharacter xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FileType>Character</FileType>
+  <ID>skeleton_002</ID>
+  <Name>Skeleton Footman</Name>
+  <FilePath>Objects\Characters\skeleton_002.dex</FilePath>
+  <ZIndex>0</ZIndex>
+  <ImagePath>Sprites\Characters\skeleton_002.png</ImagePath>
+  <Position>
+    <X>0</X>
+    <Y>0</Y>
+  </Position>
+  <Size>
+    <Width>38</Width>
+    <Height>58</Height>
+  </Size>
+  <CollisionPosition>
+    <X>6</X>
+    <Y>44</Y>
+  </CollisionPosition>
+  <CollisionSize>
+    <Width>26</Width>
+    <Height>14</Height>
+  </CollisionSize>
+  <IsCollidable>true</IsCollidable>
+  <CurrentResourcePoints>0</CurrentResourcePoints>
+  <CurrentHealthPoints>80</CurrentHealthPoints>
+  <Level>3</Level>
+  <ResourceType>None</ResourceType>
+  <MaxResourcePoints>0</MaxResourcePoints>
+  <AttackDamage>0</AttackDamage>
+  <AttackRange>1.5</AttackRange>
+  <MaxHealthPoints>80</MaxHealthPoints>
+  <IsDead>false</IsDead>
+  <Speed>3</Speed>
+  <CharacterAffiliation>Hostile</CharacterAffiliation>
+</BaseCharacter>
